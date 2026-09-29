@@ -26,7 +26,7 @@ export default function ContactPage() {
       </h1>
 
       <div className="mt-14 grid grid-cols-12 gap-x-6 gap-y-16 md:mt-20">
-        <aside className="col-span-12 lg:col-span-5">
+        <div className="col-span-12 lg:col-span-5">
           <div className="lg:sticky lg:top-[calc(var(--nav-h)+32px)]">
             <p className="eyebrow text-muted">Rather just email?</p>
             <a href={`mailto:${site.email}`} className="cta-email mt-3 inline-block font-display text-[clamp(1.5rem,2.6vw,2.6rem)] font-bold leading-tight tracking-[-0.035em]" data-reveal="rise">
@@ -56,7 +56,7 @@ export default function ContactPage() {
               </ol>
             </div>
           </div>
-        </aside>
+        </div>
 
         <div className="col-span-12 lg:col-span-6 lg:col-start-7" data-reveal="rise" data-annot="<ContactForm />">
           <h2 className="text-[clamp(1.6rem,2.4vw,2.2rem)] font-medium tracking-[-0.03em]">Send a short brief</h2>

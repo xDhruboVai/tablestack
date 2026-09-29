@@ -66,10 +66,13 @@ export default function ContactForm() {
     setStatus("sending");
     setServerError("");
     try {
+      // A rejected fetch means no connection; don't show the browser's raw "Failed to fetch".
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(f),
+      }).catch(() => {
+        throw new Error("We couldn’t reach the server. Check your connection and try again.");
       });
       const json = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(json.error || "Something went wrong on our side.");

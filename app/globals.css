@@ -868,6 +868,10 @@ html[data-mode="boh"] [data-annot]::after {
   white-space: nowrap;
   pointer-events: none;
 }
+/* The form's heading starts flush with its box, so hang its tag above the outline instead of over the text. */
+html[data-mode="boh"] [data-annot^="<ContactForm"]::after {
+  transform: translateY(-100%);
+}
 html[data-mode="boh"] .display {
   -webkit-text-stroke: 0;
 }

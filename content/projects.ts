@@ -45,7 +45,8 @@ export type Project = {
   title: string;
   client: string;
   kind: string;
-  category: "Restaurants" | "Beyond restaurants";
+  /** Industry label. The Work page shows a filter once projects span two or more categories. */
+  category: "Food & drink" | "Retail" | "Services" | "Other";
   year: string;
   location: string;
   services: string[];
@@ -112,7 +113,7 @@ const placeholderProjects: Project[] = [
     title: "Brasa",
     client: "Client name (placeholder)",
     kind: "Live-fire grill",
-    category: "Restaurants",
+    category: "Food & drink",
     year: "2026",
     location: "City, Country",
     services: ["Website design", "Full-stack build", "Reservations", "Menu CMS"],
@@ -151,7 +152,7 @@ const placeholderProjects: Project[] = [
     title: "Forno",
     client: "Client name (placeholder)",
     kind: "Neighborhood bakery",
-    category: "Restaurants",
+    category: "Food & drink",
     year: "2026",
     location: "City, Country",
     services: ["Website design", "Online pre-orders", "Brand refresh"],
@@ -190,7 +191,7 @@ const placeholderProjects: Project[] = [
     title: "Sumi",
     client: "Client name (placeholder)",
     kind: "Omakase counter",
-    category: "Restaurants",
+    category: "Food & drink",
     year: "2025",
     location: "City, Country",
     services: ["Website design", "Ticketed booking", "Art direction"],
@@ -229,7 +230,7 @@ const placeholderProjects: Project[] = [
     title: "Verde",
     client: "Client name (placeholder)",
     kind: "Café group, three locations",
-    category: "Restaurants",
+    category: "Food & drink",
     year: "2025",
     location: "City, Country",
     services: ["Multi-location website", "Menu CMS", "Online ordering", "Local SEO"],
@@ -268,7 +269,7 @@ const placeholderProjects: Project[] = [
     title: "Marginalia",
     client: "Client name (placeholder)",
     kind: "Bookshop & event space",
-    category: "Beyond restaurants",
+    category: "Retail",
     year: "2025",
     location: "City, Country",
     services: ["Website design", "Events calendar", "E-commerce"],
@@ -311,7 +312,7 @@ const realProjects: Project[] = [
     title: "Smashed Burgers",
     client: "Smashed Burgers Dhaka",
     kind: "Smash burger chain, six branches",
-    category: "Restaurants",
+    category: "Food & drink",
     year: "2026",
     location: "Dhaka, Bangladesh",
     services: ["Website design", "Full-stack build", "Table reservations", "English + Bangla"],
@@ -401,7 +402,7 @@ const realProjects: Project[] = [
     title: "Pinewood",
     client: "Pinewood Cafe + Kitchen",
     kind: "Café and restaurant, three branches",
-    category: "Restaurants",
+    category: "Food & drink",
     year: "2026",
     location: "Dhaka, Bangladesh",
     services: ["Website design", "Full-stack build", "Reservations + pre-orders", "Menu system", "English + Bangla"],

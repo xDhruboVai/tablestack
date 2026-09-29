@@ -122,8 +122,11 @@ export default function Footer() {
         <div className="md:col-span-2">
           <p className="eyebrow text-muted">Based in</p>
           <p className="mt-4">{site.location}</p>
-          <p className="mt-1 whitespace-nowrap tabular-nums text-fg-2">
-            Dhaka time <LocalTime />
+          <p className="mt-1 tabular-nums text-fg-2">
+            Dhaka time{" "}
+            <span className="whitespace-nowrap">
+              <LocalTime />
+            </span>
           </p>
         </div>
       </div>
