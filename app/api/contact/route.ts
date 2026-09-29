@@ -2,9 +2,8 @@ import { NextResponse } from "next/server";
 
 /**
  * Contact form endpoint.
- * Delivers via Resend when RESEND_API_KEY, CONTACT_TO_EMAIL and CONTACT_FROM_EMAIL are set (see .env.example).
- * In development without keys it logs the inquiry and succeeds, so the UI can be tested.
- * In production without keys it returns 503 so the form shows its error state (with the email fallback).
+ * Forwards validated inquiries to a Google Apps Script webhook, which writes
+ * the lead to Sheets and sends the notification/confirmation emails.
  */
 
 type Body = {
@@ -19,7 +18,6 @@ type Body = {
 };
 
 const clean = (v: unknown, max = 2000) => (typeof v === "string" ? v.trim().slice(0, max) : "");
-const escape = (s: string) => s.replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
 
 export async function POST(req: Request) {
   let body: Body;
@@ -46,43 +44,37 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Please check the highlighted fields." }, { status: 422 });
   }
 
-  const { RESEND_API_KEY, CONTACT_TO_EMAIL, CONTACT_FROM_EMAIL } = process.env;
+  const { GOOGLE_SHEETS_WEBHOOK_URL, GOOGLE_SHEETS_WEBHOOK_SECRET } = process.env;
 
-  if (!RESEND_API_KEY || !CONTACT_TO_EMAIL || !CONTACT_FROM_EMAIL) {
+  if (!GOOGLE_SHEETS_WEBHOOK_URL || !GOOGLE_SHEETS_WEBHOOK_SECRET) {
     if (process.env.NODE_ENV !== "production") {
-      console.info("[contact] (dev, not delivered)", data);
+      console.info("[contact] (dev, not delivered to Google Sheets)", data);
       return NextResponse.json({ ok: true, delivered: false });
     }
     return NextResponse.json({ error: "The form isn’t connected yet." }, { status: 503 });
   }
 
-  const rows = [
-    ["Name", data.name],
-    ["Email", data.email],
-    ["Business", data.business || "n/a"],
-    ["Needs", data.needs.join(", ") || "n/a"],
-    ["Budget", data.budget || "n/a"],
-    ["Timeline", data.timeline || "n/a"],
-  ];
-  const html = `<h2>New project inquiry</h2><table>${rows
-    .map(([k, v]) => `<tr><td><b>${k}</b></td><td>${escape(v)}</td></tr>`)
-    .join("")}</table><p>${escape(data.message).replace(/\n/g, "<br>")}</p>`;
+  try {
+    const res = await fetch(GOOGLE_SHEETS_WEBHOOK_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ secret: GOOGLE_SHEETS_WEBHOOK_SECRET, ...data }),
+    });
 
-  const res = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: { Authorization: `Bearer ${RESEND_API_KEY}`, "Content-Type": "application/json" },
-    body: JSON.stringify({
-      from: CONTACT_FROM_EMAIL,
-      to: [CONTACT_TO_EMAIL],
-      reply_to: data.email,
-      subject: `New project: ${data.business || data.name}`,
-      html,
-    }),
-  });
+    if (!res.ok) {
+      console.error("[contact] Google Sheets webhook failed", res.status, await res.text().catch(() => ""));
+      return NextResponse.json({ error: "Delivery failed." }, { status: 502 });
+    }
 
-  if (!res.ok) {
-    console.error("[contact] delivery failed", res.status, await res.text().catch(() => ""));
+    const result: unknown = await res.json().catch(() => null);
+    if (!result || typeof result !== "object" || !("ok" in result) || result.ok !== true) {
+      console.error("[contact] Google Sheets webhook returned an invalid response", result);
+      return NextResponse.json({ error: "Delivery failed." }, { status: 502 });
+    }
+  } catch (error) {
+    console.error("[contact] Google Sheets webhook request failed", error);
     return NextResponse.json({ error: "Delivery failed." }, { status: 502 });
   }
+
   return NextResponse.json({ ok: true, delivered: true });
 }

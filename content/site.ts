@@ -9,9 +9,9 @@ export const site = {
   name: "TableStacks",
   // Production URL - used for canonical links, sitemap and social cards.
   url: "https://tablestacks.com", // REPLACE with your real domain
-  email: "hello@tablestacks.com", // REPLACE with your real inbox
+  email: "tablestackbd@gmail.com",
   // Calendly / Cal.com link. Leave empty and "Book a call" falls back to an email with a subject line.
-  bookingUrl: "", // REPLACE e.g. "https://cal.com/tablestacks/intro"
+  bookingUrl: "https://cal.com/table-stack/intro-call",
   location: "Your City", // REPLACE - shown in footer + About
   availability: "Now booking projects for Q4 2026", // REPLACE / keep current
   responseTime: "We reply within two business days.", // REPLACE with a promise you can keep

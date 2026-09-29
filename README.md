@@ -49,16 +49,16 @@ Two eases (`out(4)` for arrivals, `inOut(4)` for covers/transitions) and three d
 | Motion constants | `lib/motion.ts` |
 | Logo / wordmark | `components/layout/Wordmark.tsx`, `app/icon.svg` |
 | Social card | `app/opengraph-image.tsx` |
-| Contact form delivery | `app/api/contact/route.ts` + `.env.local` |
+| Contact form delivery | `app/api/contact/route.ts` + `scripts/google-apps-script.gs` + `.env.local` |
 
 ## Contact form
 
-The form posts to `/api/contact`, which sends via [Resend](https://resend.com).
+The form posts to `/api/contact`, which forwards to a Google Apps Script webhook. The script writes each inquiry to Google Sheets and sends Gmail notifications.
 
 1. Copy `.env.example` to `.env.local`.
-2. Fill in `RESEND_API_KEY`, `CONTACT_TO_EMAIL`, and `CONTACT_FROM_EMAIL` (a sender on a domain you've verified in Resend).
+2. Fill in `GOOGLE_SHEETS_WEBHOOK_URL` and `GOOGLE_SHEETS_WEBHOOK_SECRET`.
 
-Without keys, development logs submissions to the terminal and shows the success ticket. **Production without keys shows the error state** (with the direct email link) so nothing is silently lost.
+Without these values, development logs submissions to the terminal and shows the success ticket. **Production without them shows the error state** (with the direct email link) so nothing is silently lost.
 
 ## Replace before launch
 
@@ -66,7 +66,7 @@ Search the codebase for `REPLACE` and `placeholder` to find every spot.
 
 **Brand + contact (`content/site.ts`)**
 - [ ] `url` - your real domain (used for canonical URLs, sitemap, social cards)
-- [ ] `email` - currently `hello@tablestacks.com`
+- [x] `email` - `tablestackbd@gmail.com`
 - [ ] `bookingUrl` - Cal.com or Calendly link (empty = "Book a call" opens an email)
 - [ ] `location`, `availability`, `responseTime`
 - [ ] `social` links (empty entries are hidden)
