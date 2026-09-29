@@ -5,7 +5,7 @@ import { ContactCTA } from "@/components/home/Sections";
 
 export const metadata: Metadata = {
   title: "Work",
-  description: "Restaurant websites designed and built by TableStacks: menus, bookings, ordering and everything behind them.",
+  description: "Websites and systems built by TableStack for businesses: sites, shops, bookings and the tools behind them.",
   alternates: { canonical: "/work" },
 };
 
@@ -24,8 +24,7 @@ export default function WorkPage() {
         </div>
         <div className="mt-8 grid grid-cols-12 gap-x-6 gap-y-4 md:mt-4">
           <p className="body-lg col-span-12 max-w-[44ch] md:col-span-6 md:col-start-7" data-split="lines">
-            Restaurants first, plus the occasional bookshop. Every project is designed and hand-built in-house,
-            front of house to back.
+            Our published work so far. We’re a young team, so the list is short and there’s more in progress.
           </p>
           {anyPlaceholder && (
             <p className="eyebrow col-span-12 text-muted md:col-span-6 md:col-start-7" data-reveal="fade">

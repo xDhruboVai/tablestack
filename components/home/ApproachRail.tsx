@@ -1,13 +1,19 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { animate, onScroll, scrambleText } from "animejs";
+import { animate, createAnimatable, scrambleText, utils } from "animejs";
 import { approach } from "@/content/site";
 import { SCRAMBLE_CHARS, prefersReducedMotion } from "@/lib/motion";
 
+/** A step takes over when its top edge reaches this far down the screen (just under the nav). */
+const TAKEOVER = 0.25;
+/** The playhead glides to the next tick over this last stretch of scroll (share of the screen height). */
+const GLIDE = 0.12;
+
 /**
  * Four steps with a timeline "scrubber" - a nod to animation tooling.
- * The playhead tracks your scroll; the active step lights up as it crosses the middle of the screen.
+ * The playhead holds on a step's tick for as long as that step is the one being read, and only
+ * glides to the next tick as the next step's top edge rises to just under the nav.
  */
 export default function ApproachRail() {
   const list = useRef<HTMLOListElement>(null);
@@ -20,27 +26,43 @@ export default function ApproachRail() {
     const l = list.current;
     if (!l) return;
     const steps = Array.from(l.querySelectorAll<HTMLElement>("[data-step]"));
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries) if (e.isIntersecting) setActive(Number((e.target as HTMLElement).dataset.step));
-      },
-      { rootMargin: "-50% 0px -50% 0px" },
-    );
-    steps.forEach((s) => io.observe(s));
+    const railEl = rail.current;
+    const headEl = head.current;
+    const mover =
+      railEl && headEl && !prefersReducedMotion() ? createAnimatable(headEl, { y: 450, ease: "out(3)" }) : null;
 
-    let a: ReturnType<typeof animate> | undefined;
-    if (!prefersReducedMotion() && head.current && rail.current) {
-      const railEl = rail.current;
-      a = animate(head.current, {
-        y: [0, () => railEl.clientHeight - 2],
-        ease: "linear",
-        duration: 1000,
-        autoplay: onScroll({ target: l, enter: "center top", leave: "center bottom", sync: 0.35 }),
-      });
-    }
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const line = window.innerHeight * TAKEOVER;
+      const glide = window.innerHeight * GLIDE;
+      const last = steps.length - 1;
+      // Position along the steps: 0 = first step, 1 = second step, … Each later step adds its share
+      // as its top edge travels the last `glide` pixels to the takeover line.
+      let pos = 0;
+      for (let k = 1; k <= last; k++) {
+        const top = steps[k].getBoundingClientRect().top;
+        const g = Math.min(1, Math.max(0, (line + glide - top) / glide));
+        pos += g * g * (3 - 2 * g);
+      }
+      setActive(Math.round(pos));
+      if (railEl && headEl) {
+        const y = (pos / last) * (railEl.clientHeight - 2);
+        if (mover) (mover.y as (v: number) => void)(y);
+        else utils.set(headEl, { y });
+      }
+    };
+    const schedule = () => {
+      if (!raf) raf = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
     return () => {
-      io.disconnect();
-      a?.revert();
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+      cancelAnimationFrame(raf);
+      mover?.revert();
     };
   }, []);
 
@@ -52,7 +74,8 @@ export default function ApproachRail() {
     });
   }, [active]);
 
-  const ticks = Array.from({ length: 41 }, (_, i) => i);
+  // One major tick per step (every 10th), so the playhead lands on a major tick at each step.
+  const ticks = Array.from({ length: (approach.length - 1) * 10 + 1 }, (_, i) => i);
 
   return (
     <div className="mt-10 grid grid-cols-12 gap-x-6 md:mt-14">
@@ -62,7 +85,7 @@ export default function ApproachRail() {
             How a project <em className="text-accent">runs.</em>
           </h2>
           <p className="body-lg mt-6 max-w-[34ch]" data-split="lines">
-            Four stages, borrowed from the kitchen. Plain language, fixed checkpoints, no surprises on the bill.
+            Four steps. You know what’s included, you see the work before launch, and you know what happens next.
           </p>
 
           <div className="mt-12 hidden items-stretch gap-6 md:flex" aria-hidden="true">

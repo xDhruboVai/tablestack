@@ -6,7 +6,7 @@ import { animate, scrambleText, utils } from "animejs";
 import { EASE, SCRAMBLE_CHARS, prefersReducedMotion } from "@/lib/motion";
 
 /**
- * Page transitions: an ink "kitchen door" swings up over the page, the route name
+ * Page transitions: an ink panel swings up over the page, the route name
  * types itself in, the next page loads underneath, then the door lifts away.
  */
 

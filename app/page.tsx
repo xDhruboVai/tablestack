@@ -10,8 +10,8 @@ export default function Home() {
     url: site.url,
     email: site.email,
     description: site.description,
-    areaServed: "Worldwide",
-    knowsAbout: ["Restaurant websites", "Web design", "Web development", "Online reservations", "Menu management"],
+    areaServed: "Bangladesh",
+    knowsAbout: ["Business websites", "E-commerce", "Restaurant websites", "Web development", "Online reservations", "Online ordering", "Management dashboards"],
   };
 
   return (

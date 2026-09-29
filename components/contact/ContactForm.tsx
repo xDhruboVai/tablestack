@@ -136,7 +136,7 @@ export default function ContactForm() {
           <Err k="email" />
         </div>
         <div className="field sm:col-span-2">
-          <label htmlFor={`${id}-business`}>Restaurant or business name</label>
+          <label htmlFor={`${id}-business`}>Business name</label>
           <input {...field("business")} type="text" autoComplete="organization" value={f.business} onChange={(e) => set("business", e.target.value)} />
         </div>
 
@@ -183,7 +183,7 @@ export default function ContactForm() {
             rows={5}
             value={f.message}
             onChange={(e) => set("message", e.target.value)}
-            placeholder="What you serve, what’s not working today, and anything we should know."
+            placeholder="What your business does, what you need, and anything we should know."
           />
           <Err k="message" />
         </div>
@@ -216,7 +216,7 @@ export default function ContactForm() {
             </>
           ) : (
             <>
-              Send it to the kitchen <span className="btn-arrow">→</span>
+              Send brief <span className="btn-arrow">→</span>
             </>
           )}
         </button>
@@ -229,7 +229,7 @@ export default function ContactForm() {
   );
 }
 
-/* ── Success state: a kitchen ticket prints ─────────────────── */
+/* ── Success state: a brief receipt prints ─────────────────── */
 function Ticket({
   ticket,
   onReset,
@@ -259,8 +259,8 @@ function Ticket({
   const d = ticket.data;
   const line = "- - - - - - - - - - - - - - - - - - -";
   const rows: [string, string][] = [
-    ["TABLE", d.business || "n/a"],
-    ["GUEST", d.name],
+    ["BUSINESS", d.business || "n/a"],
+    ["NAME", d.name],
     ["NEEDS", d.needs.length ? d.needs.join(", ") : "Tell us on the call"],
     ["BUDGET", d.budget || "TBD"],
     ["TIMING", d.timeline || "TBD"],
@@ -269,7 +269,7 @@ function Ticket({
   return (
     <div ref={root} className="ticket-wrap" role="status">
       <h2 ref={heading} tabIndex={-1} className="display text-[clamp(2.6rem,5vw,4.6rem)] outline-none">
-        Order’s in.
+        Brief received.
       </h2>
       <p className="body-lg mt-3 max-w-[40ch]" data-after>
         Thanks, {d.name.split(" ")[0]}. We’ve got your note. {site.responseTime}
@@ -278,9 +278,9 @@ function Ticket({
       <div className="ticket-printer mt-10" aria-hidden="true" />
       <div className="ticket-clip">
         <div className="ticket" data-paper>
-          <p data-row className="text-center font-bold">TABLESTACKS · KITCHEN TICKET</p>
+          <p data-row className="text-center font-bold">TABLESTACK · PROJECT BRIEF</p>
           <p data-row className="mt-2 flex justify-between">
-            <span>ORDER #{ticket.no}</span>
+            <span>BRIEF #{ticket.no}</span>
             <span>{ticket.time}</span>
           </p>
           <p data-row className="my-2 overflow-hidden whitespace-nowrap opacity-50">{line}</p>
@@ -296,9 +296,9 @@ function Ticket({
             <span className="break-words">“{d.message.slice(0, 120)}{d.message.length > 120 ? "…" : ""}”</span>
           </p>
           <p data-row className="my-2 overflow-hidden whitespace-nowrap opacity-50">{line}</p>
-          <p data-row className="text-center">** FIRE WHEN READY **</p>
+          <p data-row className="text-center">** WE’LL BE IN TOUCH **</p>
           <span data-stamp className="ticket-stamp">
-            Fired
+            Sent
           </span>
         </div>
       </div>

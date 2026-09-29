@@ -2,13 +2,13 @@ import TLink from "@/components/layout/TLink";
 import ProjectCover from "./ProjectCover";
 import type { Project } from "@/content/projects";
 
-/** Big "next course" link at the end of a case study. */
+/** Big "next project" link at the end of a case study. */
 export default function NextProject({ project }: { project: Project }) {
   return (
     <section className="px-page pb-24 pt-10 md:pb-32" aria-label="Next project">
       <TLink href={`/work/${project.slug}`} className="next-project group grid grid-cols-12 items-end gap-x-6 gap-y-6 border-t border-rule pt-10">
         <div className="col-span-12 md:col-span-7">
-          <p className="eyebrow text-accent">Next course →</p>
+          <p className="eyebrow text-accent">Next project →</p>
           <p className="display mt-4 text-[clamp(3rem,8.5vw,9rem)] transition-[font-style] group-hover:italic">{project.title}</p>
           <p className="eyebrow mt-3 text-muted">{project.kind}</p>
         </div>

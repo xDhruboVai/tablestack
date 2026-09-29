@@ -153,22 +153,22 @@ export default function HeroAnatomy() {
 
           <h1 id="hero-title" className="display mt-6 text-[clamp(2.3rem,9.8vw,3.8rem)] lg:mt-8 lg:text-[clamp(3.4rem,5.6vw,6.8rem)]" data-intro>
             <span className="split-line">
-              <span className="hl">Websites for</span>
+              <span className="hl">Websites built</span>
             </span>
             <span className="split-line">
-              <span className="hl">restaurants.</span>
+              <span className="hl">around the way</span>
             </span>
             <span className="split-line">
-              <span className="hl">Front of house</span>
+              <span className="hl">your business</span>
             </span>
             <span className="split-line">
-              <span className="hl italic text-accent">to back.</span>
+              <span className="hl italic text-accent">works.</span>
             </span>
           </h1>
 
           <p className="body-lg mt-6 max-w-[36ch] lg:mt-8" data-intro data-intro-fade>
-            Custom sites for restaurants, cafés and bars. Designed to get guests booking, built so your team can run
-            them.
+            A small web team in Bangladesh. We build websites for all kinds of businesses, plus the tools behind
+            them when you need them.
           </p>
 
           <div className="mt-7 flex flex-wrap items-center gap-3 lg:mt-9" data-intro data-intro-fade>
@@ -186,7 +186,7 @@ export default function HeroAnatomy() {
             <div className="h-full w-full" data-intro>
               <ExplodedTable />
             </div>
-            <ol className="hero-labels" aria-label="What a TableStacks site is made of">
+            <ol className="hero-labels" aria-label="What a TableStack site is made of">
               {LABEL_LAYERS.map((id, i) => {
                 const a = anatomy[i];
                 return (
@@ -206,7 +206,7 @@ export default function HeroAnatomy() {
         </div>
 
         <p className="hero-fig eyebrow px-page text-muted" data-fig aria-hidden="true">
-          Fig. 01 · Anatomy of a restaurant website
+          Fig. 01 · Anatomy of a business website
         </p>
         <div className="hero-hint px-page" data-hint aria-hidden="true">
           <span className="eyebrow flex items-center gap-3 text-muted">

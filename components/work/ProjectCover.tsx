@@ -57,7 +57,7 @@ export default function ProjectCover({
           {project.media?.annotations?.map((a) => (
             <div
               key={a.label}
-              className="blueprint-box"
+              className={`blueprint-box ${a.x >= 50 ? "is-right" : ""}`}
               style={{ left: `${a.x}%`, top: `${a.y}%`, width: `${a.w}%`, height: `${a.h}%` }}
             >
               <span>{a.label}</span>

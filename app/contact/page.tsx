@@ -10,13 +10,12 @@ export const metadata: Metadata = {
 };
 
 const next = [
-  ["01", "We reply", "A real person answers, usually with a few questions."],
-  ["02", "A short call", "Thirty minutes about your room, your guests and what’s not working."],
-  ["03", "A written proposal", "Scope, timeline and price in plain language. No surprises later."],
+  ["01", "We talk", "About your business, your customers and what the site or system needs to do."],
+  ["02", "We agree the scope", "Pages, features, timeline and a quote, all before any work starts."],
+  ["03", "We get to work", "You see the layouts first, then a working preview before launch."],
 ];
 
 export default function ContactPage() {
-  const bookHref = site.bookingUrl || `mailto:${site.email}?subject=${encodeURIComponent("Book a call")}`;
   return (
     <section className="px-page pb-28 pt-[calc(var(--nav-h)+10svh)] md:pb-40" aria-labelledby="contact-h" data-annot="page · /contact">
       <p className="eyebrow flex items-center gap-3 text-fg-2" data-reveal="scramble">
@@ -35,9 +34,11 @@ export default function ContactPage() {
             </a>
             <div className="mt-5 flex flex-wrap gap-3" data-reveal="rise" data-delay="100">
               <CopyEmail email={site.email} />
-              <a href={bookHref} className="btn btn-ghost" {...(site.bookingUrl ? { target: "_blank", rel: "noreferrer" } : {})}>
-                Book a call
-              </a>
+              {site.bookingUrl && (
+                <a href={site.bookingUrl} className="btn btn-ghost" target="_blank" rel="noreferrer">
+                  Book a call
+                </a>
+              )}
             </div>
 
             <div className="mt-14">

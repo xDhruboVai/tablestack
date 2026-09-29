@@ -114,9 +114,11 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
           </div>
         </header>
 
-        <div className="px-page group mt-16 md:mt-24">
-          <LensMedia project={p} aspect="aspect-[16/10]" priority hoverScale={false} sizes="100vw" />
-          <p className="eyebrow mt-3 text-muted foh-only">Move over the image to see how it’s built.</p>
+        <div className="px-page mt-16 md:mt-24">
+          <div className="media-fit group">
+            <LensMedia project={p} aspect="aspect-[16/10]" priority hoverScale={false} sizes="(min-width: 1280px) 80vw, 100vw" />
+            <p className="eyebrow mt-3 text-muted foh-only">Move over the image to see how it’s built.</p>
+          </div>
         </div>
 
         <div className="px-page mt-20 md:mt-32">
@@ -156,7 +158,7 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
               {p.gallery.length} frames
             </p>
           </div>
-          <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2">
+          <div className="media-fit mt-10 grid grid-cols-1 gap-6 md:grid-cols-2">
             {p.gallery.map((g, i) => (
               <figure key={i} className={g.wide ? "md:col-span-2" : ""}>
                 <div
@@ -166,7 +168,7 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
                 >
                   <div data-mask-inner className="absolute inset-0">
                     {g.src ? (
-                      <Image src={g.src} alt={g.alt} fill sizes={g.wide ? "100vw" : "(min-width: 768px) 50vw, 100vw"} className="object-cover" />
+                      <Image src={g.src} alt={g.alt} fill sizes={g.wide ? "(min-width: 1280px) 80vw, 100vw" : "(min-width: 1280px) 40vw, (min-width: 768px) 50vw, 100vw"} className="object-cover" />
                     ) : (
                       <ProjectMock project={p} frame={g.frame} slice title={`${g.alt} (placeholder artwork)`} />
                     )}

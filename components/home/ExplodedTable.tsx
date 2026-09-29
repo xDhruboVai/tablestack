@@ -11,10 +11,10 @@ export const D = 180;
 export const LEG = 150;
 
 export const LAYERS = [
-  { id: "boh", z: 0, t: 18, explode: 0, tag: "04 · BACK OF HOUSE" },
-  { id: "res", z: 18, t: 10, explode: -130, tag: "03 · BOOKINGS" },
-  { id: "menu", z: 28, t: 10, explode: -260, tag: "02 · MENU" },
-  { id: "foh", z: 38, t: 12, explode: -390, tag: "01 · FRONT OF HOUSE" },
+  { id: "boh", z: 0, t: 18, explode: 0, tag: "04 · SYSTEMS" },
+  { id: "res", z: 18, t: 10, explode: -130, tag: "03 · BOOKINGS + ORDERS" },
+  { id: "menu", z: 28, t: 10, explode: -260, tag: "02 · CONTENT" },
+  { id: "foh", z: 38, t: 12, explode: -390, tag: "01 · WEBSITE" },
 ] as const;
 
 export const VIEWBOX = { x: -175, y: -470, w: 720, h: 880 };
@@ -175,10 +175,10 @@ export default function ExplodedTable({ className = "" }: { className?: string }
       role="img"
       aria-labelledby="xtable-title xtable-desc"
     >
-      <title id="xtable-title">Exploded diagram of a restaurant website as a table</title>
+      <title id="xtable-title">Exploded diagram of a business website drawn as a table</title>
       <desc id="xtable-desc">
-        A table drawn as four stacked layers: the public website on top, then the menu, then reservations and
-        ordering, with hosting and infrastructure at the base, standing on four legs.
+        A table drawn as four stacked layers: the public website on top, then the content, then bookings and
+        orders, with admin tools, backend and hosting at the base, standing on four legs.
       </desc>
       <defs>
         <pattern id="xhatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">

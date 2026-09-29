@@ -94,12 +94,12 @@ export default function Loader() {
           </span>
           <span className="split-line">
             <span data-word className="inline-block font-display text-[34px] font-extrabold tracking-[-0.045em]">
-              Stacks
+              Stack
             </span>
           </span>
         </div>
         <p className="eyebrow text-muted">
-          Setting the table · <span data-count>000</span>
+          Building the stack · <span data-count>000</span>
         </p>
       </div>
     </div>

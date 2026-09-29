@@ -2,27 +2,33 @@
  * ─────────────────────────────────────────────────────────────
  *  BRAND + CONTACT CONFIG - edit this file first.
  *  Every string marked  // REPLACE  is a placeholder.
+ *
+ *  Voice: short, direct sentences. Say what we build, who it's for and
+ *  what a client can expect. Concrete examples over slogans. No invented
+ *  clients, metrics, testimonials or guarantees. Less talk, more work done.
  * ─────────────────────────────────────────────────────────────
  */
 
 export const site = {
-  name: "TableStacks",
+  name: "TableStack",
   // Production URL - used for canonical links, sitemap and social cards.
-  url: "https://tablestacks.com", // REPLACE with your real domain
-  email: "hello@tablestacks.com", // REPLACE with your real inbox
-  // Calendly / Cal.com link. Leave empty and "Book a call" falls back to an email with a subject line.
-  bookingUrl: "", // REPLACE e.g. "https://cal.com/tablestacks/intro"
-  location: "Your City", // REPLACE - shown in footer + About
-  availability: "Now booking projects for Q4 2026", // REPLACE / keep current
-  responseTime: "We reply within two business days.", // REPLACE with a promise you can keep
+  url: "https://tablestack.com", // REPLACE with your real domain
+  email: "tablestackbd@gmail.com",
+  // Real booking link (Cal.com, Calendly…). Leave empty and every "Book a call" button stays hidden.
+  bookingUrl: "", // REPLACE when a real booking destination exists
+  location: "Bangladesh",
+  // Shown next to the location in the footer.
+  timeZone: "Asia/Dhaka",
+  availability: "Taking on new projects",
+  responseTime: "We’ll get back to you to talk through scope and next steps.",
   social: [
-    // REPLACE or remove. Empty href = hidden.
-    { label: "Instagram", href: "" },
-    { label: "LinkedIn", href: "" },
+    // Empty href = hidden. Add the real links when they're ready.
+    { label: "Facebook", href: "" }, // REPLACE with the Facebook Page URL
+    { label: "WhatsApp", href: "" }, // REPLACE with a wa.me link
   ],
-  tagline: "Websites for restaurants. Front of house to back.",
+  tagline: "Websites built around the way your business works.",
   description:
-    "TableStacks designs and builds websites for restaurants: the part guests see and the systems that keep service running. Editable menus, reservations, ordering, speed.",
+    "TableStack is a small web team in Bangladesh. We build websites for all kinds of businesses, and add practical tools like bookings, ordering and management dashboards when they’re needed.",
 } as const;
 
 export const nav = [
@@ -35,51 +41,51 @@ export const nav = [
 export const anatomy = [
   {
     code: "01",
-    title: "Front of house",
-    body: "The site your guests see. Designed around your room, your plates, your voice.",
+    title: "The website",
+    body: "What your customers see. Built around your business, not a template.",
   },
   {
     code: "02",
-    title: "The menu",
-    body: "Real text, not a PDF. Update a dish or a price from your phone in under a minute.",
+    title: "Your content",
+    body: "Menus, products, services and hours, laid out so people find them fast.",
   },
   {
     code: "03",
-    title: "Reservations & ordering",
-    body: "OpenTable, Resy, Tock, Toast, Square. Wired in so bookings land where they should.",
+    title: "Bookings & orders",
+    body: "Reservations, ordering or enquiries, built in or connected when you need them.",
   },
   {
     code: "04",
-    title: "Back of house",
-    body: "Hosting, speed, search, uptime. The kitchen nobody sees, running clean every service.",
+    title: "The systems behind it",
+    body: "Admin tools, dashboards, backend and hosting. The tech stack in TableStack.",
   },
 ] as const;
 
 /** Wrap words in *asterisks* to set them in accent italic. */
 export const positioning =
-  "We design and build websites for restaurants. The part your *guests see,* and the systems behind it that *keep service running.* Menus you can edit in a minute. Bookings that land where they should. Pages that load on one bar of signal outside your door.";
+  "We build websites for *all kinds of businesses.* Company and service sites, online shops, restaurants, portfolios and landing pages. When a business needs more than pages, we add *practical tools:* reservations, ordering, HR, management dashboards. Clear scope. A working result.";
 
 export const capabilities = {
   frontOfHouse: {
-    label: "Front of house",
-    sub: "Design",
+    label: "Websites",
+    sub: "Front of house",
     items: [
-      { name: "Website design", note: "Custom, never templated" },
-      { name: "Menu design", note: "Readable on a phone at the table" },
-      { name: "Art direction", note: "Photography + video briefs" },
-      { name: "Motion & interaction", note: "Only where it helps" },
-      { name: "Brand refresh", note: "Type, color, voice online" },
+      { name: "Company & service sites", note: "A clear offer, an easy enquiry" },
+      { name: "Online shops", note: "Products, cart, orders" },
+      { name: "Restaurant & café sites", note: "Menus, branches, hours, bookings" },
+      { name: "Portfolios & landing pages", note: "Focused and quick to launch" },
+      { name: "Branding with your site", note: "When it’s part of the scope" },
     ],
   },
   backOfHouse: {
-    label: "Back of house",
-    sub: "Engineering",
+    label: "Systems",
+    sub: "Back of house",
     items: [
-      { name: "Full-stack builds", note: "Next.js, fast by default" },
-      { name: "Editable menus & hours", note: "A CMS your staff can use" },
-      { name: "Bookings & ordering", note: "OpenTable · Resy · Toast · Square" },
-      { name: "Local search", note: "Google Business, schema, maps" },
-      { name: "Hosting & care", note: "Updates, backups, monitoring" },
+      { name: "Reservations & booking", note: "Built in or connected" },
+      { name: "Online ordering", note: "From menu to checkout" },
+      { name: "HR & management tools", note: "Replace the manual process" },
+      { name: "Dashboards & admin", note: "Next.js, Supabase, auth" },
+      { name: "Launch & support", note: "Vercel, SEO setup, maintenance" },
     ],
   },
 } as const;
@@ -87,52 +93,49 @@ export const capabilities = {
 export const approach = [
   {
     code: "01",
-    term: "Mise en place",
-    plain: "Discovery",
-    body: "We learn how your room works: covers, turns, who updates the menu, where bookings come from. Then we plan the site around service, not around a template.",
+    term: "Discuss",
+    plain: "Define the scope",
+    body: "We talk about your business, your customers and what the site or system needs to do. Then we agree on pages, features, timeline and a quote before any work starts.",
   },
   {
     code: "02",
-    term: "The pass",
-    plain: "Design",
-    body: "Every page is designed for your guests’ real moments: finding the menu on the street, booking for Friday, checking if you’re open. You review real layouts, not mood boards.",
+    term: "Design",
+    plain: "See it first",
+    body: "You see the page layouts and key interactions before development begins.",
   },
   {
     code: "03",
-    term: "Service",
-    plain: "Build & launch",
-    body: "We hand-build the site, connect your booking and ordering tools, and set up a menu editor your team will actually use. Launch is scheduled around your quiet days.",
+    term: "Build",
+    plain: "Working preview",
+    body: "We build the site or system and share a working preview you can click through.",
   },
   {
     code: "04",
-    term: "Family meal",
-    plain: "Aftercare",
-    body: "Training for your staff, then ongoing care: updates, seasonal menus, speed checks. You always have a person to message.",
+    term: "Launch & support",
+    plain: "Go live",
+    body: "We test it and launch it, then agree on any updates or continued support.",
   },
 ] as const;
 
-/** What every site ships with - commitments, not results. */
+/** What a client can expect on every project - how we work, not results. */
 export const standards = [
-  { k: "Menus", v: "Real, searchable text. Never a PDF." },
-  { k: "Speed", v: "Built to load fast on mobile data." },
-  { k: "Access", v: "Designed to WCAG 2.2 AA." },
-  { k: "Editing", v: "Menus, hours and specials, all staff-editable." },
-  { k: "Search", v: "Local SEO + structured data on launch." },
+  { k: "Scope", v: "Pages, features, timeline and quote agreed before we start." },
+  { k: "Preview", v: "You see layouts, then a working preview, before launch." },
+  { k: "Plain language", v: "We explain the work clearly. No jargon." },
+  { k: "Mobile first", v: "Built for phones, where most customers find you." },
+  { k: "Editing", v: "Update menus, products or hours yourself, where it’s in scope." },
   { k: "Ownership", v: "Your domain, your content, your accounts." },
 ] as const;
 
-/** Tools we connect. Text only - no third-party logos. */
+/** Tools we build with. Text only - no third-party logos. */
 export const integrations = [
-  "OpenTable",
-  "Resy",
-  "Tock",
-  "SevenRooms",
-  "Toast",
-  "Square",
-  "Google Business Profile",
-  "Shopify",
-  "Sanity",
+  "Next.js",
+  "React",
+  "TypeScript",
+  "Supabase",
+  "PostgreSQL",
   "Vercel",
+  "Tailwind CSS",
 ] as const;
 
 /**
@@ -144,49 +147,42 @@ export const testimonials: { quote: string; name: string; role: string }[] = [];
 /** About page. */
 export const about = {
   intro:
-    "TableStacks is a small studio that designs and builds websites for restaurants. We work on both sides of the pass: the design your guests fall for, and the engineering your team relies on every night.",
+    "TableStack is a small creative web team based in Bangladesh. We build websites for all kinds of businesses: company and service sites, online shops, restaurants, portfolios, landing pages and full-stack web apps.",
   principles: [
     {
       code: "A",
-      title: "We know the room",
-      body: "Menus change daily. Bookings come from four places. Someone has to update the hours at 11pm. We build for that reality.",
+      title: "Built around your business",
+      body: "Shops, service businesses, restaurants, startups, growing companies. We start with how your business actually runs, then build the site around it.",
     },
     {
       code: "B",
-      title: "Hand-built, and fast",
-      body: "No templates, no page builders. Custom code that loads quickly on a phone standing outside your door.",
+      title: "Websites first. Tools when needed.",
+      body: "A website is usually where it starts. Extra systems, like ordering, HR or a management dashboard, should serve a specific need.",
     },
     {
       code: "C",
-      title: "Yours to run",
-      body: "Your staff can change a dish, a price or the hours without calling us. You own the domain, the content and the accounts.",
+      title: "Clear scope. A working result.",
+      body: "We agree on pages, features, timeline and quote before we start, and you see a working preview before anything goes live.",
     },
     {
       code: "D",
-      title: "Food first",
-      body: "Design that makes the plate and the room feel like they do in person, then gets out of the way so guests can book.",
-    },
-  ],
-  // REPLACE with real people. Set `placeholder: false` once filled in.
-  team: [
-    {
-      name: "Founder name",
-      role: "Design & front of house",
-      bio: "Replace with two sentences on background and what they lead.",
-      placeholder: true,
-    },
-    {
-      name: "Founder name",
-      role: "Engineering & back of house",
-      bio: "Replace with two sentences on background and what they lead.",
-      placeholder: true,
+      title: "Less talk, more work done",
+      body: "Short updates, plain explanations, and honesty about what’s included and what isn’t.",
     },
   ],
 } as const;
 
 /** Contact form options. */
 export const inquiry = {
-  needs: ["New website", "Redesign", "Menu & CMS", "Reservations / ordering", "Something else"],
-  budgets: ["Under $3k", "$3k–$8k", "$8k–$15k", "$15k+", "Not sure yet"],
+  needs: [
+    "New website",
+    "Redesign",
+    "Online shop",
+    "Reservations / ordering",
+    "Dashboard or admin tool",
+    "Something else",
+  ],
+  // REPLACE with ranges that match your real pricing (in BDT).
+  budgets: ["Under ৳50k", "৳50k–৳150k", "৳150k–৳400k", "৳400k+", "Not sure yet"],
   timelines: ["ASAP", "1–2 months", "3+ months", "Flexible"],
 } as const;
