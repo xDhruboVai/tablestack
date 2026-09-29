@@ -16,7 +16,7 @@ const sans = Schibsted_Grotesk({
   display: "swap",
 });
 const mono = Space_Mono({ subsets: ["latin"], weight: ["400", "700"], variable: "--font-space-mono", display: "swap" });
-/* Only used inside the placeholder client artwork (Brasa, Sumi), not part of the TableStacks brand. */
+/* Only used inside the placeholder client artwork (Brasa, Sumi), not part of the TableStack brand. */
 const artSerif = Instrument_Serif({
   subsets: ["latin"],
   weight: "400",

@@ -30,12 +30,12 @@ export default function OG() {
           </svg>
           <span style={{ display: "flex" }}>
             <span style={{ fontStyle: "italic" }}>Table</span>
-            <span style={{ fontWeight: 700 }}>Stacks</span>
+            <span style={{ fontWeight: 700 }}>Stack</span>
           </span>
         </div>
         <div style={{ display: "flex", flexDirection: "column", fontSize: 104, lineHeight: 0.95, letterSpacing: -3 }}>
-          <span>Websites for restaurants.</span>
-          <span style={{ color: "#E0432A", fontStyle: "italic" }}>Front of house to back.</span>
+          <span>Websites first.</span>
+          <span style={{ color: "#E0432A", fontStyle: "italic" }}>Tools when needed.</span>
         </div>
       </div>
     ),

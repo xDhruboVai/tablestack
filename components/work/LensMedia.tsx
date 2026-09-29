@@ -91,7 +91,7 @@ export default function LensMedia({
         <span className="eyebrow absolute left-3 top-3 bg-[var(--bg)] px-2 py-1 !text-[13px] text-fg">Placeholder</span>
       )}
       <span className="lens-tip eyebrow foh-only" aria-hidden="true">
-        Hover to see the kitchen
+        Hover to see how it’s built
       </span>
     </div>
   );

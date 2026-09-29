@@ -1,6 +1,6 @@
-# TableStacks - studio website
+# TableStack - studio website
 
-Websites for restaurants. Front of house to back.
+Websites built around the way your business works. Websites first. Tools when needed.
 
 Built with **Next.js 16 (App Router) · TypeScript · Tailwind CSS 4 · anime.js 4**.
 
@@ -17,9 +17,9 @@ Node 20+ recommended (built on Node 24).
 
 ## The idea
 
-The name is the concept: **tables** (restaurants) + **stacks** (full-stack engineering).
+The name is the concept: **table** + **tech stack** (the technical work behind a website or business system). TableStack builds websites for all kinds of businesses.
 
-- **Front of house / Back of house.** Every restaurant has a dining room guests see and a kitchen they don't. Every website has a design and the systems behind it. TableStacks builds both.
+- **Front of house / Back of house.** Every restaurant has a dining room guests see and a kitchen they don't. Every business website has the pages customers see and the systems behind them (bookings, ordering, admin tools). TableStack builds both.
 - **The exploded table (home hero).** A table drawn as four stacked layers - the site guests see, the menu, bookings/ordering, and infrastructure - standing on table legs. It assembles slab by slab on load, then explodes into an annotated diagram as you scroll (native scroll, no hijacking).
 - **The FOH/BOH switch** (top right). Flips the entire site into a blueprint of itself: dark mode, 12-column grid overlay, component outlines and labels, wireframe versions of every project preview. It's remembered per visitor.
 - **The lens.** Hover any project preview and a circle reveals its back-of-house blueprint. On touch screens it sweeps across as you scroll.
@@ -34,7 +34,7 @@ The name is the concept: **tables** (restaurants) + **stacks** (full-stack engin
 Two eases (`out(4)` for arrivals, `inOut(4)` for covers/transitions) and three durations (380 / 900 / 1300 ms) - see `lib/motion.ts`.
 
 - **Loader:** first visit per session only, ~1s, skipped by any scroll/key/tap.
-- **Page transitions:** an ink "kitchen door" rises with the route name, then lifts.
+- **Page transitions:** an ink panel rises with the route name, then lifts.
 - **Kitchen ticket:** the contact form's success state prints a ticket with the inquiry on it.
 - **Reduced motion:** with `prefers-reduced-motion`, everything renders immediately - the hero shows the fully exploded diagram as a static figure, no loader, no transitions, no scroll scrubbing.
 
@@ -66,10 +66,11 @@ Search the codebase for `REPLACE` and `placeholder` to find every spot.
 
 **Brand + contact (`content/site.ts`)**
 - [ ] `url` - your real domain (used for canonical URLs, sitemap, social cards)
-- [x] `email` - `tablestackbd@gmail.com`
-- [ ] `bookingUrl` - Cal.com or Calendly link (empty = "Book a call" opens an email)
-- [ ] `location`, `availability`, `responseTime`
-- [ ] `social` links (empty entries are hidden)
+- [x] `email` - `tablestackbd@gmail.com` (also set `CONTACT_TO_EMAIL` to this in `.env.local` so form inquiries arrive there)
+- [ ] `bookingUrl` - a real booking link. While empty, every "Book a call" button stays hidden
+- [ ] `availability`, `responseTime` (location is set to Bangladesh, footer clock to Dhaka time)
+- [ ] `inquiry.budgets` - the BDT ranges in the contact form are placeholders; set them to match your pricing
+- [ ] `social` - Facebook Page and WhatsApp links (hidden until filled in)
 - [ ] `about.team` - real names, roles, bios; set `placeholder: false`
 - [ ] `testimonials` - only real quotes, with permission. The section stays hidden while empty.
 
@@ -95,7 +96,6 @@ The five fictional sample projects (Brasa, Forno, Sumi, Verde, Marginalia) are k
 `media.annotations` sets the labelled boxes on the blueprint (in % of the cover), and `media.focusX` sets which side stays in frame when a cover is cropped into a tall card.
 
 **Brand assets**
-- [ ] Team portraits for the About page, 1200×1500 each
 - [ ] Logo: `components/layout/Wordmark.tsx` (the current mark is a placeholder: three stacked slabs)
 - [ ] Favicon: `app/icon.svg`
 - [ ] Social card: `app/opengraph-image.tsx` (uses a system font; embed the brand fonts or swap in a designed 1200×630 PNG as `app/opengraph-image.png`)

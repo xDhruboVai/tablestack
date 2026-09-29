@@ -11,16 +11,16 @@ export const metadata: Metadata = {
 
 const sides = {
   guests: [
-    "A site that feels like your room",
-    "The menu in one thumb-scroll",
-    "Booking in two taps",
-    "Hours and directions that are right",
+    "A site built around your business",
+    "Menus, products or services that are easy to find",
+    "Booking, ordering or enquiring in a few taps",
+    "Hours, locations and contact details that are right",
   ],
   team: [
-    "Menus and prices edited in a minute",
-    "Bookings routed to one place",
-    "Hours updated everywhere at once",
-    "A person to message when you need one",
+    "Content you can update yourselves, where it’s in scope",
+    "Bookings and orders collected in one place",
+    "Dashboards and admin tools when they’re needed",
+    "A team to talk to when something changes",
   ],
 };
 
@@ -32,7 +32,7 @@ export default function AboutPage() {
           About {site.name}
         </p>
         <h1 id="about-h" className="display mt-6 text-[clamp(2.8rem,8vw,9rem)]" data-split="chars">
-          Both sides <em className="text-accent">of the pass.</em>
+          Websites first. <em className="text-accent">Tools when needed.</em>
         </h1>
         <div className="mt-12 grid grid-cols-12 gap-x-6 md:mt-20">
           <p className="col-span-12 text-[clamp(1.4rem,2.3vw,2.3rem)] font-semibold leading-[1.14] tracking-[-0.035em] md:col-span-8 md:col-start-5" data-split="lines">
@@ -45,12 +45,12 @@ export default function AboutPage() {
       <section className="px-page pb-28 md:pb-40" aria-labelledby="sides-h">
         <SectionLabel index="01" label="The idea" />
         <h2 id="sides-h" className="display mt-10 max-w-[16ch] text-[clamp(2.4rem,4.8vw,5.2rem)] md:mt-14" data-split="lines">
-          Tables for guests. <em className="text-accent">Stacks</em> for the team.
+          Table, plus <em className="text-accent">tech stack.</em>
         </h2>
         <div className="mt-14 grid grid-cols-1 border border-rule md:mt-20 md:grid-cols-2" data-reveal="rise">
           <div className="bg-surface p-6 md:p-12">
             <p className="eyebrow text-accent">Front of house</p>
-            <h3 className="display mt-3 text-[clamp(1.8rem,2.4vw,2.4rem)]">What your guests get</h3>
+            <h3 className="display mt-3 text-[clamp(1.8rem,2.4vw,2.4rem)]">What your customers get</h3>
             <ul className="mt-8">
               {sides.guests.map((g, i) => (
                 <li key={g} className="flex items-baseline gap-4 border-t border-rule py-4 text-[1.1rem]">
@@ -94,47 +94,12 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* People */}
-      <section className="px-page pb-28 md:pb-40" aria-labelledby="people-h">
-        <SectionLabel index="03" label="The people" />
-        <div className="mt-10 grid grid-cols-12 gap-x-6 md:mt-14">
-          <h2 id="people-h" className="display col-span-12 text-[clamp(2.4rem,4.8vw,5.2rem)] md:col-span-6" data-split="lines">
-            Small team. <em className="text-accent">Senior hands.</em>
-          </h2>
-          <p className="body-lg col-span-12 mt-6 max-w-[38ch] md:col-span-4 md:col-start-9 md:mt-0 md:self-end" data-split="lines">
-            You work directly with the people designing and building your site. No account managers in between.
-          </p>
-        </div>
-        <div className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 md:mt-20 lg:grid-cols-3">
-          {about.team.map((m, i) => (
-            <figure key={i} data-reveal="rise" data-delay={i * 120}>
-              <div className="hatch relative flex aspect-[4/5] items-end border border-rule bg-surface p-4" data-reveal="mask">
-                <span className="display absolute inset-0 grid place-items-center text-[7rem] italic text-[var(--rule-strong)]" aria-hidden="true">
-                  {m.placeholder ? "?" : m.name.charAt(0)}
-                </span>
-                {m.placeholder && (
-                  <span className="eyebrow relative bg-[var(--bg)] px-2 py-1 !text-[13px]">Replace: portrait, 1200×1500</span>
-                )}
-              </div>
-              <figcaption className="mt-4">
-                <p className="text-xl font-medium tracking-[-0.02em]">
-                  {m.name}
-                  {m.placeholder && <span className="eyebrow ml-2 text-accent">Placeholder</span>}
-                </p>
-                <p className="eyebrow mt-1 text-muted">{m.role}</p>
-                <p className="mt-3 max-w-[40ch] text-fg-2">{m.bio}</p>
-              </figcaption>
-            </figure>
-          ))}
-        </div>
-      </section>
-
-      <Approach index="04" />
+      <Approach index="03" />
 
       <section className="px-page pb-28 md:pb-36" aria-labelledby="tools-h">
-        <SectionLabel index="05" label="Tools we connect" />
+        <SectionLabel index="04" label="What we build with" />
         <h2 id="tools-h" className="sr-only">
-          Tools we connect
+          What we build with
         </h2>
         <ul className="mt-10 flex flex-wrap gap-x-8 gap-y-3 md:mt-14" data-reveal="stagger">
           {integrations.map((t) => (

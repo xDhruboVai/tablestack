@@ -1,12 +1,12 @@
 /**
- * TableStacks wordmark in Schibsted Grotesk ExtraBold,
+ * TableStack wordmark in Schibsted Grotesk ExtraBold,
  * with a mark of three stacked isometric slabs. REPLACE when a real logo exists.
  */
 export default function Wordmark({ className = "" }: { className?: string }) {
   return (
     <span className={`inline-flex items-center gap-2 ${className}`}>
       <Mark className="h-[22px] w-[22px]" />
-      <span className="font-display text-[20px] font-extrabold leading-none tracking-[-0.045em]">TableStacks</span>
+      <span className="font-display text-[20px] font-extrabold leading-none tracking-[-0.045em]">TableStack</span>
     </span>
   );
 }

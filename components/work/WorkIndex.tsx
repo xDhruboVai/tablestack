@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { animate, createAnimatable, stagger, utils } from "animejs";
 import TLink from "@/components/layout/TLink";
 import ProjectCover from "./ProjectCover";
@@ -8,17 +9,21 @@ import WorkCard from "./WorkCard";
 import type { Project } from "@/content/projects";
 import { EASE, prefersReducedMotion } from "@/lib/motion";
 
-const FILTERS = ["All", "Restaurants", "Beyond restaurants"] as const;
-type Filter = (typeof FILTERS)[number];
 
 /**
- * The project index, set like a menu: number, name, leader, type, year.
+ * The project index: number, name, hover line, type, year.
  * Hovering a row floats a live preview that trails the cursor (anime.js createAnimatable).
  */
 export default function WorkIndex({ projects }: { projects: Project[] }) {
-  const [filter, setFilter] = useState<Filter>("All");
+  const [filter, setFilter] = useState<string>("All");
+  // Filters come from the projects themselves, and only appear once there's more than one category.
+  const categories = useMemo(() => [...new Set(projects.map((p) => p.category))], [projects]);
   const [view, setView] = useState<"list" | "grid">("list");
   const [hovered, setHovered] = useState<string | null>(null);
+  // The preview renders into <body>: ancestors with transforms (scroll reveals) would otherwise
+  // trap a position:fixed element and let later sections paint over it.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
   const listRef = useRef<HTMLDivElement>(null);
   const preview = useRef<HTMLDivElement>(null);
   const follower = useRef<ReturnType<typeof createAnimatable> | null>(null);
@@ -31,7 +36,7 @@ export default function WorkIndex({ projects }: { projects: Project[] }) {
   // Cursor-trailing preview
   useEffect(() => {
     const el = preview.current;
-    if (!el || view !== "list") return;
+    if (!el || view !== "list" || !mounted) return;
     const fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
     if (!fine) return;
     const reduced = prefersReducedMotion();
@@ -50,7 +55,11 @@ export default function WorkIndex({ projects }: { projects: Project[] }) {
       // Sit beside the cursor (flip to the left near the right edge) so titles stay readable
       const right = e.clientX + 36 + w < window.innerWidth - 16;
       (f.x as (v: number) => void)(right ? e.clientX + 36 : e.clientX - 36 - w);
-      (f.y as (v: number) => void)(e.clientY - h / 2);
+      // Centre on the cursor, but never slide under the nav or past the bottom of the screen
+      // (the margin leaves room for the card's tilt)
+      const top = 76;
+      const bottom = window.innerHeight - h - 32;
+      (f.y as (v: number) => void)(Math.max(top, Math.min(bottom, e.clientY - h / 2)));
       const dx = e.clientX - lastX;
       lastX = e.clientX;
       (f.rotate as (v: number) => void)(Math.max(-6, Math.min(6, dx * 0.35)));
@@ -61,7 +70,7 @@ export default function WorkIndex({ projects }: { projects: Project[] }) {
       follower.current?.revert();
       follower.current = null;
     };
-  }, [view]);
+  }, [view, mounted]);
 
   // Preview show/hide
   useEffect(() => {
@@ -90,9 +99,7 @@ export default function WorkIndex({ projects }: { projects: Project[] }) {
     <div>
       <div className="flex flex-col gap-5 border-b border-rule pb-6 sm:flex-row sm:items-center sm:justify-between">
         <div role="group" aria-label="Filter projects" className="flex flex-wrap gap-2">
-          {FILTERS.filter((f) => f === "All" || projects.some((p) => p.category === f))
-            .filter((_, __, shown) => shown.length > 2)
-            .map((f) => {
+          {(categories.length > 1 ? ["All", ...categories] : []).map((f) => {
             const count = f === "All" ? projects.length : projects.filter((p) => p.category === f).length;
             return (
               <button
@@ -110,7 +117,7 @@ export default function WorkIndex({ projects }: { projects: Project[] }) {
         <div role="group" aria-label="Layout" className="flex gap-2">
           {(["list", "grid"] as const).map((v) => (
             <button key={v} type="button" aria-pressed={view === v} onClick={() => setView(v)} className="chip">
-              {v === "list" ? "Menu" : "Grid"}
+              {v === "list" ? "List" : "Grid"}
             </button>
           ))}
         </div>
@@ -144,6 +151,7 @@ export default function WorkIndex({ projects }: { projects: Project[] }) {
                         {p.placeholder && <span className="ml-2 text-accent">Placeholder</span>}
                       </span>
                     </span>
+                    <span className="row-arrow hidden md:inline-block" aria-hidden="true">→</span>
                   </TLink>
                 </li>
               );
@@ -160,16 +168,20 @@ export default function WorkIndex({ projects }: { projects: Project[] }) {
         )}
       </div>
 
-      <div ref={preview} className="work-preview" aria-hidden="true">
-        {hoveredProject && (
-          <div className="cover-host relative h-full w-full overflow-hidden">
-            <ProjectCover project={hoveredProject} sizes="420px" decorative />
-            <span className="eyebrow absolute bottom-2 left-2 bg-[var(--ink)] px-2 py-1 !text-[13px] text-[var(--linen)]">
-              {hoveredProject.kind}
-            </span>
-          </div>
+      {mounted &&
+        createPortal(
+          <div ref={preview} className="work-preview" aria-hidden="true">
+            {hoveredProject && (
+              <div className="cover-host relative h-full w-full overflow-hidden">
+                <ProjectCover project={hoveredProject} sizes="420px" decorative />
+                <span className="eyebrow absolute bottom-2 left-2 bg-[var(--ink)] px-2 py-1 !text-[13px] text-[var(--linen)]">
+                  {hoveredProject.kind}
+                </span>
+              </div>
+            )}
+          </div>,
+          document.body,
         )}
-      </div>
     </div>
   );
 }

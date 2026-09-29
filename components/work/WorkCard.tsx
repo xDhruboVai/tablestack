@@ -17,7 +17,7 @@ export default function WorkCard({
   return (
     <article className="work-card group">
       <TLink href={`/work/${project.slug}`} className="block">
-        <LensMedia project={project} aspect={aspect} />
+        <LensMedia project={project} aspect={aspect} sizes="(min-width: 768px) 60vw, 100vw" />
         <div className="mt-5 flex items-start justify-between gap-6">
           <div className="min-w-0">
             <p className="eyebrow text-muted" data-reveal="scramble">

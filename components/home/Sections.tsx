@@ -16,9 +16,9 @@ export function Positioning() {
       <SectionLabel index="01" label="The studio" />
       <div className="mt-10 grid grid-cols-12 gap-x-6 md:mt-16">
         <p className="eyebrow col-span-12 mb-6 text-muted md:col-span-3 md:mb-0" data-reveal="fade">
-          Restaurants first.
+          Websites first.
           <br />
-          Open to everyone else.
+          Tools when needed.
         </p>
         <ScrollWords
           text={positioning}
@@ -72,7 +72,7 @@ export function SelectedWork() {
   );
 }
 
-/* ── (03) Capabilities - the menu ──────────────────────────── */
+/* ── (03) Capabilities ─────────────────────────────────────── */
 function MenuColumn({
   data,
   dark,
@@ -93,8 +93,9 @@ function MenuColumn({
           <li key={item.name} className="cap-row">
             <span className="eyebrow w-7 shrink-0 text-accent">{String(i + 1).padStart(2, "0")}</span>
             <span className="cap-name text-[clamp(1.05rem,1.4vw,1.3rem)] font-medium">{item.name}</span>
-            <span className="leader hidden sm:block" data-reveal="draw" data-delay={i * 90} aria-hidden="true" />
+            <span className="leader hidden sm:block" aria-hidden="true" />
             <span className="cap-note text-[15px] opacity-75 sm:text-right">{item.note}</span>
+            <span className="row-arrow hidden sm:inline-block" aria-hidden="true">→</span>
           </li>
         ))}
       </ul>
@@ -108,11 +109,11 @@ export function Capabilities() {
       <SectionLabel index="03" label="Capabilities" />
       <div className="mt-10 grid grid-cols-12 gap-x-6 md:mt-14">
         <h2 id="cap-title" className="display col-span-12 text-[clamp(2.6rem,6vw,6.4rem)] md:col-span-8" data-split="lines">
-          What’s on <em className="text-accent">the menu.</em>
+          What we <em className="text-accent">build.</em>
         </h2>
         <p className="body-lg col-span-12 mt-6 max-w-[40ch] md:col-span-4 md:mt-0 md:self-end" data-split="lines">
-          One team for both sides of the pass. Design that makes people want to come in, and engineering that
-          keeps the night running.
+          The website your customers see, and the systems your team uses behind it. Each project is scoped to what
+          your business actually needs.
         </p>
       </div>
       <div className="mt-14 grid grid-cols-1 border border-rule md:mt-20 lg:grid-cols-2" data-reveal="rise">
@@ -139,13 +140,13 @@ export function Standards() {
   return (
     <section className="relative pb-28 md:pb-40" aria-labelledby="std-title" data-annot="section · standards">
       <div className="px-page">
-        <SectionLabel index="05" label="House rules" />
+        <SectionLabel index="05" label="What to expect" />
         <div className="mt-10 grid grid-cols-12 gap-x-6 md:mt-14">
           <h2 id="std-title" className="display col-span-12 text-[clamp(2.6rem,5.6vw,6rem)] md:col-span-7" data-split="lines">
-            Every site ships <em className="text-accent">with these.</em>
+            What you can <em className="text-accent">expect.</em>
           </h2>
           <p className="body-lg col-span-12 mt-6 max-w-[38ch] md:col-span-4 md:col-start-9 md:mt-0 md:self-end" data-split="lines">
-            No results we can’t prove. Just the standards we hold every build to, on day one.
+            How every project runs. Clear scope, honest updates, and no promises about results we don’t control.
           </p>
         </div>
 
@@ -164,7 +165,7 @@ export function Standards() {
 
       <div className="mt-20 md:mt-28" aria-labelledby="int-title">
         <p id="int-title" className="eyebrow px-page text-muted" data-reveal="scramble">
-          Plugged into the tools restaurants already use
+          What we build with
         </p>
         <div className="marquee mt-6" aria-hidden="true">
           <div className="marquee-track">
@@ -201,7 +202,6 @@ export function Standards() {
 
 /* ── Contact CTA ───────────────────────────────────────────── */
 export function ContactCTA() {
-  const bookHref = site.bookingUrl || `mailto:${site.email}?subject=${encodeURIComponent("Book a call")}`;
   return (
     <section className="cta-block relative overflow-hidden" aria-labelledby="cta-title" data-annot="section · contact CTA">
       <div className="px-page py-24 md:py-36">
@@ -209,12 +209,12 @@ export function ContactCTA() {
           <span className="live-dot" aria-hidden="true" /> {site.availability}
         </p>
         <h2 id="cta-title" className="display mt-8 text-[clamp(2.6rem,8vw,8.8rem)]" data-split="chars">
-          Tell us about <em className="text-accent">your room.</em>
+          Tell us about <em className="text-accent">your business.</em>
         </h2>
         <div className="mt-10 grid grid-cols-12 gap-x-6 gap-y-10 md:mt-16">
           <p className="col-span-12 max-w-[42ch] text-[clamp(1.05rem,1.3vw,1.3rem)] leading-[1.5] opacity-80 md:col-span-5" data-reveal="rise">
-            A new site, a menu that updates itself, bookings that stop falling through, or just a second opinion. Send a
-            note. {site.responseTime}
+            A new website, an online shop, a booking or ordering system, or a tool to replace a manual process. Tell us
+            what you need. {site.responseTime}
           </p>
           <div className="col-span-12 flex flex-col items-start gap-6 md:col-span-6 md:col-start-7" data-reveal="rise" data-delay="120">
             <a href={`mailto:${site.email}`} className="cta-email font-display text-[clamp(1.5rem,3vw,3rem)] font-bold leading-tight tracking-[-0.035em]">
@@ -224,9 +224,11 @@ export function ContactCTA() {
               <TLink href="/contact" className="btn btn-invert">
                 Start a project <span className="btn-arrow">→</span>
               </TLink>
-              <a href={bookHref} className="btn btn-ghost-invert" {...(site.bookingUrl ? { target: "_blank", rel: "noreferrer" } : {})}>
-                Book a call
-              </a>
+              {site.bookingUrl && (
+                <a href={site.bookingUrl} className="btn btn-ghost-invert" target="_blank" rel="noreferrer">
+                  Book a call
+                </a>
+              )}
             </div>
           </div>
         </div>
