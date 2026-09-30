@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import ContactForm from "@/components/contact/ContactForm";
 import CopyEmail from "@/components/contact/CopyEmail";
+import NextSteps from "@/components/contact/NextSteps";
 import { bookCall, site } from "@/content/site";
 
 export const metadata: Metadata = {
@@ -8,12 +9,6 @@ export const metadata: Metadata = {
   description: `Start a project with ${site.name}. Email ${site.email} or send a short brief.`,
   alternates: { canonical: "/contact" },
 };
-
-const next = [
-  ["01", "We talk", "About your business, your customers and what the site or system needs to do."],
-  ["02", "We agree the scope", "Pages, features, timeline and a quote, all before any work starts."],
-  ["03", "We get to work", "You see the layouts first, then a working preview before launch."],
-];
 
 export default function ContactPage() {
   return (
@@ -41,17 +36,7 @@ export default function ContactPage() {
 
             <div className="mt-14">
               <p className="eyebrow text-muted">What happens next</p>
-              <ol className="mt-4" data-reveal="stagger">
-                {next.map(([n, t, b]) => (
-                  <li key={n} className="grid grid-cols-[40px_1fr] gap-x-3 border-t border-rule py-5">
-                    <span className="eyebrow pt-1 text-accent">{n}</span>
-                    <div>
-                      <p className="font-medium">{t}</p>
-                      <p className="mt-1 text-fg-2">{b}</p>
-                    </div>
-                  </li>
-                ))}
-              </ol>
+              <NextSteps />
             </div>
           </div>
         </div>

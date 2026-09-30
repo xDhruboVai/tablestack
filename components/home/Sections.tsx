@@ -1,10 +1,11 @@
 import SectionLabel from "@/components/ui/SectionLabel";
 import TLink from "@/components/layout/TLink";
 import WorkCard from "@/components/work/WorkCard";
+import StandardsChecklist from "./StandardsChecklist";
 import ScrollWords from "./ScrollWords";
 import ApproachRail from "./ApproachRail";
 import { projects, featuredSlugs } from "@/content/projects";
-import { bookCall, capabilities, integrations, positioning, site, standards, testimonials } from "@/content/site";
+import { bookCall, capabilities, integrations, positioning, site, testimonials } from "@/content/site";
 
 /* ── (01) Positioning ──────────────────────────────────────── */
 export function Positioning() {
@@ -150,17 +151,7 @@ export function Standards() {
           </p>
         </div>
 
-        <dl className="mt-14 grid grid-cols-1 border-t border-rule sm:grid-cols-2 md:mt-20 lg:grid-cols-3" data-reveal="stagger">
-          {standards.map((s, i) => (
-            <div key={s.k} className="std-cell border-b border-rule py-8 sm:pr-8">
-              <dt className="flex items-center gap-3">
-                <span className="eyebrow text-accent">{String(i + 1).padStart(2, "0")}</span>
-                <span className="eyebrow">{s.k}</span>
-              </dt>
-              <dd className="mt-4 text-[clamp(1.4rem,2vw,1.9rem)] font-medium leading-[1.15] tracking-[-0.025em]">{s.v}</dd>
-            </div>
-          ))}
-        </dl>
+        <StandardsChecklist />
       </div>
 
       <div className="mt-20 md:mt-28" aria-labelledby="int-title">

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import SectionLabel from "@/components/ui/SectionLabel";
+import DotField from "@/components/about/DotField";
 import { Approach, ContactCTA } from "@/components/home/Sections";
 import { about, integrations, site } from "@/content/site";
 
@@ -83,12 +84,13 @@ export default function AboutPage() {
         </h2>
         <div className="mt-12 grid grid-cols-1 gap-x-6 md:mt-16 md:grid-cols-2" data-reveal="stagger">
           {about.principles.map((p) => (
-            <article key={p.code} className="principle border-t border-rule py-10 md:py-14 md:pr-12">
-              <div className="flex items-baseline gap-5">
+            <article key={p.code} className="principle relative border-t border-rule py-10 md:py-14 md:pr-12">
+              <DotField />
+              <div className="relative flex items-baseline gap-5">
                 <span className="display text-[3.2rem] italic leading-none text-accent">{p.code}</span>
                 <h3 className="text-[clamp(1.6rem,2.4vw,2.2rem)] font-medium tracking-[-0.03em]">{p.title}</h3>
               </div>
-              <p className="mt-5 max-w-[46ch] text-[1.08rem] leading-[1.6] text-fg-2">{p.body}</p>
+              <p className="relative mt-5 max-w-[46ch] text-[1.08rem] leading-[1.6] text-fg-2">{p.body}</p>
             </article>
           ))}
         </div>

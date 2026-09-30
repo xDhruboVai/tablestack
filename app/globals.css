@@ -1067,6 +1067,145 @@ html.first-visit:not(.anim-ready) .loader {
   margin-inline: auto;
 }
 
+/* ─── Contact: next-step icons ─────────────────────────────── */
+.step-icon {
+  width: 36px;
+  height: 36px;
+  margin-top: 2px;
+}
+.step-icon path {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ─── About: dot field behind principles ───────────────────── */
+.dot-field {
+  position: absolute;
+  inset: 1px 0 0;
+  display: grid;
+  grid-template-columns: repeat(16, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  place-items: center;
+  pointer-events: none;
+}
+.dot-field i {
+  width: 3.5px;
+  height: 3.5px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0.14;
+}
+
+/* ─── Work: "What we build" ticker ─────────────────────────── */
+.build-ticker {
+  display: grid;
+  grid-template-columns: minmax(0, auto) clamp(96px, 13vw, 190px);
+  justify-content: start;
+  gap: clamp(1.25rem, 6vw, 6rem);
+  align-items: center;
+}
+.ticker-word {
+  display: block;
+  text-align: left;
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 2.6vw, 2.4rem);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.035em;
+  /* Dimmed but still readable: large text at 3:1 or better. */
+  color: color-mix(in srgb, var(--fg) 50%, var(--bg));
+  transition: color 0.35s, transform 0.5s var(--ease-out-quart);
+}
+.ticker-word.is-on {
+  color: var(--fg);
+  transform: translateX(10px);
+}
+.ticker-word.is-on::before {
+  content: "→ ";
+  color: var(--accent);
+}
+.ticker-dial {
+  width: 100%;
+  height: auto;
+}
+.ticker-tick {
+  stroke: var(--muted);
+  stroke-width: 1;
+}
+.ticker-tick.is-major {
+  stroke: var(--fg);
+  stroke-width: 2;
+}
+.ticker-hand-g {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+.ticker-hand {
+  stroke: var(--accent);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+}
+.ticker-hub {
+  fill: var(--accent);
+}
+
+/* ─── Standards checklist ──────────────────────────────────── */
+.check-row {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  column-gap: 1.1rem;
+  row-gap: 0.35rem;
+  align-items: start;
+  padding-block: 1.6rem;
+  border-bottom: 1px solid var(--rule);
+}
+.check-box {
+  width: 28px;
+  height: 28px;
+  grid-row: span 2;
+}
+.check-box rect {
+  fill: none;
+  stroke: var(--rule-strong);
+  stroke-width: 1.5;
+}
+.check-box path {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.check-key {
+  font-size: 15px;
+  color: var(--accent-text);
+}
+.check-val {
+  font-size: clamp(1.25rem, 1.8vw, 1.7rem);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+}
+@media (min-width: 768px) {
+  .check-row {
+    grid-template-columns: 28px 9.5rem minmax(0, 1fr);
+    align-items: baseline;
+  }
+  .check-box {
+    grid-row: auto;
+    align-self: center;
+  }
+}
+.check-stamp {
+  right: 0;
+  bottom: -3.4rem;
+  mix-blend-mode: normal;
+  background: var(--bg);
+}
+
 /* ─── Footer ───────────────────────────────────────────────── */
 .footer-email {
   background-image: linear-gradient(var(--accent), var(--accent));

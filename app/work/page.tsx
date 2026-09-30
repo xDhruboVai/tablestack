@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import WorkIndex from "@/components/work/WorkIndex";
+import BuildTicker from "@/components/work/BuildTicker";
 import { projects } from "@/content/projects";
 import { ContactCTA } from "@/components/home/Sections";
 
@@ -35,6 +36,11 @@ export default function WorkPage() {
 
         <div className="mt-16 md:mt-24" data-reveal="rise">
           <WorkIndex projects={projects} />
+        </div>
+
+        {/* The list is short for now, so follow it with the range of work we take on. */}
+        <div className="mt-24 md:mt-36" data-reveal="rise">
+          <BuildTicker />
         </div>
       </section>
       <ContactCTA />

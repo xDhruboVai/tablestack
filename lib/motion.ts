@@ -48,3 +48,18 @@ export function markIntroDone() {
   window.__tsIntroDone = true;
   window.dispatchEvent(new Event("ts:intro-done"));
 }
+
+/** Runs `cb` once, the first time `el` scrolls into view. Returns a cleanup. */
+export function whenInView(el: Element, cb: () => void, threshold = 0.35) {
+  const io = new IntersectionObserver(
+    (entries) => {
+      if (entries.some((e) => e.isIntersecting)) {
+        io.disconnect();
+        cb();
+      }
+    },
+    { threshold },
+  );
+  io.observe(el);
+  return () => io.disconnect();
+}
