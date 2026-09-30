@@ -42,7 +42,6 @@ const LAYOUT = [
 
 export function SelectedWork() {
   const featured = featuredSlugs.map((s) => projects.find((p) => p.slug === s)!).filter(Boolean);
-  const anyPlaceholder = featured.some((p) => p.placeholder);
   return (
     <section className="px-page relative pb-28 md:pb-40" aria-labelledby="work-title" data-annot="section · selected work">
       <SectionLabel index="02" label="Selected work" />
@@ -51,11 +50,6 @@ export function SelectedWork() {
           The work
         </h2>
         <div className="flex flex-col items-start gap-4 md:items-end md:pb-4">
-          {anyPlaceholder && (
-            <p className="eyebrow max-w-[36ch] text-muted md:text-right" data-reveal="fade">
-              Sample projects shown. Real case studies replace these before launch.
-            </p>
-          )}
           <TLink href="/work" className="btn btn-ghost" data-reveal="rise">
             All projects ({projects.length}) <span className="btn-arrow">→</span>
           </TLink>
@@ -113,8 +107,7 @@ export function Capabilities() {
           What we <em className="text-accent">build.</em>
         </h2>
         <p className="body-lg col-span-12 mt-6 max-w-[40ch] md:col-span-4 md:mt-0 md:self-end" data-split="lines">
-          The website your customers see, and the systems your team uses behind it. Each project is scoped to what
-          your business actually needs.
+          Websites, softwares and databases built around what your business needs.
         </p>
       </div>
       <div className="mt-14 grid grid-cols-1 border border-rule md:mt-20 lg:grid-cols-2" data-reveal="rise">
@@ -146,9 +139,6 @@ export function Standards() {
           <h2 id="std-title" className="display col-span-12 text-[clamp(2.6rem,5.6vw,6rem)] md:col-span-7" data-split="lines">
             What you can <em className="text-accent">expect.</em>
           </h2>
-          <p className="body-lg col-span-12 mt-6 max-w-[38ch] md:col-span-4 md:col-start-9 md:mt-0 md:self-end" data-split="lines">
-            How every project runs. Clear scope, honest updates, and no promises about results we don’t control.
-          </p>
         </div>
 
         <StandardsChecklist />
@@ -204,8 +194,7 @@ export function ContactCTA() {
         </h2>
         <div className="mt-10 grid grid-cols-12 gap-x-6 gap-y-10 md:mt-16">
           <p className="col-span-12 max-w-[42ch] text-[clamp(1.05rem,1.3vw,1.3rem)] leading-[1.5] opacity-80 md:col-span-5" data-reveal="rise">
-            A new website, an online shop, a booking or ordering system, or a tool to replace a manual process. Tell us
-            what you need. {site.responseTime}
+            Tell us what you need. {site.responseTime}
           </p>
           <div className="col-span-12 flex flex-col items-start gap-6 md:col-span-6 md:col-start-7" data-reveal="rise" data-delay="120">
             <a href={`mailto:${site.email}`} className="cta-email font-display text-[clamp(1.5rem,3vw,3rem)] font-bold leading-tight tracking-[-0.035em]">

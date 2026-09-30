@@ -55,9 +55,9 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-/* Runs before paint: restores the dark BOH mode by default, enables motion styles, flags a first visit for the loader. */
+/* Runs before paint: starts in the light FOH mode, enables motion styles, flags a first visit for the loader. */
 const bootScript = `(function(){try{var d=document.documentElement;
-if(localStorage.getItem('ts-mode')!=='foh')d.dataset.mode='boh';
+delete d.dataset.mode;
 if(!matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('motion');
 if(!sessionStorage.getItem('ts-visited')){d.classList.add('first-visit');sessionStorage.setItem('ts-visited','1');}}
 }catch(e){}})();`;

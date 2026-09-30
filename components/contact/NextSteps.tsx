@@ -8,21 +8,21 @@ const steps = [
   {
     n: "01",
     t: "We talk",
-    b: "About your business, your customers and what the site or system needs to do.",
+    b: "Your business and what you need built.",
     // speech bubble
     icon: ["M5 7h26v17H17l-7 6v-6H5z", "M11 13h14", "M11 18h9"],
   },
   {
     n: "02",
     t: "We agree the scope",
-    b: "Pages, features, timeline and a quote, all before any work starts.",
+    b: "Pages, features, timeline and quote.",
     // checklist
     icon: ["M7 9h14", "M7 17h14", "M7 25h9", "M24 23l3 3 6-7"],
   },
   {
     n: "03",
     t: "We get to work",
-    b: "You see the layouts first, then a working preview before launch.",
+    b: "Layouts first, then a working preview.",
     // browser window
     icon: ["M4 7h28v21H4z", "M4 13h28", "M9 19h10", "M9 23h6"],
   },

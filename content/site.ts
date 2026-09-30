@@ -12,10 +12,9 @@
 export const site = {
   name: "TableStack",
   // Production URL - used for canonical links, sitemap and social cards.
-  url: "https://tablestack.com", // REPLACE with your real domain
+  url: "https://www.tablestackbd.com", // REPLACE with your real domain
   email: "tablestackbd@gmail.com",
-  // Cal.com / Calendly link. Set it and every "Book a call" button opens it in a new tab;
-  // while it's empty, "Book a call" opens an email with the subject "Book a call".
+  // Booking link used by every "Book a call" button.
   bookingUrl: "https://cal.com/table-stack/intro-call",
   location: "Bangladesh",
   // Shown next to the location in the footer.
@@ -25,11 +24,11 @@ export const site = {
   social: [
     // Empty href = hidden. Add the real links when they're ready.
     { label: "Facebook", href: "" }, // REPLACE with the Facebook Page URL
-    { label: "WhatsApp", href: "" }, // REPLACE with a wa.me link
+    { label: "WhatsApp", href: "https://wa.me/qr/LB3AYHDJVRUAG1" }, // REPLACE with a wa.me link
   ],
   tagline: "Websites built around the way your business works.",
   description:
-    "TableStack is a small web team in Bangladesh. We build websites for all kinds of businesses, and add practical tools like bookings, ordering and management dashboards when they’re needed.",
+    "A small web team in Bangladesh. We build websites, softwares and databases for all kinds of businesses and corporations, plus the tools behind them when you need them.",
 } as const;
 
 /** Props for every "Book a call" link: the booking page in a new tab, or an email while there's no link. */
@@ -69,7 +68,7 @@ export const anatomy = [
 
 /** Wrap words in *asterisks* to set them in accent italic. */
 export const positioning =
-  "We build websites for *all kinds of businesses.* Company and service sites, online shops, restaurants, portfolios and landing pages. When a business needs more than pages, we add *practical tools:* reservations, ordering, HR, management dashboards. Clear scope. A working result.";
+  "We build websites for *all kinds of businesses and corporations.* Company and service sites, online shops, restaurants, portfolios, landing pages and whatnot. When a business needs more than pages, we add *practical tools:* reservations, ordering, HR, management dashboards. Clear scope. A working result.";
 
 export const capabilities = {
   frontOfHouse: {
@@ -101,36 +100,36 @@ export const approach = [
     code: "01",
     term: "Discuss",
     plain: "Define the scope",
-    body: "We talk about your business, your customers and what the site or system needs to do. Then we agree on pages, features, timeline and a quote before any work starts.",
+    body: "We discuss your business, then agree on pages, features, timeline and a quote.",
   },
   {
     code: "02",
     term: "Design",
     plain: "See it first",
-    body: "You see the page layouts and key interactions before development begins.",
+    body: "You see the layouts and key interactions before development.",
   },
   {
     code: "03",
     term: "Build",
     plain: "Working preview",
-    body: "We build the site or system and share a working preview you can click through.",
+    body: "We build it and share a working preview.",
   },
   {
     code: "04",
     term: "Launch & support",
     plain: "Go live",
-    body: "We test it and launch it, then agree on any updates or continued support.",
+    body: "We test, launch and agree on any continued support.",
   },
 ] as const;
 
 /** What a client can expect on every project - how we work, not results. */
 export const standards = [
-  { k: "Scope", v: "Pages, features, timeline and quote agreed before we start." },
-  { k: "Preview", v: "You see layouts, then a working preview, before launch." },
-  { k: "Plain language", v: "We explain the work clearly. No jargon." },
-  { k: "Mobile first", v: "Built for phones, where most customers find you." },
-  { k: "Editing", v: "Update menus, products or hours yourself, where it’s in scope." },
-  { k: "Ownership", v: "Your domain, your content, your accounts." },
+  { k: "Scope", v: "Pages, features, timeline and quote agreed first." },
+  { k: "Preview", v: "Layouts and a working preview before launch." },
+  { k: "Plain language", v: "Clear explanations, no jargon." },
+  { k: "Mobile first", v: "Built for phones first." },
+  { k: "Editing", v: "Update content yourself where it’s in scope." },
+  { k: "Ownership", v: "Your domain, content and accounts." },
 ] as const;
 
 /** Tools we build with. Text only - no third-party logos. */
@@ -153,27 +152,27 @@ export const testimonials: { quote: string; name: string; role: string }[] = [];
 /** About page. */
 export const about = {
   intro:
-    "TableStack is a small creative web team based in Bangladesh. We build websites for all kinds of businesses: company and service sites, online shops, restaurants, portfolios, landing pages and full-stack web apps.",
+    "TableStack is a small web team in Bangladesh. We build websites, softwares and databases for businesses and corporations.",
   principles: [
     {
       code: "A",
       title: "Built around your business",
-      body: "Shops, service businesses, restaurants, startups, growing companies. We start with how your business actually runs, then build the site around it.",
+      body: "We start with how your business actually runs.",
     },
     {
       code: "B",
       title: "Websites first. Tools when needed.",
-      body: "A website is usually where it starts. Extra systems, like ordering, HR or a management dashboard, should serve a specific need.",
+      body: "Extra systems should serve a specific need.",
     },
     {
       code: "C",
       title: "Clear scope. A working result.",
-      body: "We agree on pages, features, timeline and quote before we start, and you see a working preview before anything goes live.",
+      body: "We agree on the scope and show a working preview before launch.",
     },
     {
       code: "D",
       title: "Less talk, more work done",
-      body: "Short updates, plain explanations, and honesty about what’s included and what isn’t.",
+      body: "Short updates and plain explanations.",
     },
   ],
 } as const;
@@ -184,10 +183,11 @@ export const inquiry = {
     "New website",
     "Redesign",
     "Online shop",
+    "Reservations / ordering",
     "Dashboard or admin tool",
     "Something else",
   ],
-  // Budget ranges in BDT.
-  budgets: ["Under ৳25,000", "Under ৳35,000", "Under ৳50,000", "৳50,000+"],
+  // REPLACE with ranges that match your real pricing (in BDT).
+  budgets: ["Under ৳50k", "৳50k–৳150k", "৳150k–৳400k", "৳400k+", "Not sure yet"],
   timelines: ["ASAP", "1–2 months", "3+ months", "Flexible"],
 } as const;

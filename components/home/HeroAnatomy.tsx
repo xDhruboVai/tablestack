@@ -167,8 +167,8 @@ export default function HeroAnatomy() {
           </h1>
 
           <p className="body-lg mt-6 max-w-[36ch] lg:mt-8" data-intro data-intro-fade>
-            A small web team in Bangladesh. We build websites for all kinds of businesses, plus the tools behind
-            them when you need them.
+            A small web team in Bangladesh. We build websites, softwares and databases for all kinds of businesses and
+            corporations, plus the tools behind them when you need them.
           </p>
 
           <div className="mt-7 flex flex-wrap items-center gap-3 lg:mt-9" data-intro data-intro-fade>

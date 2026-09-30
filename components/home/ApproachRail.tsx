@@ -84,10 +84,6 @@ export default function ApproachRail() {
           <h2 id="app-title" className="display text-[clamp(2.6rem,5vw,5.6rem)]" data-split="lines">
             How a project <em className="text-accent">runs.</em>
           </h2>
-          <p className="body-lg mt-6 max-w-[34ch]" data-split="lines">
-            Four steps. You know what’s included, you see the work before launch, and you know what happens next.
-          </p>
-
           <div className="mt-12 hidden items-stretch gap-6 md:flex" aria-hidden="true">
             <div ref={rail} className="approach-rail">
               {ticks.map((t) => (
