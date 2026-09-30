@@ -14,8 +14,9 @@ export const site = {
   // Production URL - used for canonical links, sitemap and social cards.
   url: "https://tablestack.com", // REPLACE with your real domain
   email: "tablestackbd@gmail.com",
-  // Real booking link (Cal.com, Calendly…). Leave empty and every "Book a call" button stays hidden.
-  bookingUrl: "", // REPLACE when a real booking destination exists
+  // Cal.com / Calendly link. Set it and every "Book a call" button opens it in a new tab;
+  // while it's empty, "Book a call" opens an email with the subject "Book a call".
+  bookingUrl: "", // REPLACE with the real booking link
   location: "Bangladesh",
   // Shown next to the location in the footer.
   timeZone: "Asia/Dhaka",
@@ -30,6 +31,11 @@ export const site = {
   description:
     "TableStack is a small web team in Bangladesh. We build websites for all kinds of businesses, and add practical tools like bookings, ordering and management dashboards when they’re needed.",
 } as const;
+
+/** Props for every "Book a call" link: the booking page in a new tab, or an email while there's no link. */
+export const bookCall = site.bookingUrl
+  ? { href: site.bookingUrl, target: "_blank", rel: "noreferrer" }
+  : { href: `mailto:${site.email}?subject=${encodeURIComponent("Book a call")}` };
 
 export const nav = [
   { label: "Work", href: "/work" },

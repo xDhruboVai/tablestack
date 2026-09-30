@@ -4,7 +4,7 @@ import WorkCard from "@/components/work/WorkCard";
 import ScrollWords from "./ScrollWords";
 import ApproachRail from "./ApproachRail";
 import { projects, featuredSlugs } from "@/content/projects";
-import { capabilities, integrations, positioning, site, standards, testimonials } from "@/content/site";
+import { bookCall, capabilities, integrations, positioning, site, standards, testimonials } from "@/content/site";
 
 /* ── (01) Positioning ──────────────────────────────────────── */
 export function Positioning() {
@@ -224,11 +224,9 @@ export function ContactCTA() {
               <TLink href="/contact" className="btn btn-invert">
                 Start a project <span className="btn-arrow">→</span>
               </TLink>
-              {site.bookingUrl && (
-                <a href={site.bookingUrl} className="btn btn-ghost-invert" target="_blank" rel="noreferrer">
-                  Book a call
-                </a>
-              )}
+              <a {...bookCall} className="btn btn-ghost-invert">
+                Book a call
+              </a>
             </div>
           </div>
         </div>

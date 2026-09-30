@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import ContactForm from "@/components/contact/ContactForm";
 import CopyEmail from "@/components/contact/CopyEmail";
-import { site } from "@/content/site";
+import { bookCall, site } from "@/content/site";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -34,11 +34,9 @@ export default function ContactPage() {
             </a>
             <div className="mt-5 flex flex-wrap gap-3" data-reveal="rise" data-delay="100">
               <CopyEmail email={site.email} />
-              {site.bookingUrl && (
-                <a href={site.bookingUrl} className="btn btn-ghost" target="_blank" rel="noreferrer">
-                  Book a call
-                </a>
-              )}
+              <a {...bookCall} className="btn btn-ghost">
+                Book a call
+              </a>
             </div>
 
             <div className="mt-14">

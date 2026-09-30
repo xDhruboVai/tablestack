@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import TLink from "./TLink";
-import { nav, site } from "@/content/site";
+import { bookCall, nav, site } from "@/content/site";
 
 function LocalTime() {
   const [t, setT] = useState<string | null>(null);
@@ -102,13 +102,11 @@ export default function Footer() {
                 Email us
               </a>
             </li>
-            {site.bookingUrl && (
-              <li>
-                <a href={site.bookingUrl} className="link-draw" target="_blank" rel="noreferrer">
-                  Book a call
-                </a>
-              </li>
-            )}
+            <li>
+              <a {...bookCall} className="link-draw">
+                Book a call
+              </a>
+            </li>
             {social.map((s) => (
               <li key={s.label}>
                 <a href={s.href} className="link-draw" target="_blank" rel="noreferrer">
