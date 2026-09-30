@@ -7,8 +7,8 @@ import type { Project } from "@/content/projects";
 import { prefersReducedMotion } from "@/lib/motion";
 
 /**
- * Project preview with an inverted lens: a circle under the cursor shows the image with its
- * colours inverted. On touch screens the lens sweeps across as the preview scrolls into view.
+ * Project preview with a lens: a circle under the cursor shows the image as a black-and-white
+ * negative. On touch screens the lens sweeps across as the preview scrolls into view.
  */
 export default function LensMedia({
   project,
@@ -36,7 +36,7 @@ export default function LensMedia({
       el.style.setProperty("--ly", "50%");
       const sweep = animate(el, {
         "--lx": ["-15%", "115%"],
-        "--lr": ["0px", "48px"],
+        "--lr": ["0px", "60px"],
         ease: "linear",
         duration: 1000,
         autoplay: onScroll({ target: el, enter: "bottom top", leave: "top bottom", sync: 0.5 }),
@@ -46,7 +46,7 @@ export default function LensMedia({
       };
     }
 
-    const radius = () => Math.max(36, Math.min(56, el.clientWidth * 0.06));
+    const radius = () => Math.max(48, Math.min(72, el.clientWidth * 0.08));
     const move = (e: PointerEvent) => {
       const r = el.getBoundingClientRect();
       el.style.setProperty("--lx", `${e.clientX - r.left}px`);

@@ -370,14 +370,14 @@ html.motion:not(.anim-ready) :is([data-reveal], [data-split], [data-intro]) {
   }
 }
 
-/* ─── Work lens: a circle under the cursor shows the image inverted ── */
+/* ─── Work lens: a circle under the cursor shows the image as a black-and-white negative ── */
 .lens {
   --lx: 50%;
   --ly: 50%;
   --lr: 0px;
 }
 .lens-invert {
-  filter: invert(1);
+  filter: grayscale(1) invert(1);
   clip-path: circle(var(--lr) at var(--lx) var(--ly));
   transition: clip-path 0.08s linear;
 }
