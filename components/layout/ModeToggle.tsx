@@ -64,15 +64,26 @@ export default function ModeToggle({ compact = false }: { compact?: boolean }) {
       type="button"
       onClick={toggle}
       aria-pressed={boh}
-      aria-label="Back of house mode: see how this site is built"
-      title="See how this site is built"
+      aria-label="Dark mode: see how this site is built"
+      title={boh ? "Back to the light view" : "Dark mode: see how this site is built"}
       className="mode-toggle group"
       data-compact={compact || undefined}
     >
       <span className="mode-toggle-track" aria-hidden="true">
         <span className="mode-toggle-thumb" />
-        <span className={`mode-toggle-opt ${!boh ? "is-on" : ""}`}>FOH</span>
-        <span className={`mode-toggle-opt ${boh ? "is-on" : ""}`}>BOH</span>
+        <span className={`mode-toggle-opt ${!boh ? "is-on" : ""}`}>
+          {/* Sun: the light, front-of-house view */}
+          <svg viewBox="0 0 24 24" className="mode-icon">
+            <circle cx="12" cy="12" r="4.2" />
+            <path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6" />
+          </svg>
+        </span>
+        <span className={`mode-toggle-opt ${boh ? "is-on" : ""}`}>
+          {/* Moon: the dark, back-of-house view */}
+          <svg viewBox="0 0 24 24" className="mode-icon">
+            <path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7Z" />
+          </svg>
+        </span>
       </span>
     </button>
   );

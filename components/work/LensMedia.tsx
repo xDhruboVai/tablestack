@@ -36,7 +36,7 @@ export default function LensMedia({
       el.style.setProperty("--ly", "50%");
       const sweep = animate(el, {
         "--lx": ["-15%", "115%"],
-        "--lr": ["0px", "110px"],
+        "--lr": ["0px", "48px"],
         ease: "linear",
         duration: 1000,
         autoplay: onScroll({ target: el, enter: "bottom top", leave: "top bottom", sync: 0.5 }),
@@ -46,25 +46,45 @@ export default function LensMedia({
       };
     }
 
-    const radius = () => Math.max(90, Math.min(170, el.clientWidth * 0.16));
+    const radius = () => Math.max(36, Math.min(56, el.clientWidth * 0.06));
     const move = (e: PointerEvent) => {
       const r = el.getBoundingClientRect();
       el.style.setProperty("--lx", `${e.clientX - r.left}px`);
       el.style.setProperty("--ly", `${e.clientY - r.top}px`);
     };
+    let open = false;
     const enter = (e: PointerEvent) => {
+      open = true;
       move(e);
       animate(el, { "--lr": `${radius()}px`, duration: 650, ease: "out(4)" });
     };
-    const leave = () => animate(el, { "--lr": "0px", duration: 500, ease: "inOut(3)" });
+    const leave = () => {
+      if (!open) return;
+      open = false;
+      animate(el, { "--lr": "0px", duration: 500, ease: "inOut(3)" });
+    };
+    // pointerleave can be missed (cursor leaves the window fast, or the page scrolls under a still
+    // cursor), which would leave the lens stuck open. Close it in those cases too.
+    const onPageScroll = () => {
+      if (open && !el.matches(":hover")) leave();
+    };
+    const onDocLeave = (e: MouseEvent) => {
+      if (!e.relatedTarget) leave();
+    };
 
     el.addEventListener("pointerenter", enter);
     el.addEventListener("pointermove", move);
     el.addEventListener("pointerleave", leave);
+    window.addEventListener("blur", leave);
+    window.addEventListener("scroll", onPageScroll, { passive: true });
+    document.addEventListener("mouseout", onDocLeave);
     return () => {
       el.removeEventListener("pointerenter", enter);
       el.removeEventListener("pointermove", move);
       el.removeEventListener("pointerleave", leave);
+      window.removeEventListener("blur", leave);
+      window.removeEventListener("scroll", onPageScroll);
+      document.removeEventListener("mouseout", onDocLeave);
     };
   }, []);
 
@@ -90,7 +110,7 @@ export default function LensMedia({
       {project.placeholder && (
         <span className="eyebrow absolute left-3 top-3 bg-[var(--bg)] px-2 py-1 !text-[13px] text-fg">Placeholder</span>
       )}
-      <span className="lens-tip eyebrow foh-only" aria-hidden="true">
+      <span className="lens-tip eyebrow" aria-hidden="true">
         Hover to see how it’s built
       </span>
     </div>

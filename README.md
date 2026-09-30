@@ -67,9 +67,9 @@ Search the codebase for `REPLACE` and `placeholder` to find every spot.
 **Brand + contact (`content/site.ts`)**
 - [ ] `url` - your real domain (used for canonical URLs, sitemap, social cards)
 - [x] `email` - `tablestackbd@gmail.com` (also set `CONTACT_TO_EMAIL` to this in `.env.local` so form inquiries arrive there)
-- [ ] `bookingUrl` - your Cal.com / Calendly link (opens in a new tab). While empty, "Book a call" opens an email instead
+- [x] `bookingUrl` - https://cal.com/table-stack/intro-call (every "Book a call" opens it in a new tab)
 - [ ] `availability`, `responseTime` (location is set to Bangladesh, footer clock to Dhaka time)
-- [ ] `inquiry.budgets` - the BDT ranges in the contact form are placeholders; set them to match your pricing
+- [x] `inquiry.budgets` - set to Under ৳25,000 / Under ৳35,000 / Under ৳50,000 / ৳50,000+
 - [ ] `social` - Facebook Page and WhatsApp links (hidden until filled in)
 - [ ] `about.team` - real names, roles, bios; set `placeholder: false`
 - [ ] `testimonials` - only real quotes, with permission. The section stays hidden while empty.

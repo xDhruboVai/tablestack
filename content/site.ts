@@ -16,7 +16,7 @@ export const site = {
   email: "tablestackbd@gmail.com",
   // Cal.com / Calendly link. Set it and every "Book a call" button opens it in a new tab;
   // while it's empty, "Book a call" opens an email with the subject "Book a call".
-  bookingUrl: "", // REPLACE with the real booking link
+  bookingUrl: "https://cal.com/table-stack/intro-call",
   location: "Bangladesh",
   // Shown next to the location in the footer.
   timeZone: "Asia/Dhaka",
@@ -184,11 +184,10 @@ export const inquiry = {
     "New website",
     "Redesign",
     "Online shop",
-    "Reservations / ordering",
     "Dashboard or admin tool",
     "Something else",
   ],
-  // REPLACE with ranges that match your real pricing (in BDT).
-  budgets: ["Under ৳50k", "৳50k–৳150k", "৳150k–৳400k", "৳400k+", "Not sure yet"],
+  // Budget ranges in BDT.
+  budgets: ["Under ৳25,000", "Under ৳35,000", "Under ৳50,000", "৳50,000+"],
   timelines: ["ASAP", "1–2 months", "3+ months", "Flexible"],
 } as const;

@@ -117,7 +117,7 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
         <div className="px-page mt-16 md:mt-24">
           <div className="media-fit group">
             <LensMedia project={p} aspect="aspect-[16/10]" priority hoverScale={false} sizes="(min-width: 1280px) 80vw, 100vw" />
-            <p className="eyebrow mt-3 text-muted foh-only">Move over the image to see how it’s built.</p>
+            <p className="eyebrow mt-3 text-muted">Move over the image to see how it’s built.</p>
           </div>
         </div>
 

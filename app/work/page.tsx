@@ -39,7 +39,7 @@ export default function WorkPage() {
         </div>
 
         {/* The list is short for now, so follow it with the range of work we take on. */}
-        <div className="mt-24 md:mt-36" data-reveal="rise">
+        <div className="mt-20 md:mt-28" data-reveal="rise">
           <BuildTicker />
         </div>
       </section>

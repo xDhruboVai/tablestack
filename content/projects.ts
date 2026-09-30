@@ -62,8 +62,6 @@ export type Project = {
   media?: {
     cover?: string;
     coverAlt?: string;
-    /** Edge-detected "blueprint" of the cover, shown under the back-of-house lens. */
-    coverBoh?: string;
     /** Horizontal crop focus (0 = left, 50 = center, 100 = right) when the cover is cropped. */
     focusX?: number;
     /** Back-of-house lens labels over the cover, in % of the image. */
@@ -348,7 +346,6 @@ const realProjects: Project[] = [
     },
     media: {
       cover: "/work/smashed-burgers/cover.jpg",
-      coverBoh: "/work/smashed-burgers/cover-boh.jpg",
       coverAlt: "Smashed Burgers homepage: a dripping double smash burger next to the headline Ready to get messy?",
       annotations: [
         { x: 7, y: 1, w: 86, h: 8, label: "Nav · EN / বাংলা switch" },
@@ -436,8 +433,7 @@ const realProjects: Project[] = [
       ],
     },
     media: {
-      cover: "/work/pinewood/cover.jpg",
-      coverBoh: "/work/pinewood/cover-boh.jpg",
+      cover: "/work/pinewood/cover-4.jpg",
       focusX: 0,
       coverAlt: "Pinewood homepage: the Pine 3 set menu plated on a wooden table, with its price and a Reserve a table button",
       annotations: [

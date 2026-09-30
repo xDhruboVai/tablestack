@@ -35,7 +35,6 @@ export default function ProjectCover({
   }
 
   const boh = variant === "boh";
-  const bohSrc = project.media?.coverBoh;
   const focus = project.media?.focusX ?? 50;
 
   return (
@@ -44,12 +43,12 @@ export default function ProjectCover({
       style={{ background: boh ? "#15130F" : project.art.palette.bg, left: `${focus}%`, transform: `translate(-${focus}%, -50%)` }}
     >
       <Image
-        src={boh && bohSrc ? bohSrc : cover}
+        src={cover}
         alt={decorative || variant === "boh" ? "" : project.media?.coverAlt ?? `${project.title} website`}
         fill
         sizes={sizes}
         priority={priority}
-        className={boh && !bohSrc ? "blueprint-img object-cover" : "object-cover"}
+        className={boh ? "blueprint-img object-cover" : "object-cover"}
       />
       {variant === "boh" && (
         <>

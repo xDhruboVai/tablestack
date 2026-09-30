@@ -74,7 +74,7 @@ export default function BuildTicker() {
       onPointerLeave={() => (paused.current = false)}
       onBlur={() => (paused.current = false)}
     >
-      <div className="min-w-0">
+      <div className="bt-words">
         <p className="eyebrow text-muted">What we build</p>
         <ul className="mt-4">
           {ITEMS.map((it, i) => (
@@ -92,10 +92,10 @@ export default function BuildTicker() {
             </li>
           ))}
         </ul>
-        <p ref={note} className="mt-4 min-h-[1.6em] text-fg-2" aria-live="polite">
-          {ITEMS[active].note}
-        </p>
       </div>
+      <p ref={note} className="bt-note text-fg-2" aria-live="polite">
+        {ITEMS[active].note}
+      </p>
       <svg className="ticker-dial" viewBox="-70 -70 140 140" aria-hidden="true">
         {Array.from({ length: TICKS }, (_, i) => {
           const a = (i / TICKS) * Math.PI * 2;

@@ -1,4 +1,4 @@
-/** "(02) - Selected work ──────────" label used to open every section. */
+/** "(02) Selected work" label used to open every section. */
 export default function SectionLabel({ index, label, className = "" }: { index: string; label: string; className?: string }) {
   return (
     <div className={`flex items-center gap-4 ${className}`}>
@@ -8,7 +8,6 @@ export default function SectionLabel({ index, label, className = "" }: { index: 
       <span className="eyebrow" data-reveal="scramble">
         {label}
       </span>
-      <span className="rule flex-1" data-reveal="draw" aria-hidden="true" />
     </div>
   );
 }

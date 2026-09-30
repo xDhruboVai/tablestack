@@ -25,6 +25,12 @@ const sides = {
   ],
 };
 
+const facts = [
+  ["Based in", site.location],
+  ["We build", "Websites, online shops and the systems behind them"],
+  ["How we work", "Discuss, design, build, launch"],
+];
+
 export default function AboutPage() {
   return (
     <>
@@ -35,10 +41,25 @@ export default function AboutPage() {
         <h1 id="about-h" className="display mt-6 text-[clamp(2.8rem,8vw,9rem)]" data-split="chars">
           Websites first. <em className="text-accent">Tools when needed.</em>
         </h1>
-        <div className="mt-12 grid grid-cols-12 gap-x-6 md:mt-20">
-          <p className="col-span-12 text-[clamp(1.4rem,2.3vw,2.3rem)] font-semibold leading-[1.14] tracking-[-0.035em] md:col-span-8 md:col-start-5" data-split="lines">
+        <div className="mt-12 grid grid-cols-12 gap-x-6 gap-y-12 md:mt-20">
+          <p className="col-span-12 text-[clamp(1.4rem,2.3vw,2.3rem)] font-semibold leading-[1.14] tracking-[-0.035em] md:col-span-7 md:col-start-6 md:row-start-1 lg:col-span-8 lg:col-start-5" data-split="lines">
             {about.intro}
           </p>
+          {/* Quick facts fill the left column beside the intro */}
+          <dl className="about-facts col-span-12 md:col-span-4 md:col-start-1 md:row-start-1 lg:col-span-3" data-reveal="stagger">
+            {facts.map(([k, v]) => (
+              <div key={k}>
+                <dt className="eyebrow text-muted">{k}</dt>
+                <dd>{v}</dd>
+              </div>
+            ))}
+            <div>
+              <dt className="eyebrow text-muted">Status</dt>
+              <dd className="flex items-center gap-2">
+                <span className="live-dot" aria-hidden="true" /> {site.availability}
+              </dd>
+            </div>
+          </dl>
         </div>
       </section>
 
