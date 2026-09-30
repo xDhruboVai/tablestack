@@ -31,15 +31,12 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   };
 }
 
-function Chapter({ n, label, children }: { n: string; label: string; children: React.ReactNode }) {
+function Chapter({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="grid grid-cols-12 gap-x-6 border-t border-rule py-12 md:py-20" data-annot={`section · ${label.toLowerCase()}`}>
       <div className="col-span-12 mb-6 md:col-span-4 md:mb-0">
         <div className="md:sticky md:top-[calc(var(--nav-h)+32px)]">
-          <p className="eyebrow text-accent" data-reveal="scramble">
-            {n}
-          </p>
-          <h2 className="display mt-3 text-[clamp(2rem,3vw,3rem)] italic" data-split="lines">
+          <h2 className="display text-[clamp(2rem,3vw,3rem)] italic" data-split="lines">
             {label}
           </h2>
         </div>
@@ -83,7 +80,7 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
               ← All work
             </TLink>
             <span className="eyebrow text-muted" data-reveal="scramble">
-              {String(n).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}
+              {p.category}
             </span>
           </div>
 
@@ -117,32 +114,35 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
         <div className="px-page mt-16 md:mt-24">
           <div className="media-fit group">
             <LensMedia project={p} aspect="aspect-[16/10]" priority hoverScale={false} sizes="(min-width: 1280px) 80vw, 100vw" />
-            <p className="eyebrow mt-3 text-muted">Move over the image to see how it’s built.</p>
+            <p className="eyebrow mt-3 text-muted">
+              <span className="hint-pointer">Move your cursor over the image.</span>
+              <span className="hint-touch">Drag a finger across the image.</span>
+            </p>
           </div>
         </div>
 
         <div className="px-page mt-20 md:mt-32">
-          <Chapter n="01" label="Challenge">
+          <Chapter label="Challenge">
             <p className="body-lg !text-[clamp(1.2rem,1.7vw,1.6rem)] !leading-[1.45]" data-split="lines">
               {p.challenge}
             </p>
           </Chapter>
-          <Chapter n="02" label="Approach">
+          <Chapter label="Approach">
             <p className="body-lg !text-[clamp(1.2rem,1.7vw,1.6rem)] !leading-[1.45]" data-split="lines">
               {p.approach}
             </p>
           </Chapter>
-          <Chapter n="03" label="Execution">
+          <Chapter label="Execution">
             <ul data-reveal="stagger">
-              {p.execution.map((e, i) => (
+              {p.execution.map((e) => (
                 <li key={e} className="flex items-baseline gap-5 border-b border-rule py-5 text-[clamp(1.05rem,1.4vw,1.3rem)]">
-                  <span className="eyebrow w-6 shrink-0 text-accent">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="list-bar" aria-hidden="true" />
                   {e}
                 </li>
               ))}
             </ul>
           </Chapter>
-          <Chapter n="04" label="Outcome">
+          <Chapter label="Outcome">
             <p className="body-lg !text-[clamp(1.2rem,1.7vw,1.6rem)] !leading-[1.45]" data-split="lines">
               {p.outcome}
             </p>
@@ -179,10 +179,7 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
                     </span>
                   )}
                 </div>
-                <figcaption className="eyebrow mt-3 flex justify-between gap-4 text-muted">
-                  <span>{g.caption}</span>
-                  <span>{String(i + 1).padStart(2, "0")}</span>
-                </figcaption>
+                <figcaption className="eyebrow mt-3 text-muted">{g.caption}</figcaption>
               </figure>
             ))}
           </div>

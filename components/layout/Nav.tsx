@@ -139,7 +139,7 @@ export default function Nav() {
         <div className="px-page flex h-full flex-col justify-between pb-8 pt-[calc(var(--nav-h)+5svh)]">
           <nav aria-label="Mobile">
             <ul className="flex flex-col gap-1">
-              {[{ label: "Home", href: "/" }, ...nav].map((item, i) => (
+              {[{ label: "Home", href: "/" }, ...nav].map((item) => (
                 <li key={item.href} className="split-line">
                   <TLink
                     href={item.href}
@@ -148,7 +148,6 @@ export default function Nav() {
                     aria-current={pathname === item.href ? "page" : undefined}
                     onClick={() => setOpen(false)}
                   >
-                    <span className="eyebrow text-accent">0{i + 1}</span>
                     <span className="display text-[clamp(2.6rem,12vw,4.2rem)]">{item.label}</span>
                   </TLink>
                 </li>

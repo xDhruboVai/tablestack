@@ -1,30 +1,30 @@
 import SectionLabel from "@/components/ui/SectionLabel";
+import ToolMarquee from "@/components/ui/ToolMarquee";
 import TLink from "@/components/layout/TLink";
 import WorkCard from "@/components/work/WorkCard";
 import StandardsChecklist from "./StandardsChecklist";
 import ScrollWords from "./ScrollWords";
-import ApproachRail from "./ApproachRail";
+import ApproachAssemble from "./ApproachAssemble";
 import { projects, featuredSlugs } from "@/content/projects";
-import { bookCall, capabilities, integrations, positioning, site, testimonials } from "@/content/site";
+import { bookCall, capabilities, positioning, site, testimonials } from "@/content/site";
 
 /* ── (01) Positioning ──────────────────────────────────────── */
 export function Positioning() {
   return (
-    <section className="px-page relative pb-28 pt-24 md:pb-40 md:pt-36" aria-labelledby="pos-label" data-annot="section · positioning">
+    <section className="px-page relative pb-20 pt-24 md:pb-28 md:pt-36" aria-labelledby="pos-label" data-annot="section · positioning">
       <h2 id="pos-label" className="sr-only">
         What we do
       </h2>
       <SectionLabel index="01" label="The studio" />
       <div className="mt-10 grid grid-cols-12 gap-x-6 md:mt-16">
-        <p className="eyebrow col-span-12 mb-6 text-muted md:col-span-3 md:mb-0" data-reveal="fade">
-          Websites first.
-          <br />
-          Tools when needed.
-        </p>
+        {/* Full width so the long statement doesn't leave an empty column beside it */}
         <ScrollWords
           text={positioning}
-          className="col-span-12 text-[clamp(1.7rem,3.6vw,3.8rem)] font-semibold leading-[1.08] tracking-[-0.04em] md:col-span-9"
+          className="col-span-12 text-[clamp(1.7rem,3.6vw,3.8rem)] font-semibold leading-[1.08] tracking-[-0.04em] lg:col-span-11"
         />
+        <p className="eyebrow col-span-12 mt-6 text-muted md:col-span-4 md:col-start-9 md:mt-8 md:text-right" data-reveal="fade">
+          Websites first. Tools when needed.
+        </p>
       </div>
     </section>
   );
@@ -35,7 +35,7 @@ const LAYOUT = [
   // Every frame is 16:10, the shape of a desktop screenshot, so nothing gets cropped away.
   // The stagger comes from column widths and vertical offsets instead.
   { col: "md:col-span-7", aspect: "aspect-[16/10]", offset: "" },
-  { col: "md:col-span-5 md:col-start-8", aspect: "aspect-[16/10]", offset: "md:mt-[16vw]" },
+  { col: "md:col-span-5 md:col-start-8", aspect: "aspect-[16/10]", offset: "md:mt-[6vw]" },
   { col: "md:col-span-5 md:col-start-2", aspect: "aspect-[16/10]", offset: "md:mt-[4vw]" },
   { col: "md:col-span-6 md:col-start-7", aspect: "aspect-[16/10]", offset: "md:mt-[12vw]" },
 ];
@@ -43,7 +43,7 @@ const LAYOUT = [
 export function SelectedWork() {
   const featured = featuredSlugs.map((s) => projects.find((p) => p.slug === s)!).filter(Boolean);
   return (
-    <section className="px-page relative pb-28 md:pb-40" aria-labelledby="work-title" data-annot="section · selected work">
+    <section className="px-page relative pb-20 md:pb-28" aria-labelledby="work-title" data-annot="section · selected work">
       <SectionLabel index="02" label="Selected work" />
       <div className="mt-10 flex flex-col gap-6 md:mt-14 md:flex-row md:items-end md:justify-between">
         <h2 id="work-title" className="display text-[clamp(2.8rem,7vw,7.5rem)]" data-split="chars">
@@ -84,9 +84,9 @@ function MenuColumn({
         <span className="eyebrow opacity-70">{data.sub}</span>
       </div>
       <ul className="mt-10">
-        {data.items.map((item, i) => (
+        {data.items.map((item) => (
           <li key={item.name} className="cap-row">
-            <span className="eyebrow w-7 shrink-0 text-accent">{String(i + 1).padStart(2, "0")}</span>
+            <span className="list-bar" aria-hidden="true" />
             <span className="cap-name text-[clamp(1.05rem,1.4vw,1.3rem)] font-medium">{item.name}</span>
             <span className="leader hidden sm:block" aria-hidden="true" />
             <span className="cap-note text-[15px] opacity-75 sm:text-right">{item.note}</span>
@@ -100,7 +100,7 @@ function MenuColumn({
 
 export function Capabilities() {
   return (
-    <section className="px-page relative pb-28 md:pb-40" aria-labelledby="cap-title" data-annot="section · capabilities">
+    <section className="px-page relative pb-20 md:pb-28" aria-labelledby="cap-title" data-annot="section · capabilities">
       <SectionLabel index="03" label="Capabilities" />
       <div className="mt-10 grid grid-cols-12 gap-x-6 md:mt-14">
         <h2 id="cap-title" className="display col-span-12 text-[clamp(2.6rem,6vw,6.4rem)] md:col-span-8" data-split="lines">
@@ -121,18 +121,17 @@ export function Capabilities() {
 /* ── (04) Approach ─────────────────────────────────────────── */
 export function Approach({ index = "04" }: { index?: string }) {
   return (
-    <section className="px-page relative pb-28 md:pb-40" aria-labelledby="app-title" data-annot="section · approach">
+    <section className="px-page relative pb-20 md:pb-28" aria-labelledby="app-title" data-annot="section · approach">
       <SectionLabel index={index} label="Approach" />
-      <ApproachRail />
+      <ApproachAssemble />
     </section>
   );
 }
 
 /* ── (05) Standards + integrations (credibility without invented claims) ── */
 export function Standards() {
-  const doubled = [...integrations, ...integrations];
   return (
-    <section className="relative pb-28 md:pb-40" aria-labelledby="std-title" data-annot="section · standards">
+    <section className="relative pb-20 md:pb-28" aria-labelledby="std-title" data-annot="section · standards">
       <div className="px-page">
         <SectionLabel index="05" label="What to expect" />
         <div className="mt-10 grid grid-cols-12 gap-x-6 md:mt-14">
@@ -148,21 +147,7 @@ export function Standards() {
         <p id="int-title" className="eyebrow px-page text-muted" data-reveal="scramble">
           What we build with
         </p>
-        <div className="marquee mt-6" aria-hidden="true">
-          <div className="marquee-track">
-            {doubled.map((name, i) => (
-              <span key={i} className="flex items-center whitespace-nowrap font-display text-[clamp(2rem,4vw,3.6rem)] font-bold italic leading-none tracking-[-0.04em]">
-                <span className="px-6 md:px-10">{name}</span>
-                <span className="text-[0.4em] not-italic text-accent">✳</span>
-              </span>
-            ))}
-          </div>
-        </div>
-        <ul className="sr-only">
-          {integrations.map((n) => (
-            <li key={n}>{n}</li>
-          ))}
-        </ul>
+        <ToolMarquee className="mt-6" />
       </div>
 
       {testimonials.length > 0 && (

@@ -6,21 +6,18 @@ import { prefersReducedMotion, whenInView } from "@/lib/motion";
 
 const steps = [
   {
-    n: "01",
     t: "We talk",
     b: "Your business and what you need built.",
     // speech bubble
     icon: ["M5 7h26v17H17l-7 6v-6H5z", "M11 13h14", "M11 18h9"],
   },
   {
-    n: "02",
     t: "We agree the scope",
     b: "Pages, features, timeline and quote.",
     // checklist
     icon: ["M7 9h14", "M7 17h14", "M7 25h9", "M24 23l3 3 6-7"],
   },
   {
-    n: "03",
     t: "We get to work",
     b: "Layouts first, then a working preview.",
     // browser window
@@ -67,8 +64,8 @@ export default function NextSteps() {
   return (
     <ol ref={root} className="mt-4" data-reveal="stagger">
       {steps.map((s) => (
-        <li key={s.n} className="grid grid-cols-[40px_1fr_auto] gap-x-3 border-t border-rule py-5">
-          <span className="eyebrow pt-1 text-accent">{s.n}</span>
+        <li key={s.t} className="grid grid-cols-[auto_1fr_auto] gap-x-4 border-t border-rule py-5">
+          <span className="list-bar mt-1" aria-hidden="true" />
           <div>
             <p className="font-medium">{s.t}</p>
             <p className="mt-1 text-fg-2">{s.b}</p>

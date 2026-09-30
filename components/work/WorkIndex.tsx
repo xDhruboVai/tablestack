@@ -11,7 +11,7 @@ import { EASE, prefersReducedMotion } from "@/lib/motion";
 
 
 /**
- * The project index: number, name, hover line, type, year.
+ * The project index: category, name, type, year.
  * Hovering a row floats a live preview that trails the cursor (anime.js createAnimatable).
  */
 export default function WorkIndex({ projects }: { projects: Project[] }) {
@@ -127,7 +127,6 @@ export default function WorkIndex({ projects }: { projects: Project[] }) {
         {view === "list" ? (
           <ol className="work-list" onPointerLeave={() => setHovered(null)}>
             {shown.map((p) => {
-              const n = projects.indexOf(p) + 1;
               return (
                 <li key={p.slug} data-item>
                   <TLink
@@ -137,12 +136,16 @@ export default function WorkIndex({ projects }: { projects: Project[] }) {
                     onFocus={() => setHovered(p.slug)}
                     onBlur={() => setHovered(null)}
                   >
-                    <span className="eyebrow w-10 shrink-0 text-accent">{String(n).padStart(2, "0")}</span>
+                    <span className="eyebrow hidden w-28 shrink-0 text-accent md:block">{p.category}</span>
                     <span className="work-row-thumb cover-host relative md:hidden" aria-hidden="true">
                       <ProjectCover project={p} sizes="96px" decorative />
                     </span>
-                    <span className="work-row-title display">{p.title}</span>
-                    <span className="leader hidden md:block" aria-hidden="true" />
+                    {/* On phones the category sits above the name, so the row fits narrow screens. */}
+                    <span className="flex min-w-0 flex-col gap-1">
+                      <span className="eyebrow text-accent md:hidden">{p.category}</span>
+                      <span className="work-row-title display">{p.title}</span>
+                    </span>
+                    <span className="hidden min-w-6 flex-1 md:block" aria-hidden="true" />
                     <span className="work-row-meta">
                       <span>{p.kind}</span>
                       <span className="hidden xl:inline">{p.services.slice(0, 2).join(" · ")}</span>

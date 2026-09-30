@@ -14,13 +14,13 @@ export default function WorkPage() {
   const anyPlaceholder = projects.some((p) => p.placeholder);
   return (
     <>
-      <section className="px-page pb-24 pt-[calc(var(--nav-h)+10svh)] md:pb-36" aria-labelledby="work-h" data-annot="page · /work">
+      <section className="px-page pb-24 pt-[calc(var(--nav-h)+10svh)] md:pb-28" aria-labelledby="work-h" data-annot="page · /work">
         <div className="flex items-start gap-4">
           <h1 id="work-h" className="display text-[clamp(4rem,14vw,13rem)]" data-split="chars">
             Work
           </h1>
           <span className="mt-[1.2vw] text-[clamp(1.1rem,1.6vw,1.6rem)] font-semibold tabular-nums text-[var(--accent-text)]" data-reveal="scramble">
-            ({String(projects.length).padStart(2, "0")})
+            {projects.length} {projects.length === 1 ? "project" : "projects"}
           </span>
         </div>
         <div className="mt-8 grid grid-cols-12 gap-x-6 gap-y-4 md:mt-4">

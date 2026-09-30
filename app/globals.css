@@ -190,8 +190,6 @@ svg {
 .work-row .row-arrow {
   margin-left: -1rem;
 }
-.work-row:hover .leader,
-.work-row:focus-visible .leader,
 .cap-row:hover .leader {
   transform: scaleX(1);
 }
@@ -372,15 +370,18 @@ html.motion:not(.anim-ready) :is([data-reveal], [data-split], [data-intro]) {
   }
 }
 
-/* ─── Work lens: back-of-house layer revealed under the cursor ── */
-.lens {
-  --lx: 50%;
-  --ly: 50%;
-  --lr: 0px;
+/* ─── Work lens: WebGL fluid drawn over the cover while it moves ── */
+.lens-fluid {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s;
 }
-.lens-boh {
-  clip-path: circle(var(--lr) at var(--lx) var(--ly));
-  transition: clip-path 0.08s linear;
+.lens-fluid.is-on {
+  opacity: 1;
 }
 
 /* Cover images crop through a centered 16:10 box so % overlays stay aligned */
@@ -440,24 +441,6 @@ html.motion:not(.anim-ready) :is([data-reveal], [data-split], [data-intro]) {
   color: rgb(242 238 230 / 0.7);
 }
 
-.lens-tip {
-  position: absolute;
-  right: 12px;
-  bottom: 12px;
-  padding: 5px 9px;
-  background: var(--ink);
-  color: var(--linen);
-  font-size: 13px;
-  opacity: 0;
-  transform: translateY(6px);
-  transition: opacity 0.4s, transform 0.5s var(--ease-out-quart);
-}
-@media (hover: hover) and (pointer: fine) {
-  .work-card:hover .lens-tip {
-    opacity: 1;
-    transform: none;
-  }
-}
 .work-card-arrow {
   display: inline-block;
   font-family: var(--font-sans);
@@ -745,55 +728,6 @@ html[data-mode="boh"] .cap-dark {
   color: var(--accent);
 }
 
-/* ─── Approach rail ────────────────────────────────────────── */
-.approach-rail {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 240px;
-  width: 26px;
-}
-.approach-rail > span {
-  display: block;
-  height: 1px;
-  width: 9px;
-  background: var(--rule-strong);
-}
-.approach-rail > span.is-major {
-  width: 22px;
-  background: var(--fg);
-}
-.approach-head-track {
-  position: absolute;
-  inset: 0;
-}
-.approach-head {
-  position: absolute;
-  top: 0;
-  left: -6px;
-  width: 38px;
-  height: 2px;
-  background: var(--accent);
-}
-.approach-head span {
-  position: absolute;
-  left: -6px;
-  top: -4px;
-  border-left: 7px solid var(--accent);
-  border-top: 5px solid transparent;
-  border-bottom: 5px solid transparent;
-}
-@media (min-width: 768px) {
-  .approach-step {
-    opacity: 0.32;
-    transition: opacity 0.6s var(--ease-out-quart);
-  }
-  .approach-step.is-active {
-    opacity: 1;
-  }
-}
-
 /* ─── Contact CTA block ────────────────────────────────────── */
 .cta-block {
   background: var(--ink);
@@ -928,6 +862,7 @@ html:not([data-mode="boh"]) .boh-only {
 /* ─── FOH/BOH switch ───────────────────────────────────────── */
 .mode-toggle {
   border-radius: 999px;
+  cursor: pointer;
 }
 .mode-toggle-track {
   position: relative;
@@ -1056,7 +991,7 @@ html.first-visit:not(.anim-ready) .loader {
   stroke-linejoin: round;
 }
 
-/* ─── About: dot field behind principles ───────────────────── */
+/* ─── About: dot field inside the principle cards ──────────── */
 .dot-field {
   position: absolute;
   inset: 1px 0 0;
@@ -1079,11 +1014,11 @@ html[data-mode="boh"] .dot-field {
 }
 
 /* ─── Work: "What we build" ticker ─────────────────────────── */
-/* Phones: words beside a small dial, note underneath. From md: the words take the width they
-   need, and the dial and note sit centred in all the space to their right. */
+/* Phones: words, then the wireframe, then the note. From md: the words take the width they
+   need, and the wireframe and note sit centred in all the space to their right. */
 .build-ticker {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) clamp(72px, 22vw, 140px);
+  grid-template-columns: minmax(0, 1fr);
   column-gap: 1.25rem;
   row-gap: 1rem;
   align-items: center;
@@ -1095,12 +1030,14 @@ html[data-mode="boh"] .dot-field {
   grid-row: 1;
   min-width: 0;
 }
-.ticker-dial {
-  grid-column: 2;
-  grid-row: 1;
+.ticker-frame {
+  grid-column: 1;
+  grid-row: 2;
+  max-width: 320px;
 }
 .bt-note {
-  grid-column: 1 / -1;
+  grid-column: 1;
+  grid-row: 3;
   min-height: 1.6em;
 }
 @media (min-width: 768px) {
@@ -1113,11 +1050,12 @@ html[data-mode="boh"] .dot-field {
     grid-column: 1;
     grid-row: 1 / 3;
   }
-  .ticker-dial {
+  .ticker-frame {
     grid-column: 2;
     grid-row: 1;
     justify-self: center;
     align-self: end;
+    max-width: 380px;
   }
   .bt-note {
     grid-column: 2;
@@ -1129,6 +1067,8 @@ html[data-mode="boh"] .dot-field {
 }
 .ticker-word {
   display: block;
+  /* Keeps each line a comfortable tap target (24px+) on phones. */
+  padding-block: 3px;
   text-align: left;
   font-family: var(--font-display);
   font-size: clamp(1.2rem, 3.1vw, 3.2rem);
@@ -1147,41 +1087,53 @@ html[data-mode="boh"] .dot-field {
   content: "→ ";
   color: var(--accent);
 }
-.ticker-dial {
+.ticker-frame {
   width: 100%;
-  max-width: 260px;
   height: auto;
   overflow: visible;
 }
-.ticker-tick {
-  stroke: var(--muted);
+.wf-window {
+  fill: var(--surface);
+  stroke: var(--rule-strong);
   stroke-width: 1;
 }
-.ticker-tick.is-major {
-  stroke: var(--fg);
-  stroke-width: 2;
+line.wf-window {
+  fill: none;
 }
-.ticker-hand-g {
-  transform-box: fill-box;
-  transform-origin: 50% 100%;
+.wf-dot {
+  fill: var(--rule-strong);
 }
-.ticker-hand {
-  stroke: var(--accent);
-  stroke-width: 2.5;
-  stroke-linecap: round;
-}
-.ticker-hub {
+.wf-dot.is-accent,
+.wf-block.is-accent {
   fill: var(--accent);
+}
+.wf-block {
+  fill: color-mix(in srgb, var(--fg) 12%, transparent);
+  transition: fill 0.4s;
+}
+.wf-block.is-strong {
+  fill: color-mix(in srgb, var(--fg) 38%, transparent);
 }
 
 /* ─── About: quick facts beside the intro ──────────────────── */
-.about-facts > div {
-  padding-block: 0.9rem;
-  border-top: 1px solid var(--rule);
+.about-facts {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  column-gap: 1.5rem;
 }
-.about-facts > div:first-child {
-  padding-top: 0;
-  border-top: 0;
+@media (min-width: 640px) {
+  .about-facts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (min-width: 1024px) {
+  .about-facts {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+.about-facts > div {
+  padding-block: 1rem;
+  border-top: 1px solid var(--rule);
 }
 .about-facts dd {
   margin-top: 0.3rem;
@@ -1205,7 +1157,6 @@ html[data-mode="boh"] .dot-field {
   grid-row: span 2;
 }
 .check-box rect {
-  /* Filled with the page colour so the route line passes behind the boxes. */
   fill: var(--bg);
   stroke: var(--rule-strong);
   stroke-width: 1.5;
@@ -1237,39 +1188,111 @@ html[data-mode="boh"] .dot-field {
     align-self: center;
   }
 }
-.check-track {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-  pointer-events: none;
+/* The ring beside the checklist: a dot goes round once, drawing it and lighting each stop. */
+.expect {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 3rem;
 }
-.check-track path {
+@media (min-width: 768px) {
+  /* List on the left, ring on the right. */
+  .expect {
+    grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
+    align-items: center;
+    column-gap: clamp(3rem, 6vw, 6rem);
+  }
+}
+.expect-ring {
+  position: relative;
+  width: 100%;
+  max-width: 240px;
+  justify-self: center;
+}
+@media (min-width: 768px) {
+  .expect-ring {
+    max-width: 320px;
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .expect-list {
+    grid-column: 1;
+    grid-row: 1;
+  }
+}
+.expect-ring svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+.expect-track {
+  fill: none;
+  stroke: var(--rule);
+  stroke-width: 2;
+}
+.expect-progress {
   fill: none;
   stroke: var(--accent);
-  stroke-width: 1.5;
+  stroke-width: 2.5;
   stroke-linecap: round;
-  opacity: 0.7;
 }
-/* The "car" that drives the route; positioned by anime.js createMotionPath. */
-.check-car {
+.expect-stop {
+  fill: var(--bg);
+  stroke: var(--rule-strong);
+  stroke-width: 1.5;
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: fill 0.3s, stroke 0.3s, transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.expect-stop.is-on {
+  fill: var(--accent);
+  stroke: var(--accent);
+  transform: scale(1.25);
+}
+/* Turned round the ring's centre by anime.js. */
+.expect-orbit {
+  transform-box: view-box;
+  transform-origin: 0 0;
+}
+.expect-dot {
+  fill: var(--accent);
+  stroke: var(--bg);
+  stroke-width: 3;
+}
+.expect-glow {
+  fill: var(--accent);
+  opacity: 0.18;
+}
+.expect-center {
   position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 2;
-  width: 18px;
-  height: 9px;
-  margin: -4.5px 0 0 -9px;
-  border-radius: 5px;
-  background: var(--accent);
-  box-shadow: 0 0 0 3px var(--bg);
-  opacity: 0;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   pointer-events: none;
 }
+.expect-figure {
+  font-family: var(--font-display);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.05em;
+}
+.expect-count {
+  font-size: clamp(3.4rem, 6vw, 5rem);
+}
+.expect-of {
+  font-size: clamp(1.4rem, 2.4vw, 2rem);
+  color: var(--muted);
+}
+.expect-note {
+  margin-top: 0.4rem;
+  color: var(--muted);
+}
 .check-stamp {
-  right: 0;
-  bottom: -3.4rem;
+  right: -0.5rem;
+  bottom: 0.5rem;
   mix-blend-mode: normal;
   background: var(--bg);
 }
@@ -1297,6 +1320,9 @@ html[data-mode="boh"] .dot-field {
   white-space: nowrap;
   padding-bottom: 0.06em;
   user-select: none;
+  /* Decorative. The glyph boxes of a font this size hang well below the line and would
+     otherwise sit on top of the "Back to top" button and swallow its clicks. */
+  pointer-events: none;
 }
 .footer-mark-word {
   display: inline-block;
@@ -1623,4 +1649,376 @@ html[data-mode="boh"] .dot-field {
 }
 .page-door {
   --accent-text: var(--accent-text-inv);
+}
+
+/* ─── About: team cards ───────────────────────────────────────── */
+@layer components {
+  .team-photo {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    border: 1px solid var(--rule);
+    background: var(--surface);
+  }
+  .team-photo img {
+    object-fit: cover;
+    object-position: 50% 30%;
+    transition: transform 0.7s var(--ease-out-quart);
+  }
+  .team-card:hover .team-photo img {
+    transform: scale(1.04);
+  }
+  .team-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding-bottom: 2px;
+    border-bottom: 1px solid var(--rule-strong);
+    font-weight: 500;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .team-link:hover,
+  .team-link:focus-visible {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+}
+
+/* ─── Approach: the page assembles itself ──────────────────── */
+@layer components {
+  .asm {
+    --note-1: #f6d38a;
+    --note-2: #f3c2ae;
+    --note-3: #cfe3a6;
+    /* Scroll room: the pinned block plus about half a screen per step. */
+    min-height: calc(100svh - var(--nav-h) + var(--steps, 4) * 45svh);
+  }
+  /* The window and the steps stay pinned, centred in the space under the nav. */
+  .asm-pin {
+    position: sticky;
+    top: var(--nav-h);
+    min-height: calc(100svh - var(--nav-h));
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-content: center;
+    gap: 1.25rem;
+    padding-block: 1rem;
+  }
+  .asm-frame {
+    display: block;
+    width: 100%;
+    max-width: 720px;
+    height: auto;
+  }
+  .asm-caption {
+    margin-top: 0.75rem;
+    font-size: 15px;
+    color: var(--muted);
+  }
+  .asm-step {
+    padding-block: 0.9rem;
+    border-top: 1px solid var(--rule);
+    opacity: 0.38;
+    transition: opacity 0.5s var(--ease-out-quart);
+  }
+  .asm-step.is-active {
+    opacity: 1;
+  }
+  /* Only the active step shows its text; the others fold down to their titles. */
+  .asm-step-more {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.5s var(--ease-out-quart);
+  }
+  .asm-step-more > p {
+    overflow: hidden;
+    min-height: 0;
+  }
+  .asm-step.is-active .asm-step-more {
+    grid-template-rows: 1fr;
+  }
+  @media (max-width: 767px) {
+    .asm-caption {
+      display: none;
+    }
+    .asm-frame {
+      max-width: 420px;
+    }
+  }
+  @media (min-width: 768px) {
+    .asm-pin {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+      align-items: center;
+      column-gap: 4rem;
+    }
+  }
+  .asm-window {
+    fill: var(--surface);
+    stroke: var(--rule-strong);
+    stroke-width: 1.25;
+  }
+  line.asm-window {
+    fill: none;
+  }
+  .asm-dot {
+    fill: var(--rule-strong);
+  }
+  .asm-dot.is-accent {
+    fill: var(--accent);
+  }
+  .asm-url {
+    fill: color-mix(in srgb, var(--fg) 7%, transparent);
+  }
+  .asm-url-text {
+    font-size: 9px;
+    text-anchor: middle;
+    fill: var(--muted);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+  [data-stage="2"] .asm-url-text.is-preview,
+  [data-stage="3"] .asm-url-text.is-live {
+    opacity: 1;
+  }
+  /* Discuss: the notes */
+  .asm-note {
+    transition: opacity 0.45s, transform 0.6s var(--ease-out-quart);
+    transition-delay: calc(var(--i) * 60ms);
+  }
+  [data-stage]:not([data-stage="0"]) .asm-note {
+    opacity: 0;
+    transform: translateY(40px) scale(0.85);
+  }
+  .asm-scribble {
+    fill: color-mix(in srgb, var(--ink) 30%, transparent);
+  }
+  /* Design onwards: the page blocks */
+  .asm-block {
+    transform-box: fill-box;
+    transform-origin: center;
+    fill: color-mix(in srgb, var(--fg) 8%, transparent);
+    stroke: color-mix(in srgb, var(--fg) 40%, transparent);
+    stroke-width: 1;
+    stroke-dasharray: 4 3;
+    opacity: 0;
+    transform: scale(0.7);
+    transition:
+      opacity 0.45s,
+      transform 0.6s var(--ease-out-quart),
+      fill 0.5s,
+      stroke 0.5s;
+    transition-delay: calc(var(--i) * 45ms);
+  }
+  [data-stage]:not([data-stage="0"]) .asm-block {
+    opacity: 1;
+    transform: none;
+  }
+  :is([data-stage="2"], [data-stage="3"]) .asm-block {
+    stroke: transparent;
+  }
+  :is([data-stage="2"], [data-stage="3"]) .asm-block.is-text {
+    fill: var(--fg);
+  }
+  :is([data-stage="2"], [data-stage="3"]) .asm-block.is-accent {
+    fill: var(--accent);
+  }
+  :is([data-stage="2"], [data-stage="3"]) .asm-block.is-muted {
+    fill: color-mix(in srgb, var(--fg) 28%, transparent);
+  }
+  :is([data-stage="2"], [data-stage="3"]) .asm-block.is-image {
+    fill: color-mix(in srgb, var(--accent) 22%, var(--ink));
+  }
+  :is([data-stage="2"], [data-stage="3"]) .asm-block.is-card {
+    fill: color-mix(in srgb, var(--fg) 6%, transparent);
+    stroke: var(--rule-strong);
+    stroke-dasharray: none;
+  }
+  /* Launch: the live badge */
+  .asm-live {
+    transform-box: fill-box;
+    transform-origin: center;
+    opacity: 0;
+    transform: scale(0.6);
+    transition: opacity 0.35s, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  [data-stage="3"] .asm-live {
+    opacity: 1;
+    transform: none;
+  }
+  .asm-live rect {
+    fill: var(--fg);
+  }
+  .asm-live circle {
+    fill: var(--accent);
+  }
+  .asm-x line {
+    stroke: color-mix(in srgb, var(--fg) 30%, transparent);
+    stroke-width: 1;
+    stroke-dasharray: 4 3;
+    opacity: 0;
+    transition: opacity 0.4s 0.3s;
+  }
+  [data-stage="1"] .asm-x line {
+    opacity: 1;
+  }
+  .asm-photo {
+    opacity: 0;
+    transition: opacity 0.6s 0.35s;
+  }
+  :is([data-stage="2"], [data-stage="3"]) .asm-photo {
+    opacity: 1;
+  }
+  .asm-photo circle {
+    fill: color-mix(in srgb, var(--accent) 80%, #f6d38a);
+  }
+  .asm-photo path {
+    fill: color-mix(in srgb, var(--accent) 45%, var(--ink));
+  }
+  .asm-live text {
+    font-size: 9px;
+    font-weight: 600;
+    fill: var(--bg);
+  }
+}
+
+/* ─── Stacking cards (About principles) ─────────────────────── */
+@layer components {
+  .stack {
+    display: grid;
+    gap: 10svh;
+    padding-bottom: 4svh;
+  }
+  .stack-card {
+    position: sticky;
+    --cover: 0;
+  }
+  /* Keep the content above an optional background layer (the dot field). */
+  .stack-inner > :not(.dot-field) {
+    position: relative;
+  }
+  .stack-inner {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto 1fr auto;
+    gap: 1.5rem;
+    min-height: clamp(360px, 62svh, 520px);
+    padding: clamp(1.5rem, 3.5vw, 3.5rem);
+    border: 1px solid var(--rule);
+    transform-origin: 50% 0;
+    transform: scale(calc(1 - var(--cover) * 0.04));
+    filter: brightness(calc(1 - var(--cover) * 0.12));
+  }
+  .tone-paper .stack-inner {
+    background: var(--surface);
+    color: var(--fg);
+  }
+  .tone-ink .stack-inner {
+    background: var(--ink);
+    color: var(--linen);
+    border-color: transparent;
+  }
+  html[data-mode="boh"] .tone-ink .stack-inner {
+    background: #0d0c0a;
+  }
+  .tone-accent .stack-inner {
+    /* A touch lighter than the accent so the dark text passes AA contrast (4.87:1). */
+    background: #e64e36;
+    color: var(--ink);
+    border-color: transparent;
+  }
+  .stack-num {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(4.5rem, 11vw, 11rem);
+    line-height: 0.8;
+    letter-spacing: -0.06em;
+    color: var(--accent);
+  }
+  .tone-accent .stack-num {
+    color: var(--ink);
+  }
+  .stack-plain {
+    opacity: 0.7;
+  }
+  .stack-meter {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1rem;
+    opacity: 0.8;
+  }
+  .stack-bars {
+    display: flex;
+    gap: 6px;
+  }
+  .stack-bars i {
+    width: 28px;
+    height: 4px;
+    background: currentColor;
+    opacity: 0.2;
+  }
+  .stack-bars i.is-on {
+    opacity: 1;
+  }
+  /* From md: the big letter/number and the text sit side by side, centred in the card. */
+  @media (min-width: 768px) {
+    .stack-inner {
+      grid-template-columns: minmax(8rem, 3fr) minmax(0, 7fr);
+      grid-template-rows: 1fr auto;
+      column-gap: clamp(2rem, 5vw, 5rem);
+      align-items: center;
+      min-height: clamp(320px, 52svh, 460px);
+    }
+    .stack-num {
+      grid-row: 1;
+      justify-self: center;
+    }
+    .stack-body {
+      grid-row: 1;
+    }
+    .stack-meter {
+      grid-column: 1 / -1;
+    }
+  }
+}
+
+/* Form fields scrolled into view (e.g. the first error) stop below the fixed nav, label included. */
+:is(input, textarea, select) {
+  scroll-margin-top: calc(var(--nav-h) + 3.5rem);
+}
+/* The case-study hint: cursor wording on mouse devices, finger wording on touch screens. */
+.hint-touch {
+  display: none;
+}
+@media not ((hover: hover) and (pointer: fine)) {
+  .hint-pointer {
+    display: none;
+  }
+  .hint-touch {
+    display: inline;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hint-pointer,
+  .hint-touch {
+    display: none;
+  }
+}
+
+/* Marks items in a list or a sequence (in place of 01, 02, 03). */
+.list-bar {
+  display: inline-block;
+  flex: none;
+  width: 3px;
+  height: 0.95em;
+  align-self: center;
+  background: var(--accent);
+}
+/* On touch screens a sideways drag on a work image stirs the fluid instead of triggering the
+   browser's swipe-back; vertical drags still scroll the page. */
+@media not ((hover: hover) and (pointer: fine)) {
+  .lens {
+    touch-action: pan-y;
+  }
 }

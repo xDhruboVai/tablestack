@@ -50,7 +50,7 @@ export function markIntroDone() {
 }
 
 /** Runs `cb` once, the first time `el` scrolls into view. Returns a cleanup. */
-export function whenInView(el: Element, cb: () => void, threshold = 0.35) {
+export function whenInView(el: Element, cb: () => void, threshold = 0.35, rootMargin = "0px") {
   const io = new IntersectionObserver(
     (entries) => {
       if (entries.some((e) => e.isIntersecting)) {
@@ -58,7 +58,7 @@ export function whenInView(el: Element, cb: () => void, threshold = 0.35) {
         cb();
       }
     },
-    { threshold },
+    { threshold, rootMargin },
   );
   io.observe(el);
   return () => io.disconnect();

@@ -69,7 +69,7 @@ Search the codebase for `REPLACE` and `placeholder` to find every spot.
 - [x] `email` - `tablestackbd@gmail.com` (also set `CONTACT_TO_EMAIL` to this in `.env.local` so form inquiries arrive there)
 - [x] `bookingUrl` - https://cal.com/table-stack/intro-call (every "Book a call" opens it in a new tab)
 - [ ] `availability`, `responseTime` (location is set to Bangladesh, footer clock to Dhaka time)
-- [x] `inquiry.budgets` - set to Under ৳25,000 / Under ৳35,000 / Under ৳50,000 / ৳50,000+
+- [x] `inquiry.budgets` - set to Under Tk 25,000 / Under Tk 35,000 / Under Tk 50,000 / Tk 50,000+
 - [ ] `social` - Facebook Page and WhatsApp links (hidden until filled in)
 - [ ] `about.team` - real names, roles, bios; set `placeholder: false`
 - [ ] `testimonials` - only real quotes, with permission. The section stays hidden while empty.

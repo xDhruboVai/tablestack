@@ -149,6 +149,33 @@ export const integrations = [
  */
 export const testimonials: { quote: string; name: string; role: string }[] = [];
 
+/** The team, shown on the About page. Photos live in /public/team; `focus` is the crop point (object-position). */
+export const team = [
+  {
+    name: "Dihan Islam Dhrubo",
+    study: "BRAC University, CSE",
+    graduation: "Expected graduation May 2027",
+    github: "https://github.com/xDhruboVai",
+    photo: "/team/dihan.webp",
+    focus: "50% 30%",
+  },
+  {
+    name: "Saalim Saadman",
+    study: "UCSI University Bangladesh Branch Campus, CS",
+    graduation: "Expected graduation September 2028",
+    github: "https://github.com/Saadmantheretroenjoyer",
+    photo: "/team/saalim.jpg",
+    focus: "90% 40%",
+  },
+  {
+    name: "Nahin Hasan",
+    study: "North South University, BBA (Marketing)",
+    graduation: "Expected graduation August 2028",
+    photo: "/team/nahin.jpg",
+    focus: "50% 38%",
+  },
+] as const;
+
 /** About page. */
 export const about = {
   intro:
@@ -183,11 +210,10 @@ export const inquiry = {
     "New website",
     "Redesign",
     "Online shop",
-    "Reservations / ordering",
     "Dashboard or admin tool",
     "Something else",
   ],
-  // REPLACE with ranges that match your real pricing (in BDT).
-  budgets: ["Under ৳50k", "৳50k–৳150k", "৳150k–৳400k", "৳400k+", "Not sure yet"],
+  // Budget ranges in BDT.
+  budgets: ["Under Tk 25,000", "Under Tk 35,000", "Under Tk 50,000", "Tk 50,000+"],
   timelines: ["ASAP", "1–2 months", "3+ months", "Flexible"],
 } as const;

@@ -20,8 +20,8 @@ export default function WorkCard({
         <LensMedia project={project} aspect={aspect} sizes="(min-width: 768px) 60vw, 100vw" />
         <div className="mt-5 flex items-start justify-between gap-6">
           <div className="min-w-0">
-            <p className="eyebrow text-muted" data-reveal="scramble">
-              {String(index + 1).padStart(2, "0")} · {project.kind}
+            <p className="eyebrow text-muted" data-reveal="fade">
+              <span className="text-accent">{project.category}</span> · {project.kind}
             </p>
             <h3 className={`display mt-2 flex flex-wrap items-baseline gap-x-3 ${titleSize}`}>
               <span className="work-card-title">{project.title}</span>

@@ -356,7 +356,7 @@ const realProjects: Project[] = [
     },
     gallery: [
       {
-        src: "/work/smashed-burgers/home.jpg",
+        src: "/work/smashed-burgers/home-2.jpg",
         frame: "desktop",
         alt: "Fan Favourites section: burger and fries cards with category, name and price",
         caption: "Fan favourites, desktop",

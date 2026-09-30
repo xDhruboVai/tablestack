@@ -55,9 +55,9 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-/* Runs before paint: starts in the light FOH mode, enables motion styles, flags a first visit for the loader. */
+/* Runs before paint: starts in light mode unless the visitor chose dark before, enables motion styles, flags a first visit for the loader. */
 const bootScript = `(function(){try{var d=document.documentElement;
-delete d.dataset.mode;
+if(localStorage.getItem('ts-mode')==='boh')d.dataset.mode='boh';else delete d.dataset.mode;
 if(!matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('motion');
 if(!sessionStorage.getItem('ts-visited')){d.classList.add('first-visit');sessionStorage.setItem('ts-visited','1');}}
 }catch(e){}})();`;
