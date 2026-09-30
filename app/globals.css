@@ -370,18 +370,16 @@ html.motion:not(.anim-ready) :is([data-reveal], [data-split], [data-intro]) {
   }
 }
 
-/* ─── Work lens: WebGL fluid drawn over the cover while it moves ── */
-.lens-fluid {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.35s;
+/* ─── Work lens: a circle under the cursor shows the image inverted ── */
+.lens {
+  --lx: 50%;
+  --ly: 50%;
+  --lr: 0px;
 }
-.lens-fluid.is-on {
-  opacity: 1;
+.lens-invert {
+  filter: invert(1);
+  clip-path: circle(var(--lr) at var(--lx) var(--ly));
+  transition: clip-path 0.08s linear;
 }
 
 /* Cover images crop through a centered 16:10 box so % overlays stay aligned */
@@ -396,51 +394,6 @@ html.motion:not(.anim-ready) :is([data-reveal], [data-split], [data-intro]) {
   aspect-ratio: 16 / 10;
   transform: translate(-50%, -50%);
 }
-/* Under the lens: the same screenshot, desaturated and dimmed, so the labels read clearly. */
-.blueprint-img {
-  filter: grayscale(1) brightness(0.3) contrast(1.15);
-}
-.blueprint-grid {
-  position: absolute;
-  inset: 0;
-  /* Same dot grid as dark mode */
-  background-image: radial-gradient(circle, rgb(242 238 230 / 0.28) 1px, transparent 1.5px);
-  background-size: 18px 18px;
-  background-position: 9px 9px;
-}
-/* Quiet, neutral labels: thin linen outlines and small tags, no red. */
-.blueprint-box {
-  position: absolute;
-  border: 1px solid rgb(242 238 230 / 0.45);
-  border-radius: 3px;
-}
-.blueprint-box span,
-.blueprint-stack {
-  position: absolute;
-  font-family: var(--font-mono);
-  font-size: clamp(11px, 0.9cqw, 13px);
-  line-height: 1.3;
-  white-space: nowrap;
-}
-.blueprint-box span {
-  left: -1px;
-  top: -1px;
-  padding: 2px 6px;
-  border-radius: 3px 0 3px 0;
-  background: rgb(242 238 230 / 0.9);
-  color: var(--ink);
-}
-/* Boxes on the right half hang their label from the right edge so it can't run off the image. */
-.blueprint-box.is-right span {
-  left: auto;
-  right: -1px;
-}
-.blueprint-stack {
-  left: 3%;
-  bottom: 3%;
-  color: rgb(242 238 230 / 0.7);
-}
-
 .work-card-arrow {
   display: inline-block;
   font-family: var(--font-sans);
@@ -1668,6 +1621,28 @@ line.wf-window {
   .team-card:hover .team-photo img {
     transform: scale(1.04);
   }
+  .team-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    min-height: 36px;
+    padding: 0.35rem 0.85rem;
+    border: 1px solid var(--rule-strong);
+    border-radius: 999px;
+    font-size: 15px;
+    font-weight: 500;
+    transition: color 0.2s, border-color 0.2s, background-color 0.2s;
+  }
+  .team-chip svg {
+    width: 16px;
+    height: 16px;
+    flex: none;
+  }
+  .team-chip:hover,
+  .team-chip:focus-visible {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
   .team-link {
     display: inline-flex;
     align-items: center;
@@ -1987,16 +1962,10 @@ line.wf-window {
 :is(input, textarea, select) {
   scroll-margin-top: calc(var(--nav-h) + 3.5rem);
 }
-/* The case-study hint: cursor wording on mouse devices, finger wording on touch screens. */
-.hint-touch {
-  display: none;
-}
+/* The case-study hint only makes sense where there is a cursor. */
 @media not ((hover: hover) and (pointer: fine)) {
   .hint-pointer {
     display: none;
-  }
-  .hint-touch {
-    display: inline;
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -2014,13 +1983,6 @@ line.wf-window {
   height: 0.95em;
   align-self: center;
   background: var(--accent);
-}
-/* On touch screens a sideways drag on a work image stirs the fluid instead of triggering the
-   browser's swipe-back; vertical drags still scroll the page. */
-@media not ((hover: hover) and (pointer: fine)) {
-  .lens {
-    touch-action: pan-y;
-  }
 }
 
 /* "What we build" service rows: a marker, then the service with its plain line underneath. */

@@ -313,25 +313,24 @@ const realProjects: Project[] = [
     category: "Food & drink",
     year: "2026",
     location: "Dhaka, Bangladesh",
-    services: ["Website design", "Full-stack build", "Table reservations", "English + Bangla"],
+    services: ["Website design", "Full-stack build", "English + Bangla"],
     stack: ["Next.js", "Tailwind CSS", "Vercel"],
     summary:
-      "A loud, saucy site for a six-branch smash burger chain, in English and Bangla, with the full menu and table requests for every branch.",
+      "A loud, saucy site for a six-branch smash burger chain, in English and Bangla, with the full menu and every branch in one place.",
     liveUrl: "https://smashed-burgers-six.vercel.app/en",
     challenge:
-      "Six branches, one menu across 13 categories, and a brand that runs on attitude. The site had to sell the food on sight, make a big menu easy to browse on a phone, and let guests request a table at any branch.",
+      "Six branches, one menu across 13 categories, and a brand that runs on attitude. The site had to sell the food on sight, and make a big menu easy to browse on a phone.",
     approach:
-      "We leaned all the way into the brand: near-black pages, tall condensed type in mustard yellow, and food cut out and lit like a poster. A scroll-driven sauce sequence (Drop, Pour, Flow, Drown) puts on a show, while the menu and booking stay one tap away.",
+      "We leaned all the way into the brand: near-black pages, tall condensed type in mustard yellow, and food cut out and lit like a poster. A scroll-driven sauce sequence (Drop, Pour, Flow, Drown) puts on a show, while the menu stays one tap away.",
     execution: [
       "Every page in English and Bangla, switchable from the header",
       "Menu organised into 13 categories with prices in BDT, the same at every branch",
-      "Reservation requests by branch, date, time and party size, confirmed by a call from the branch team",
       "Locations page with addresses, hours and directions for each branch",
-      "Mobile tab bar for Home, Menu, Reserve and Locations",
+      "Mobile tab bar for Home, Menu and Locations",
       "Guest reviews sourced from Google Maps",
     ],
     outcome:
-      "Launched in English and Bangla, with every branch, the full menu and table requests on one fast, mobile-first site.",
+      "Launched in English and Bangla, with every branch and the full menu on one fast, mobile-first site.",
     art: {
       palette: { bg: "#0B0A09", fg: "#FBF4E6", accent: "#F6B81A", soft: "#1A1713" },
       type: "condensed",
@@ -351,7 +350,7 @@ const realProjects: Project[] = [
         { x: 7, y: 1, w: 86, h: 8, label: "Nav · EN / বাংলা switch" },
         { x: 7.5, y: 18, w: 34, h: 48, label: "h1 · condensed display" },
         { x: 51, y: 27, w: 45, h: 51, label: "Hero dish · cut-out photo" },
-        { x: 7.5, y: 80, w: 31, h: 9, label: "Menu + Reserve CTAs" },
+        { x: 7.5, y: 80, w: 31, h: 9, label: "Menu buttons" },
       ],
     },
     gallery: [
@@ -367,7 +366,7 @@ const realProjects: Project[] = [
         src: "/work/smashed-burgers/mobile.jpg",
         frame: "mobile",
         alt: "Two phones showing the Smashed Burgers homepage and the reservation form",
-        caption: "Home + reservations, mobile",
+        caption: "Home, mobile",
         spec: "",
       },
       {

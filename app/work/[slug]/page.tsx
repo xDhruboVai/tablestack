@@ -59,16 +59,6 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
     ["Services", p.services.join(", ")],
     ["Stack", p.stack.join(" · ")],
     ["Year", p.year],
-    [
-      "Live site",
-      p.liveUrl ? (
-        <a href={p.liveUrl} target="_blank" rel="noreferrer" className="link-draw">
-          Visit ↗
-        </a>
-      ) : (
-        "Link added at launch"
-      ),
-    ],
   ];
 
   return (
@@ -97,9 +87,21 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
             {p.title}
           </h1>
           <div className="mt-8 grid grid-cols-12 gap-x-6 gap-y-10 md:mt-10">
-            <p className="col-span-12 text-[clamp(1.4rem,2.3vw,2.2rem)] font-medium leading-[1.15] tracking-[-0.025em] md:col-span-7" data-split="lines">
-              {p.summary}
-            </p>
+            <div className="col-span-12 md:col-span-7">
+              <p className="text-[clamp(1.4rem,2.3vw,2.2rem)] font-medium leading-[1.15] tracking-[-0.025em]" data-split="lines">
+                {p.summary}
+              </p>
+              {/* The live site, as the main action of the page */}
+              {p.liveUrl && (
+                <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-3" data-reveal="rise">
+                  <a href={p.liveUrl} target="_blank" rel="noreferrer" className="btn btn-primary">
+                    Visit the live site <span className="btn-arrow">↗</span>
+                    <span className="sr-only"> (opens in a new tab)</span>
+                  </a>
+                  <span className="text-[15px] text-muted">{new URL(p.liveUrl).host}</span>
+                </div>
+              )}
+            </div>
             <dl className="col-span-12 grid grid-cols-2 gap-x-6 gap-y-5 md:col-span-4 md:col-start-9" data-reveal="stagger">
               {meta.map(([k, v]) => (
                 <div key={k} className="border-t border-rule pt-3">
@@ -114,42 +116,11 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
         <div className="px-page mt-16 md:mt-24">
           <div className="media-fit group">
             <LensMedia project={p} aspect="aspect-[16/10]" priority hoverScale={false} sizes="(min-width: 1280px) 80vw, 100vw" />
-            <p className="eyebrow mt-3 text-muted">
-              <span className="hint-pointer">Move your cursor over the image.</span>
-              <span className="hint-touch">Drag a finger across the image.</span>
-            </p>
+            <p className="hint-pointer eyebrow mt-3 text-muted">Move your cursor over the image.</p>
           </div>
         </div>
 
-        <div className="px-page mt-20 md:mt-32">
-          <Chapter label="Challenge">
-            <p className="body-lg !text-[clamp(1.2rem,1.7vw,1.6rem)] !leading-[1.45]" data-split="lines">
-              {p.challenge}
-            </p>
-          </Chapter>
-          <Chapter label="Approach">
-            <p className="body-lg !text-[clamp(1.2rem,1.7vw,1.6rem)] !leading-[1.45]" data-split="lines">
-              {p.approach}
-            </p>
-          </Chapter>
-          <Chapter label="Execution">
-            <ul data-reveal="stagger">
-              {p.execution.map((e) => (
-                <li key={e} className="flex items-baseline gap-5 border-b border-rule py-5 text-[clamp(1.05rem,1.4vw,1.3rem)]">
-                  <span className="list-bar" aria-hidden="true" />
-                  {e}
-                </li>
-              ))}
-            </ul>
-          </Chapter>
-          <Chapter label="Outcome">
-            <p className="body-lg !text-[clamp(1.2rem,1.7vw,1.6rem)] !leading-[1.45]" data-split="lines">
-              {p.outcome}
-            </p>
-          </Chapter>
-        </div>
-
-        <section className="px-page pb-10 pt-16 md:pt-24" aria-labelledby="gallery-h">
+        <section className="px-page pt-16 md:pt-24" aria-labelledby="gallery-h">
           <div className="flex items-end justify-between gap-6 border-t border-rule pt-10">
             <h2 id="gallery-h" className="display text-[clamp(2.2rem,4vw,4rem)]" data-split="lines">
               Gallery
@@ -184,6 +155,35 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
             ))}
           </div>
         </section>
+
+        <div className="px-page mt-16 pb-10 md:mt-24">
+          <Chapter label="Challenge">
+            <p className="body-lg !text-[clamp(1.2rem,1.7vw,1.6rem)] !leading-[1.45]" data-split="lines">
+              {p.challenge}
+            </p>
+          </Chapter>
+          <Chapter label="Approach">
+            <p className="body-lg !text-[clamp(1.2rem,1.7vw,1.6rem)] !leading-[1.45]" data-split="lines">
+              {p.approach}
+            </p>
+          </Chapter>
+          <Chapter label="Execution">
+            <ul data-reveal="stagger">
+              {p.execution.map((e) => (
+                <li key={e} className="flex items-baseline gap-5 border-b border-rule py-5 text-[clamp(1.05rem,1.4vw,1.3rem)]">
+                  <span className="list-bar" aria-hidden="true" />
+                  {e}
+                </li>
+              ))}
+            </ul>
+          </Chapter>
+          <Chapter label="Outcome">
+            <p className="body-lg !text-[clamp(1.2rem,1.7vw,1.6rem)] !leading-[1.45]" data-split="lines">
+              {p.outcome}
+            </p>
+          </Chapter>
+        </div>
+
       </article>
 
       <NextProject project={next} />

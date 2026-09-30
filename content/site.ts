@@ -38,7 +38,7 @@ export const bookCall = site.bookingUrl
 
 export const nav = [
   { label: "Work", href: "/work" },
-  { label: "About", href: "/about" },
+  { label: "About Us", href: "/about" },
   { label: "Contact", href: "/contact" },
 ] as const;
 
@@ -66,9 +66,9 @@ export const anatomy = [
   },
 ] as const;
 
-/** Wrap words in *asterisks* to set them in accent italic. */
+/** Wrap words in *asterisks* for accent italic, **double asterisks** for bold. */
 export const positioning =
-  "We build websites for *all kinds of businesses and corporations.* Company and service sites, online shops, restaurants, portfolios, landing pages and whatnot. When a business needs more than pages, we add *practical tools:* reservations, ordering, HR, management dashboards. Clear scope. A working result.";
+  "We build websites, databases and AI tools for *businesses of every size.* **Clear scope. A working result.**";
 
 /** What we do: three areas, five services each. `note` is the plain-language line under each service. */
 export const pillars = [
@@ -164,10 +164,16 @@ export const integrations = [
  */
 export const testimonials: { quote: string; name: string; role: string }[] = [];
 
-/** The team, shown on the About page. Photos live in /public/team; `focus` is the crop point (object-position). */
+/**
+ * The team, shown on the About page. Photos live in /public/team; `focus` is the crop point (object-position).
+ * `whatsapp` is the local number as shown; the link uses the international form (880 + number without the 0).
+ */
 export const team = [
   {
     name: "Dihan Islam Dhrubo",
+    role: "Backend Developer",
+    facebook: "https://www.facebook.com/dihanislam.dhrubo.5/",
+    whatsapp: "01323866906",
     study: "BRAC University, CSE",
     graduation: "Expected graduation May 2027",
     github: "https://github.com/xDhruboVai",
@@ -176,6 +182,9 @@ export const team = [
   },
   {
     name: "Saalim Saadman",
+    role: "Frontend Developer",
+    facebook: "https://www.facebook.com/saalim.saadman.2025/",
+    whatsapp: "01742777666",
     study: "UCSI University Bangladesh Branch Campus, CS",
     graduation: "Expected graduation September 2028",
     github: "https://github.com/Saadmantheretroenjoyer",
@@ -184,6 +193,9 @@ export const team = [
   },
   {
     name: "Nahin Hasan",
+    role: "Management, Client Relations & PR",
+    facebook: "https://www.facebook.com/nahin.hasan.5220/",
+    whatsapp: "01716934401",
     study: "North South University, BBA (Marketing)",
     graduation: "Expected graduation August 2028",
     photo: "/team/nahin.jpg",

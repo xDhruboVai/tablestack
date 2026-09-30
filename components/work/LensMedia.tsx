@@ -1,20 +1,14 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { animate, onScroll } from "animejs";
 import ProjectCover from "./ProjectCover";
 import type { Project } from "@/content/projects";
 import { prefersReducedMotion } from "@/lib/motion";
-import { createFluid, type FluidSim } from "@/lib/fluid";
-
-/** How long the fluid keeps settling after the cursor leaves, before the canvas fades out (ms). */
-const SETTLE = 2200;
 
 /**
- * Project preview with a fluid distortion: moving the cursor over it stirs a liquid that bends the
- * picture and shows it inverted where the fluid is (WebGL, see lib/fluid.ts). On touch screens a finger
- * dragged across the image stirs it (page scrolling is never blocked). The simulation only starts on
- * the first touch or hover, and only runs while in use or settling. Reduced motion and browsers
- * without WebGL2 keep the plain image.
+ * Project preview with an inverted lens: a circle under the cursor shows the image with its
+ * colours inverted. On touch screens the lens sweeps across as the preview scrolls into view.
  */
 export default function LensMedia({
   project,
@@ -32,129 +26,51 @@ export default function LensMedia({
   sizes?: string;
 }) {
   const lens = useRef<HTMLDivElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const src = project.media?.cover;
-  const focusX = project.media?.focusX ?? 50;
 
   useEffect(() => {
     const el = lens.current;
-    const canvas = canvasRef.current;
-    if (!el || !canvas || !src || prefersReducedMotion()) return;
+    if (!el || prefersReducedMotion()) return;
+
     const fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
-
-    let sim: FluidSim | null = null;
-    let loading = false;
-    let failed = false;
-    let inside = false;
-    let raf = 0;
-    let lastT = 0;
-    let stopAt = 0;
-
-    const loop = (t: number) => {
-      const dt = lastT ? (t - lastT) / 1000 : 1 / 60;
-      lastT = t;
-      sim?.step(dt);
-      if (!inside && t > stopAt) {
-        canvas.classList.remove("is-on");
-        raf = 0;
-        lastT = 0;
-        return;
-      }
-      raf = requestAnimationFrame(loop);
-    };
-    const run = () => {
-      if (!sim) return;
-      canvas.classList.add("is-on");
-      if (!raf) raf = requestAnimationFrame(loop);
-    };
-
-    const start = () => {
-      if (sim || loading || failed) return;
-      loading = true;
-      const img = new Image();
-      img.decoding = "async";
-      img.onload = () => {
-        loading = false;
-        try {
-          sim = createFluid(canvas, img, focusX);
-        } catch {
-          sim = null;
-        }
-        if (!sim) failed = true;
-        else if (inside) run();
+    if (!fine) {
+      el.style.setProperty("--ly", "50%");
+      const sweep = animate(el, {
+        "--lx": ["-15%", "115%"],
+        "--lr": ["0px", "48px"],
+        ease: "linear",
+        duration: 1000,
+        autoplay: onScroll({ target: el, enter: "bottom top", leave: "top bottom", sync: 0.5 }),
+      });
+      return () => {
+        sweep.revert();
       };
-      img.onerror = () => {
-        loading = false;
-        failed = true;
-      };
-      img.src = src;
-    };
+    }
 
-    const local = (e: { clientX: number; clientY: number }) => {
-      const r = canvas.getBoundingClientRect();
-      // The canvas can be scaled by the hover zoom; convert back to its own CSS pixels.
-      return [((e.clientX - r.left) / r.width) * canvas.clientWidth, ((e.clientY - r.top) / r.height) * canvas.clientHeight];
-    };
-    const enter = (e: PointerEvent) => {
-      inside = true;
-      start();
-      sim?.resetPointer();
-      const [x, y] = local(e);
-      sim?.pointer(x, y);
-      run();
-    };
+    const radius = () => Math.max(36, Math.min(56, el.clientWidth * 0.06));
     const move = (e: PointerEvent) => {
-      if (!sim) return;
-      const [x, y] = local(e);
-      sim.pointer(x, y);
+      const r = el.getBoundingClientRect();
+      el.style.setProperty("--lx", `${e.clientX - r.left}px`);
+      el.style.setProperty("--ly", `${e.clientY - r.top}px`);
+    };
+    let open = false;
+    const enter = (e: PointerEvent) => {
+      open = true;
+      move(e);
+      animate(el, { "--lr": `${radius()}px`, duration: 650, ease: "out(4)" });
     };
     const leave = () => {
-      if (!inside) return;
-      inside = false;
-      stopAt = performance.now() + SETTLE;
+      if (!open) return;
+      open = false;
+      animate(el, { "--lr": "0px", duration: 500, ease: "inOut(3)" });
+    };
+    // pointerleave can be missed (cursor leaves the window fast, or the page scrolls under a still
+    // cursor), which would leave the lens stuck open. Close it in those cases too.
+    const onPageScroll = () => {
+      if (open && !el.matches(":hover")) leave();
     };
     const onDocLeave = (e: MouseEvent) => {
       if (!e.relatedTarget) leave();
     };
-    const onPageScroll = () => {
-      if (inside && !el.matches(":hover")) leave();
-    };
-    const ro = new ResizeObserver(() => sim?.resize());
-    ro.observe(canvas);
-
-    // Touch: passive listeners, so the page still scrolls; the finger's path (and the image moving
-    // under it while scrolling) stirs the fluid.
-    const touchStart = (e: TouchEvent) => {
-      const t = e.touches[0];
-      if (!t) return;
-      inside = true;
-      start();
-      sim?.resetPointer();
-      const [x, y] = local(t);
-      sim?.pointer(x, y);
-      run();
-    };
-    const touchMove = (e: TouchEvent) => {
-      const t = e.touches[0];
-      if (!sim || !t) return;
-      const [x, y] = local(t);
-      sim.pointer(x, y);
-    };
-    if (!fine) {
-      el.addEventListener("touchstart", touchStart, { passive: true });
-      el.addEventListener("touchmove", touchMove, { passive: true });
-      el.addEventListener("touchend", leave);
-      el.addEventListener("touchcancel", leave);
-      return () => {
-        cancelAnimationFrame(raf);
-        ro.disconnect();
-        sim?.destroy();
-        el.removeEventListener("touchstart", touchStart);
-        el.removeEventListener("touchmove", touchMove);
-        el.removeEventListener("touchend", leave);
-        el.removeEventListener("touchcancel", leave);
-      };
-    }
 
     el.addEventListener("pointerenter", enter);
     el.addEventListener("pointermove", move);
@@ -163,9 +79,6 @@ export default function LensMedia({
     window.addEventListener("scroll", onPageScroll, { passive: true });
     document.addEventListener("mouseout", onDocLeave);
     return () => {
-      cancelAnimationFrame(raf);
-      ro.disconnect();
-      sim?.destroy();
       el.removeEventListener("pointerenter", enter);
       el.removeEventListener("pointermove", move);
       el.removeEventListener("pointerleave", leave);
@@ -173,7 +86,7 @@ export default function LensMedia({
       window.removeEventListener("scroll", onPageScroll);
       document.removeEventListener("mouseout", onDocLeave);
     };
-  }, [src, focusX]);
+  }, []);
 
   return (
     <div
@@ -189,13 +102,17 @@ export default function LensMedia({
           }`}
         >
           <ProjectCover project={project} priority={priority} sizes={sizes} />
-          {/* Drawn over the image (same crop) while the fluid is moving. */}
-          <canvas ref={canvasRef} className="lens-fluid" aria-hidden="true" />
         </div>
+      </div>
+      <div className="lens-invert cover-host pointer-events-none absolute inset-0" aria-hidden="true">
+        <ProjectCover project={project} sizes={sizes} decorative />
       </div>
       {project.placeholder && (
         <span className="eyebrow absolute left-3 top-3 bg-[var(--bg)] px-2 py-1 !text-[13px] text-fg">Placeholder</span>
       )}
+      <span className="lens-tip eyebrow" aria-hidden="true">
+        Hover to see how it’s built
+      </span>
     </div>
   );
 }
