@@ -22,7 +22,7 @@ export const site = {
   availability: "Taking on new projects",
   responseTime: "We’ll get back to you to talk through scope and next steps.",
   social: [
-    // Empty href = hidden. Add the real links when they're ready.
+    // Empty href = hidden. Add the real links when they're ready.       
     { label: "Facebook", href: "" }, // REPLACE with the Facebook Page URL
     { label: "WhatsApp", href: "https://wa.me/qr/LB3AYHDJVRUAG1" }, // REPLACE with a wa.me link
   ],
