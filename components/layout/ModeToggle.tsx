@@ -11,7 +11,7 @@ type Mode = "foh" | "boh";
  * BOH turns the whole site into a blueprint of itself: grid, component outlines, wireframes.
  */
 export default function ModeToggle({ compact = false }: { compact?: boolean }) {
-  const [mode, setMode] = useState<Mode>("foh");
+  const [mode, setMode] = useState<Mode>("boh");
 
   useEffect(() => {
     setMode(document.documentElement.dataset.mode === "boh" ? "boh" : "foh");

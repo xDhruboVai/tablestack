@@ -46,7 +46,7 @@ export default function LensMedia({
       };
     }
 
-    const radius = () => Math.max(36, Math.min(56, el.clientWidth * 0.06));
+    const radius = () => Math.max(90, Math.min(170, el.clientWidth * 0.16));
     const move = (e: PointerEvent) => {
       const r = el.getBoundingClientRect();
       el.style.setProperty("--lx", `${e.clientX - r.left}px`);
