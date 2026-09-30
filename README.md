@@ -1,5 +1,5 @@
 # TableStack - studio website
-
+ 
 Websites built around the way your business works. Websites first. Tools when needed.
 
 Built with **Next.js 16 (App Router) · TypeScript · Tailwind CSS 4 · anime.js 4**.
