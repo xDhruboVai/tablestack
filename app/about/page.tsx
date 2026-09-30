@@ -30,7 +30,7 @@ const sides = {
 
 const facts = [
   ["Based in", site.location],
-  ["We build", "Websites, online shops and the systems behind them"],
+  ["We build", "Websites, databases, software and AI"],
   ["How we work", "Discuss, design, build, launch"],
 ];
 

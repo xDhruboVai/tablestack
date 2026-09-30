@@ -2,12 +2,10 @@
 
 import { useEffect, useRef, useState } from "react";
 import { animate, utils } from "animejs";
-import { capabilities } from "@/content/site";
+import { pillars } from "@/content/site";
 import { prefersReducedMotion } from "@/lib/motion";
 
-const f = capabilities.frontOfHouse.items;
-const b = capabilities.backOfHouse.items;
-const ITEMS = [f[0], f[1], f[2], f[3], b[0], b[3]];
+const ITEMS = pillars.map((p) => ({ name: p.title, note: p.summary }));
 const INTERVAL = 2600;
 
 /** One block of the wireframe: position and size in the 200 x 130 frame, plus its tone. */
@@ -15,25 +13,26 @@ type Block = [x: number, y: number, w: number, h: number, tone?: "a" | "s"];
 const row = (n: number, f: (i: number) => Block) => Array.from({ length: n }, (_, i) => f(i));
 
 /**
- * A page skeleton for each line, in the same order as ITEMS. The blocks morph from one layout to
+ * A picture for each area, in the same order as ITEMS. The blocks morph from one layout to
  * the next; "a" is the accent block, "s" a stronger grey, the rest faint.
  */
 const LAYOUTS: Block[][] = [
-  // Company & service sites: headline, copy, button, image, footer band
+  // Web & digital: a web page with headline, copy, button, image and a footer band
   [[12, 28, 104, 10, "a"], [12, 44, 84, 5], [12, 53, 92, 5], [12, 62, 70, 5], [12, 74, 38, 11, "s"], [128, 28, 60, 57], [12, 96, 176, 24]],
-  // Online shops: a product grid with prices
-  [...row(4, (i) => [12 + i * 45, 28, 40, 40]), ...row(4, (i) => [12 + i * 45, 72, 30, 5, "s"]), ...row(4, (i) => [12 + i * 45, 81, 18, 5, "a"]), ...row(4, (i) => [12 + i * 45, 94, 40, 26])],
-  // Restaurant & café sites: hero photo with title, then a two-column menu
-  [[12, 26, 176, 42], [44, 42, 112, 10, "a"], ...row(3, (i) => [12, 78 + i * 10, 80, 5]), ...row(3, (i) => [108, 78 + i * 10, 80, 5]), [72, 108, 20, 5, "s"], [168, 108, 20, 5, "s"]],
-  // Portfolios & landing pages: centred headline, button, three tiles
-  [[42, 28, 116, 12, "a"], [62, 46, 76, 5], [82, 57, 36, 11, "s"], ...row(3, (i) => [12 + i * 60, 80, 56, 40])],
-  // Reservations & booking: a week of days, one picked, and time slots
-  [[12, 27, 176, 9, "s"], ...row(7, (i) => [12 + i * 25.5, 42, 21, 18, i === 3 ? "a" : undefined]), ...row(3, (i) => [12 + i * 60, 68, 56, 12, i === 1 ? "s" : undefined]), [12, 88, 176, 5], [12, 97, 120, 5], [150, 106, 38, 14, "a"]],
-  // Dashboards & admin: sidebar, stat cards, a bar chart
-  [[12, 26, 32, 94, "s"], [52, 26, 64, 30], [124, 26, 64, 30], ...row(7, (i) => {
-    const h = [22, 36, 28, 46, 32, 52, 40][i];
-    return [54 + i * 19, 120 - h, 13, h, i === 5 ? "a" : undefined];
-  })],
+  // Data & databases: three linked tables, then a small chart of the data
+  [
+    [12, 28, 50, 9, "a"], ...row(4, (i) => [12, 41 + i * 8, 50, 5]),
+    [75, 28, 50, 9, "s"], ...row(3, (i) => [75, 41 + i * 8, 50, 5]),
+    [138, 28, 50, 9, "s"], ...row(2, (i) => [138, 41 + i * 8, 50, 5]),
+    [62, 44, 13, 1.5, "s"], [125, 44, 13, 1.5, "s"],
+    ...row(6, (i) => { const h = [10, 16, 12, 20, 14, 24][i]; return [12 + i * 30, 120 - h, 22, h, i === 5 ? "a" : undefined]; }),
+  ],
+  // Agentic AI: a chat with the assistant, and a small network of agents
+  [
+    [52, 28, 70, 10], [12, 44, 96, 22, "s"], [40, 72, 68, 10], [12, 88, 80, 14, "s"], [12, 110, 110, 10],
+    [146, 28, 32, 14, "a"], [136, 58, 22, 12], [166, 58, 22, 12], [146, 88, 32, 14, "s"],
+    [161, 42, 1.5, 16, "s"], [147, 70, 1.5, 18, "s"], [176, 70, 1.5, 18, "s"],
+  ],
 ];
 const SLOTS = Math.max(...LAYOUTS.map((l) => l.length));
 /** Blocks a layout doesn't use shrink to nothing at the frame's centre. */
@@ -42,8 +41,8 @@ const blockAt = (layout: number, slot: number) => LAYOUTS[layout][slot] ?? EMPTY
 const toneClass = (b: Block) => `wf-block${b[4] === "a" ? " is-accent" : b[4] === "s" ? " is-strong" : ""}`;
 
 /**
- * "What we build" as a ticker: one line at a time is lit, and a small browser wireframe
- * morphs into the kind of page that line means.
+ * "What we build" as a ticker: one area at a time is lit, and a small browser wireframe
+ * morphs into a picture of that area.
  * Auto-advances while on screen, pauses on hover or focus; stays still with reduced motion.
  */
 export default function BuildTicker() {

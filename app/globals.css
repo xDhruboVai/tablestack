@@ -2022,3 +2022,17 @@ line.wf-window {
     touch-action: pan-y;
   }
 }
+
+/* "What we build" service rows: a marker, then the service with its plain line underneath. */
+.pillar-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: 0.85rem;
+  align-items: start;
+  padding-block: 0.95rem;
+  border-top: 1px solid color-mix(in srgb, currentColor 16%, transparent);
+}
+.pillar-row:hover .cap-name {
+  transform: translateX(6px);
+  color: var(--accent);
+}

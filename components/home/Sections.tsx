@@ -6,7 +6,7 @@ import StandardsChecklist from "./StandardsChecklist";
 import ScrollWords from "./ScrollWords";
 import ApproachAssemble from "./ApproachAssemble";
 import { projects, featuredSlugs } from "@/content/projects";
-import { bookCall, capabilities, positioning, site, testimonials } from "@/content/site";
+import { bookCall, pillars, positioning, site, testimonials } from "@/content/site";
 
 /* ── (01) Positioning ──────────────────────────────────────── */
 export function Positioning() {
@@ -68,29 +68,19 @@ export function SelectedWork() {
 }
 
 /* ── (03) Capabilities ─────────────────────────────────────── */
-function MenuColumn({
-  data,
-  dark,
-}: {
-  data: (typeof capabilities)["frontOfHouse"] | (typeof capabilities)["backOfHouse"];
-  dark?: boolean;
-}) {
+function PillarColumn({ data, dark }: { data: (typeof pillars)[number]; dark?: boolean }) {
   return (
-    <div className={`cap-col relative px-6 py-10 md:px-10 md:py-14 ${dark ? "cap-dark" : "bg-surface"}`}>
-      <div className="flex items-baseline justify-between gap-4">
-        <h3 className="display text-[clamp(2rem,3vw,3rem)]">
-          {data.label}
-        </h3>
-        <span className="eyebrow opacity-70">{data.sub}</span>
-      </div>
-      <ul className="mt-10">
+    <div className={`cap-col relative px-6 py-10 md:px-8 md:py-12 ${dark ? "cap-dark" : "bg-surface"}`}>
+      <p className="eyebrow opacity-70">{data.sub}</p>
+      <h3 className="display mt-2 text-[clamp(1.8rem,2.4vw,2.4rem)]">{data.title}</h3>
+      <ul className="mt-8">
         {data.items.map((item) => (
-          <li key={item.name} className="cap-row">
-            <span className="list-bar" aria-hidden="true" />
-            <span className="cap-name text-[clamp(1.05rem,1.4vw,1.3rem)] font-medium">{item.name}</span>
-            <span className="leader hidden sm:block" aria-hidden="true" />
-            <span className="cap-note text-[15px] opacity-75 sm:text-right">{item.note}</span>
-            <span className="row-arrow hidden sm:inline-block" aria-hidden="true">→</span>
+          <li key={item.name} className="pillar-row">
+            <span className="list-bar mt-[0.35em]" aria-hidden="true" />
+            <span>
+              <span className="cap-name block text-[clamp(1.02rem,1.2vw,1.15rem)] font-medium">{item.name}</span>
+              <span className="mt-1 block text-[15px] opacity-75">{item.note}</span>
+            </span>
           </li>
         ))}
       </ul>
@@ -107,12 +97,14 @@ export function Capabilities() {
           What we <em className="text-accent">build.</em>
         </h2>
         <p className="body-lg col-span-12 mt-6 max-w-[40ch] md:col-span-4 md:mt-0 md:self-end" data-split="lines">
-          Websites, softwares and databases built around what your business needs.
+          Three areas, one team. Websites, data and AI, scoped to what your business actually needs.
         </p>
       </div>
-      <div className="mt-14 grid grid-cols-1 border border-rule md:mt-20 lg:grid-cols-2" data-reveal="rise">
-        <MenuColumn data={capabilities.frontOfHouse} />
-        <MenuColumn data={capabilities.backOfHouse} dark />
+      {/* One column per area: light, dark, light. */}
+      <div className="mt-14 grid grid-cols-1 gap-px border border-rule bg-[var(--rule)] md:mt-20 lg:grid-cols-3" data-reveal="rise">
+        {pillars.map((p, i) => (
+          <PillarColumn key={p.title} data={p} dark={i % 2 === 1} />
+        ))}
       </div>
     </section>
   );

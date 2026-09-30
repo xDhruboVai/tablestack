@@ -11,7 +11,7 @@ export default function Home() {
     email: site.email,
     description: site.description,
     areaServed: "Bangladesh",
-    knowsAbout: ["Business websites", "E-commerce", "Restaurant websites", "Web development", "Online reservations", "Online ordering", "Management dashboards"],
+    knowsAbout: ["Web application development", "UI/UX design", "E-commerce", "Progressive web apps", "SEO", "Web accessibility", "Database engineering", "Data pipelines", "Enterprise software", "Mobile app development", "Cloud and DevOps", "API development", "AI agents", "Retrieval-augmented generation", "LLM integration"],
   };
 
   return (

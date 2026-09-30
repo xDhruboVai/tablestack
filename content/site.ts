@@ -51,18 +51,18 @@ export const anatomy = [
   },
   {
     code: "02",
-    title: "Your content",
-    body: "Menus, products, services and hours, laid out so people find them fast.",
+    title: "Your data",
+    body: "Databases designed, migrated and kept fast, so the numbers are always right.",
   },
   {
     code: "03",
-    title: "Bookings & orders",
-    body: "Reservations, ordering or enquiries, built in or connected when you need them.",
+    title: "Software & cloud",
+    body: "Business software, mobile apps and APIs, running on the cloud.",
   },
   {
     code: "04",
-    title: "The systems behind it",
-    body: "Admin tools, dashboards, backend and hosting. The tech stack in TableStack.",
+    title: "AI that does the work",
+    body: "Agents and automation that take the manual work off your team. The tech stack in TableStack.",
   },
 ] as const;
 
@@ -70,30 +70,45 @@ export const anatomy = [
 export const positioning =
   "We build websites for *all kinds of businesses and corporations.* Company and service sites, online shops, restaurants, portfolios, landing pages and whatnot. When a business needs more than pages, we add *practical tools:* reservations, ordering, HR, management dashboards. Clear scope. A working result.";
 
-export const capabilities = {
-  frontOfHouse: {
-    label: "Websites",
-    sub: "Front of house",
+/** What we do: three areas, five services each. `note` is the plain-language line under each service. */
+export const pillars = [
+  {
+    title: "Web & digital",
+    sub: "Websites and web apps",
+    summary: "Web apps, UI/UX, online shops, PWAs and SEO",
     items: [
-      { name: "Company & service sites", note: "A clear offer, an easy enquiry" },
-      { name: "Online shops", note: "Products, cart, orders" },
-      { name: "Restaurant & café sites", note: "Menus, branches, hours, bookings" },
-      { name: "Portfolios & landing pages", note: "Focused and quick to launch" },
-      { name: "Branding with your site", note: "When it’s part of the scope" },
+      { name: "Custom web applications", note: "Front-end, back-end or the full stack" },
+      { name: "Web & mobile UI/UX design", note: "Interfaces that work on every screen" },
+      { name: "E-commerce & CMS", note: "Online shops, and content your team can edit" },
+      { name: "PWAs & API integration", note: "App-like sites, connected to your tools" },
+      { name: "Performance, SEO & accessibility", note: "Fast, found on Google, usable by everyone" },
     ],
   },
-  backOfHouse: {
-    label: "Systems",
-    sub: "Back of house",
+  {
+    title: "Data & databases",
+    sub: "The data underneath",
+    summary: "Schema design, migration, ETL and backups",
     items: [
-      { name: "Reservations & booking", note: "Built in or connected" },
-      { name: "Online ordering", note: "From menu to checkout" },
-      { name: "HR & management tools", note: "Replace the manual process" },
-      { name: "Dashboards & admin", note: "Next.js, Supabase, auth" },
-      { name: "Launch & support", note: "Vercel, SEO setup, maintenance" },
+      { name: "Database architecture & schema design", note: "SQL, NoSQL and vector databases" },
+      { name: "Legacy database migration", note: "Move old systems to modern ones, safely" },
+      { name: "Administration & performance tuning", note: "Indexing and tuning so queries stay fast" },
+      { name: "Data warehousing, ETL & real-time sync", note: "Data moved, cleaned and kept in step" },
+      { name: "Backups, recovery & high availability", note: "Systems that stay up and bounce back" },
     ],
   },
-} as const;
+  {
+    title: "Agentic AI",
+    sub: "AI that does the work",
+    summary: "Agents, automation, RAG and fine-tuning",
+    items: [
+      { name: "AI agents & multi-agent systems", note: "Agents that plan and act together" },
+      { name: "Custom AI tools & workflow automation", note: "Function calling that takes over manual steps" },
+      { name: "RAG & vector search", note: "AI answers grounded in your own documents" },
+      { name: "LLM fine-tuning & model integration", note: "Models shaped and wired into your product" },
+      { name: "Enterprise AI, analytics & governance", note: "Responsible AI across the company" },
+    ],
+  },
+] as const;
 
 export const approach = [
   {
@@ -207,10 +222,10 @@ export const about = {
 /** Contact form options. */
 export const inquiry = {
   needs: [
-    "New website",
-    "Redesign",
-    "Online shop",
-    "Dashboard or admin tool",
+    "Website or web app",
+    "Database or data work",
+    "Software, mobile or cloud",
+    "AI or automation",
     "Something else",
   ],
   // Budget ranges in BDT.

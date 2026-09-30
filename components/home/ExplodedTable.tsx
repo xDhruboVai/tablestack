@@ -11,9 +11,9 @@ export const D = 180;
 export const LEG = 150;
 
 export const LAYERS = [
-  { id: "boh", z: 0, t: 18, explode: 0, tag: "04 · SYSTEMS" },
-  { id: "res", z: 18, t: 10, explode: -130, tag: "03 · BOOKINGS + ORDERS" },
-  { id: "menu", z: 28, t: 10, explode: -260, tag: "02 · CONTENT" },
+  { id: "boh", z: 0, t: 18, explode: 0, tag: "04 · AI" },
+  { id: "res", z: 18, t: 10, explode: -130, tag: "03 · SOFTWARE + CLOUD" },
+  { id: "menu", z: 28, t: 10, explode: -260, tag: "02 · DATA" },
   { id: "foh", z: 38, t: 12, explode: -390, tag: "01 · WEBSITE" },
 ] as const;
 
