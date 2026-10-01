@@ -19,31 +19,32 @@ async function post(body: object) {
   }
 }
 
-/** The hidden work-admin page: a PIN gate, then one on/off switch per project. */
+/** The admin page: username/password gate, then one on/off switch per project. */
 export default function WorkToggles({
   unlocked,
-  pinReady,
+  loginReady,
   storageReady,
   items,
 }: {
   unlocked: boolean;
-  pinReady: boolean;
+  loginReady: boolean;
   storageReady: boolean;
   items: Item[];
 }) {
   const router = useRouter();
-  const [pin, setPin] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [state, setState] = useState(items);
   const [busy, setBusy] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  if (!pinReady || !storageReady) {
+  if (!loginReady || !storageReady) {
     return (
       <div className="form-alert mt-10 max-w-[60ch]" role="status">
         <p className="font-medium">Not set up yet.</p>
         <p className="mt-1 text-fg-2">
-          {!storageReady && "Storage isn’t connected (SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are missing). "}
-          {!pinReady && "No PIN is set (WORK_ADMIN_PIN is missing). "}
+          {!storageReady && "Storage isn’t connected (NEXT_PUBLIC_SUPABASE_URL and a project key are missing). "}
+          {!loginReady && "No admin credentials are set (WORK_ADMIN_USERNAME and WORK_ADMIN_PASSWORD are missing). "}
           Until then every project stays visible.
         </p>
       </div>
@@ -53,8 +54,8 @@ export default function WorkToggles({
   if (!unlocked) {
     const submit = async (e: React.FormEvent) => {
       e.preventDefault();
-      setBusy("pin");
-      const err = await post({ pin });
+      setBusy("login");
+      const err = await post({ username: username.trim(), password });
       setBusy(null);
       setError(err);
       if (!err) router.refresh();
@@ -62,25 +63,36 @@ export default function WorkToggles({
     return (
       <form onSubmit={submit} className="mt-10 max-w-[22rem]" noValidate>
         <div className="field">
-          <label htmlFor="wa-pin">PIN</label>
+          <label htmlFor="wa-username">Username</label>
           <input
-            id="wa-pin"
-            type="password"
-            inputMode="numeric"
-            autoComplete="off"
-            value={pin}
-            onChange={(e) => setPin(e.target.value)}
+            id="wa-username"
+            type="text"
+            autoComplete="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
             aria-invalid={error ? true : undefined}
-            aria-describedby={error ? "wa-pin-err" : undefined}
+            aria-describedby={error ? "wa-login-err" : undefined}
           />
-          {error && (
-            <p id="wa-pin-err" className="field-error" role="alert">
-              {error}
-            </p>
-          )}
         </div>
-        <button type="submit" className="btn btn-primary mt-6" disabled={busy === "pin" || !pin}>
-          {busy === "pin" ? "Checking" : "Unlock"}
+        <div className="field mt-4">
+          <label htmlFor="wa-password">Password</label>
+          <input
+            id="wa-password"
+            type="password"
+            autoComplete="current-password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            aria-invalid={error ? true : undefined}
+            aria-describedby={error ? "wa-login-err" : undefined}
+          />
+        </div>
+        {error && (
+          <p id="wa-login-err" className="field-error mt-4" role="alert">
+            {error}
+          </p>
+        )}
+        <button type="submit" className="btn btn-primary mt-6" disabled={busy === "login" || !username || !password}>
+          {busy === "login" ? "Checking" : "Sign in"}
         </button>
       </form>
     );

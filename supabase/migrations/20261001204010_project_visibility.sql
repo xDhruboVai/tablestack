@@ -1,0 +1,1 @@
+create table if not exists public.project_visibility ( slug text primary key, visible boolean not null default true, updated_at timestamptz not null default now() );
