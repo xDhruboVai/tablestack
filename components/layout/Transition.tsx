@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useCallback, useContext, useEffect, useRef } from "react";
-import { nav } from "@/content/site";
+import { footerNav, nav } from "@/content/site";
 import { usePathname, useRouter } from "next/navigation";
 import { animate, scrambleText, utils } from "animejs";
 import { EASE, SCRAMBLE_CHARS, prefersReducedMotion } from "@/lib/motion";
@@ -30,8 +30,9 @@ export function whenUncovered(cb: () => void) {
 function labelFor(href: string) {
   const path = href.split(/[?#]/)[0];
   if (path === "/") return "Home";
-  const named = nav.find((n) => n.href === path);
+  const named = [...nav, ...footerNav].find((n) => n.href === path);
   if (named) return named.label;
+  if (path.startsWith("/blog/")) return "Blog";
   const last = path.split("/").filter(Boolean).pop() ?? "";
   return last.charAt(0).toUpperCase() + last.slice(1).replace(/-/g, " ");
 }

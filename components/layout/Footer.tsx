@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import TLink from "./TLink";
-import { bookCall, nav, site } from "@/content/site";
+import { bookCall, footerNav, nav, site } from "@/content/site";
 
 function LocalTime() {
   const [t, setT] = useState<string | null>(null);
@@ -79,7 +79,7 @@ export default function Footer() {
                 Home
               </TLink>
             </li>
-            {nav.map((n) => (
+            {[...nav, ...footerNav].map((n) => (
               <li key={n.href}>
                 <TLink href={n.href} className="link-draw">
                   {n.label}
@@ -103,6 +103,11 @@ export default function Footer() {
               </a>
             </li>
             <li>
+              <a href={`tel:${site.phoneIntl}`} className="link-draw whitespace-nowrap">
+                {site.phone.slice(0, 5)} {site.phone.slice(5)}
+              </a>
+            </li>
+            <li>
               <a {...bookCall} className="link-draw">
                 Book a call
               </a>
@@ -119,7 +124,9 @@ export default function Footer() {
 
         <div className="md:col-span-2">
           <p className="eyebrow text-muted">Based in</p>
-          <p className="mt-4">{site.location}</p>
+          <p className="mt-4">
+            {site.city}, {site.location}
+          </p>
           <p className="mt-1 tabular-nums text-fg-2">
             Dhaka time{" "}
             <span className="whitespace-nowrap">

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { site } from "@/content/site";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import TLink from "@/components/layout/TLink";
@@ -23,10 +24,18 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
     description: p.summary,
     alternates: { canonical: `/work/${p.slug}` },
     openGraph: {
+      type: "article",
+      siteName: site.name,
       title: `${p.title} · ${p.kind}`,
       description: p.summary,
       url: `/work/${p.slug}`,
-      ...(p.media?.cover ? { images: [{ url: p.media.cover, alt: p.media.coverAlt ?? p.title }] } : {}),
+      images: [p.media?.cover ? { url: p.media.cover, alt: p.media.coverAlt ?? p.title } : { url: "/opengraph-image" }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${p.title} · ${p.kind}`,
+      description: p.summary,
+      images: [p.media?.cover ?? "/opengraph-image"],
     },
   };
 }

@@ -28,24 +28,26 @@ const artSerif = Instrument_Serif({
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: `${site.name} | ${site.tagline}`,
+    default: site.seoTitle,
     template: `%s | ${site.name}`,
   },
-  description: site.description,
+  description: site.seoDescription,
   applicationName: site.name,
+  // Keep Vercel preview and development deployments out of search results; only production is indexable.
+  robots: process.env.VERCEL_ENV && process.env.VERCEL_ENV !== "production" ? { index: false, follow: false } : undefined,
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     siteName: site.name,
-    title: `${site.name} | ${site.tagline}`,
-    description: site.description,
+    title: site.seoTitle,
+    description: site.seoDescription,
     url: "/",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: `${site.name} | ${site.tagline}`,
-    description: site.description,
+    title: site.seoTitle,
+    description: site.seoDescription,
   },
 };
 

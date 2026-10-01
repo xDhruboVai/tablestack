@@ -1,14 +1,15 @@
-import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
+import { site } from "@/content/site";
 import WorkIndex from "@/components/work/WorkIndex";
 import BuildTicker from "@/components/work/BuildTicker";
 import { projects } from "@/content/projects";
 import { ContactCTA } from "@/components/home/Sections";
 
-export const metadata: Metadata = {
+export const metadata = pageMeta({
   title: "Work",
-  description: "Websites and systems built by TableStack for businesses: sites, shops, bookings and the tools behind them.",
-  alternates: { canonical: "/work" },
-};
+  description: `Websites ${site.name} has designed and built for businesses in Bangladesh, each with a case study and a link to the live site.`,
+  path: "/work",
+});
 
 export default function WorkPage() {
   const anyPlaceholder = projects.some((p) => p.placeholder);

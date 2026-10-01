@@ -1,14 +1,14 @@
-import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import ContactForm from "@/components/contact/ContactForm";
 import CopyEmail from "@/components/contact/CopyEmail";
 import NextSteps from "@/components/contact/NextSteps";
 import { bookCall, site } from "@/content/site";
 
-export const metadata: Metadata = {
+export const metadata = pageMeta({
   title: "Contact",
-  description: `Start a project with ${site.name}. Email ${site.email} or send a short brief.`,
-  alternates: { canonical: "/contact" },
-};
+  description: `Start a project with ${site.name}. Send a short brief, email ${site.email}, book a call or message us on WhatsApp.`,
+  path: "/contact",
+});
 
 export default function ContactPage() {
   return (

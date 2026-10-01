@@ -1,14 +1,16 @@
 import type { MetadataRoute } from "next";
 import { site } from "@/content/site";
 import { projects } from "@/content/projects";
+import { posts } from "@/content/posts";
 
+/**
+ * Canonical, indexable pages only (no redirects, no API routes).
+ * `lastModified` is set only where a real date exists (blog posts); a made-up date is worse than none.
+ */
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date();
+  const paths = ["", "/work", "/about", "/contact", "/why-tablestack", "/faq", "/blog", ...projects.map((p) => `/work/${p.slug}`)];
   return [
-    { url: site.url, lastModified: now, priority: 1 },
-    { url: `${site.url}/work`, lastModified: now, priority: 0.9 },
-    { url: `${site.url}/about`, lastModified: now, priority: 0.7 },
-    { url: `${site.url}/contact`, lastModified: now, priority: 0.8 },
-    ...projects.map((p) => ({ url: `${site.url}/work/${p.slug}`, lastModified: now, priority: 0.6 })),
+    ...paths.map((p) => ({ url: `${site.url}${p || "/"}` })),
+    ...posts.map((p) => ({ url: `${site.url}/blog/${p.slug}`, lastModified: new Date(p.date) })),
   ];
 }

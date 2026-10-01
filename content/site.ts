@@ -11,9 +11,15 @@
 
 export const site = {
   name: "TableStack",
+  // Other ways people write the name. Sent to search engines as alternate names only; the brand is "TableStack".
+  altNames: ["Table Stack", "TableStack BD"],
   // Production URL - used for canonical links, sitemap and social cards.
-  url: "https://www.tablestackbd.com", // REPLACE with your real domain
+  url: "https://tablestackbd.com",
   email: "tablestackbd@gmail.com",
+  // Company phone: shown in the footer and in Google's business data.
+  phone: "01716934401",
+  phoneIntl: "+8801716934401",
+  city: "Dhaka",
   // Booking link used by every "Book a call" button.
   bookingUrl: "https://cal.com/table-stack/intro-call",
   location: "Bangladesh",
@@ -23,12 +29,16 @@ export const site = {
   responseTime: "We’ll get back to you to talk through scope and next steps.",
   social: [
     // Empty href = hidden. Add the real links when they're ready.       
-    { label: "Facebook", href: "" }, // REPLACE with the Facebook Page URL
+    { label: "Facebook", href: "https://www.facebook.com/share/14vDpitJUjH/" },
     { label: "WhatsApp", href: "https://wa.me/qr/LB3AYHDJVRUAG1" }, // REPLACE with a wa.me link
   ],
   tagline: "Websites built around the way your business works.",
+  // Shown in Google results and link previews (keep under about 160 characters).
+  seoTitle: "TableStack | Web Development & AI Solutions in Bangladesh",
+  seoDescription:
+    "TableStack is a Bangladesh web development team building custom websites, business software, databases, and AI tools. Explore our work and discuss your project.",
   description:
-    "A small web team in Bangladesh. We build websites, softwares and databases for all kinds of businesses and corporations, plus the tools behind them when you need them.",
+    "A small web team in Bangladesh. We build websites, software and databases for all kinds of businesses and corporations, plus the tools behind them when you need them.",
 } as const;
 
 /** Props for every "Book a call" link: the booking page in a new tab, or an email while there's no link. */
@@ -40,6 +50,13 @@ export const nav = [
   { label: "Work", href: "/work" },
   { label: "About Us", href: "/about" },
   { label: "Contact", href: "/contact" },
+] as const;
+
+/** Extra pages, linked from the footer only. */
+export const footerNav = [
+  { label: "Why TableStack", href: "/why-tablestack" },
+  { label: "FAQ", href: "/faq" },
+  { label: "Blog", href: "/blog" },
 ] as const;
 
 /** The four layers of the exploded table in the hero. */
@@ -206,7 +223,7 @@ export const team = [
 /** About page. */
 export const about = {
   intro:
-    "TableStack is a small web team in Bangladesh. We build websites, softwares and databases for businesses and corporations.",
+    "TableStack is a small web team in Bangladesh. We build websites, software, databases and AI tools for businesses and corporations.",
   principles: [
     {
       code: "A",

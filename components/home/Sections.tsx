@@ -90,7 +90,7 @@ function PillarColumn({ data, dark }: { data: (typeof pillars)[number]; dark?: b
 
 export function Capabilities() {
   return (
-    <section className="px-page relative pb-20 md:pb-28" aria-labelledby="cap-title" data-annot="section · capabilities">
+    <section id="services" className="px-page relative scroll-mt-[var(--nav-h)] pb-20 md:pb-28" aria-labelledby="cap-title" data-annot="section · capabilities">
       <SectionLabel index="03" label="Capabilities" />
       <div className="mt-10 grid grid-cols-12 gap-x-6 md:mt-14">
         <h2 id="cap-title" className="display col-span-12 text-[clamp(2.6rem,6vw,6.4rem)] md:col-span-8" data-split="lines">

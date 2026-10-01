@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 import Image from "next/image";
 import SectionLabel from "@/components/ui/SectionLabel";
 import DotField from "@/components/about/DotField";
@@ -8,11 +8,11 @@ import SocialIcon from "@/components/ui/SocialIcon";
 import { ContactCTA } from "@/components/home/Sections";
 import { about, site, team } from "@/content/site";
 
-export const metadata: Metadata = {
+export const metadata = pageMeta({
   title: "About Us",
-  description: about.intro,
-  alternates: { canonical: "/about" },
-};
+  description: `Meet ${site.name}: three people in Dhaka, Bangladesh who design and build websites, software, databases and AI tools. See who we are and how we work.`,
+  path: "/about",
+});
 
 const sides = {
   guests: [
