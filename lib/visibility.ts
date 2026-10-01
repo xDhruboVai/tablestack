@@ -44,6 +44,11 @@ export async function getVisibleProjects(): Promise<Project[]> {
   return projects.filter((p) => !hidden.has(p.slug));
 }
 
+/** A single shared rule: if at least one project is visible, the Work page and Work links stay live. */
+export async function hasVisibleProjects(): Promise<boolean> {
+  return (await getVisibleProjects()).length > 0;
+}
+
 /** Saves one project's state. Returns an error message for the admin page, or null on success. */
 export async function setVisibility(slug: string, visible: boolean): Promise<string | null> {
   if (!storageReady) return "Storage isn't connected yet.";
