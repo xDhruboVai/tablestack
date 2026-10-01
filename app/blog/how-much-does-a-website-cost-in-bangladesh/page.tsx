@@ -3,6 +3,7 @@ import TLink from "@/components/layout/TLink";
 import { ContactCTA } from "@/components/home/Sections";
 import { formatDate, posts } from "@/content/posts";
 import { site } from "@/content/site";
+import { getVisibleProjects } from "@/lib/visibility";
 
 const post = posts.find((p) => p.slug === "how-much-does-a-website-cost-in-bangladesh")!;
 
@@ -22,7 +23,8 @@ const ranges = [
   ["A web app or custom system", "Tk 150,000 and up", "Booking systems, dashboards, customer portals and other software built for one business."],
 ];
 
-export default function PostPage() {
+export default async function PostPage() {
+  const showWork = (await getVisibleProjects()).length > 0;
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -143,10 +145,14 @@ export default function PostPage() {
             <TLink href="/#services" className="inline-link">
               see what we build
             </TLink>
-            ,{" "}
-            <TLink href="/work" className="inline-link">
-              look at our work
-            </TLink>
+            {showWork && (
+              <>
+                ,{" "}
+                <TLink href="/work" className="inline-link">
+                  look at our work
+                </TLink>
+              </>
+            )}
             , or read the{" "}
             <TLink href="/faq" className="inline-link">
               frequently asked questions

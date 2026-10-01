@@ -2,7 +2,8 @@ import { pageMeta } from "@/lib/seo";
 import { site } from "@/content/site";
 import WorkIndex from "@/components/work/WorkIndex";
 import BuildTicker from "@/components/work/BuildTicker";
-import { projects } from "@/content/projects";
+import { notFound } from "next/navigation";
+import { getVisibleProjects } from "@/lib/visibility";
 import { ContactCTA } from "@/components/home/Sections";
 
 export const metadata = pageMeta({
@@ -11,7 +12,10 @@ export const metadata = pageMeta({
   path: "/work",
 });
 
-export default function WorkPage() {
+export default async function WorkPage() {
+  const projects = await getVisibleProjects();
+  // No projects switched on: the Work page doesn't exist.
+  if (projects.length === 0) notFound();
   const anyPlaceholder = projects.some((p) => p.placeholder);
   return (
     <>

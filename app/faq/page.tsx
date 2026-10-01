@@ -3,6 +3,7 @@ import TLink from "@/components/layout/TLink";
 import { ContactCTA } from "@/components/home/Sections";
 import { faqs } from "@/content/faq";
 import { site } from "@/content/site";
+import { getVisibleProjects } from "@/lib/visibility";
 
 export const metadata = pageMeta({
   title: "FAQ",
@@ -10,7 +11,8 @@ export const metadata = pageMeta({
   path: "/faq",
 });
 
-export default function FaqPage() {
+export default async function FaqPage() {
+  const showWork = (await getVisibleProjects()).length > 0;
   // The same questions, as structured data, so Google can show them in results.
   const jsonLd = {
     "@context": "https://schema.org",
@@ -65,11 +67,16 @@ export default function FaqPage() {
           Want to know more about how we work? See{" "}
           <TLink href="/why-tablestack" className="inline-link">
             why businesses choose TableStack
-          </TLink>{" "}
-          or{" "}
-          <TLink href="/work" className="inline-link">
-            look at our work
           </TLink>
+          {showWork && (
+            <>
+              {" "}
+              or{" "}
+              <TLink href="/work" className="inline-link">
+                look at our work
+              </TLink>
+            </>
+          )}
           .
         </p>
       </section>

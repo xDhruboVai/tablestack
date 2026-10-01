@@ -5,7 +5,7 @@ import WorkCard from "@/components/work/WorkCard";
 import StandardsChecklist from "./StandardsChecklist";
 import ScrollWords from "./ScrollWords";
 import ApproachAssemble from "./ApproachAssemble";
-import { projects, featuredSlugs } from "@/content/projects";
+import type { Project } from "@/content/projects";
 import { bookCall, pillars, positioning, site, testimonials } from "@/content/site";
 
 /* ── (01) Positioning ──────────────────────────────────────── */
@@ -40,8 +40,8 @@ const LAYOUT = [
   { col: "md:col-span-6 md:col-start-7", aspect: "aspect-[16/10]", offset: "md:mt-[12vw]" },
 ];
 
-export function SelectedWork() {
-  const featured = featuredSlugs.map((s) => projects.find((p) => p.slug === s)!).filter(Boolean);
+export function SelectedWork({ projects }: { projects: Project[] }) {
+  const featured = projects.slice(0, 4);
   return (
     <section className="px-page relative pb-20 md:pb-28" aria-labelledby="work-title" data-annot="section · selected work">
       <SectionLabel index="02" label="Selected work" />

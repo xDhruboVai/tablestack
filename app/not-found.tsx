@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import TLink from "@/components/layout/TLink";
+import { getVisibleProjects } from "@/lib/visibility";
 
 export const metadata: Metadata = { title: "Page not found", robots: { index: false, follow: true } };
 
-export default function NotFound() {
+export default async function NotFound() {
+  const showWork = (await getVisibleProjects()).length > 0;
   return (
     <section className="px-page flex min-h-[100svh] flex-col justify-center pb-20 pt-[calc(var(--nav-h)+6svh)]" aria-labelledby="nf-h">
       <p className="eyebrow text-accent">404 · Page not found</p>
@@ -17,9 +19,11 @@ export default function NotFound() {
         <TLink href="/" className="btn btn-primary">
           Back to home <span className="btn-arrow">→</span>
         </TLink>
-        <TLink href="/work" className="btn btn-ghost">
-          See the work
-        </TLink>
+        {showWork && (
+          <TLink href="/work" className="btn btn-ghost">
+            See the work
+          </TLink>
+        )}
       </div>
     </section>
   );

@@ -7,6 +7,7 @@ import Nav from "@/components/layout/Nav";
 import Footer from "@/components/layout/Footer";
 import Loader from "@/components/layout/Loader";
 import RevealRoot from "@/components/motion/RevealRoot";
+import { getVisibleProjects } from "@/lib/visibility";
 
 /* Brand type: Schibsted Grotesk (display + body) and Space Mono (labels, the "back of house" voice). */
 const sans = Schibsted_Grotesk({
@@ -64,7 +65,9 @@ if(!matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('mot
 if(!sessionStorage.getItem('ts-visited')){d.classList.add('first-visit');sessionStorage.setItem('ts-visited','1');}}
 }catch(e){}})();`;
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  // With every project switched off, the Work link is left out of the navigation.
+  const showWork = (await getVisibleProjects()).length > 0;
   return (
     <html lang="en" className={`${sans.variable} ${mono.variable} ${artSerif.variable}`} suppressHydrationWarning>
       <head>
@@ -75,11 +78,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           Skip to content
         </a>
         <TransitionProvider>
-          <Nav />
+          <Nav showWork={showWork} />
           <main id="main" tabIndex={-1} className="relative z-[2] outline-none">
             {children}
           </main>
-          <Footer />
+          <Footer showWork={showWork} />
         </TransitionProvider>
         <Loader />
         <RevealRoot />

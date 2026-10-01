@@ -57,8 +57,9 @@ function FooterMark() {
   );
 }
 
-export default function Footer() {
+export default function Footer({ showWork = true }: { showWork?: boolean }) {
   const social = site.social.filter((s) => s.href);
+  const links = [...nav, ...footerNav].filter((n) => showWork || n.href !== "/work");
 
   return (
     <footer className="site-footer relative z-[2] overflow-hidden border-t border-rule" data-annot="<Footer />">
@@ -79,7 +80,7 @@ export default function Footer() {
                 Home
               </TLink>
             </li>
-            {[...nav, ...footerNav].map((n) => (
+            {links.map((n) => (
               <li key={n.href}>
                 <TLink href={n.href} className="link-draw">
                   {n.label}

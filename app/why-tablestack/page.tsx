@@ -2,6 +2,7 @@ import { pageMeta } from "@/lib/seo";
 import TLink from "@/components/layout/TLink";
 import { ContactCTA } from "@/components/home/Sections";
 import { bookCall, site } from "@/content/site";
+import { getVisibleProjects } from "@/lib/visibility";
 
 export const metadata = pageMeta({
   title: "Why Choose TableStack?",
@@ -45,7 +46,8 @@ const fit = [
   "A business with customer or sales data scattered across spreadsheets",
 ];
 
-export default function WhyPage() {
+export default async function WhyPage() {
+  const showWork = (await getVisibleProjects()).length > 0;
   return (
     <>
       <section className="px-page pb-20 pt-[calc(var(--nav-h)+8svh)] md:pb-28" aria-labelledby="why-h">
@@ -93,11 +95,17 @@ export default function WhyPage() {
               See it for yourself
             </h2>
             <p className="mt-8 max-w-[44ch] leading-[1.6] text-fg-2" data-reveal="fade">
-              We are a young team, and we would rather show than tell. Our{" "}
-              <TLink href="/work" className="inline-link">
-                work page
-              </TLink>{" "}
-              has the projects we have launched, each with a link to the live site. You can also{" "}
+              We are a young team, and we would rather show than tell.{" "}
+              {showWork && (
+                <>
+                  Our{" "}
+                  <TLink href="/work" className="inline-link">
+                    work page
+                  </TLink>{" "}
+                  has the projects we have launched, each with a link to the live site.{" "}
+                </>
+              )}
+              You can{" "}
               <TLink href="/about" className="inline-link">
                 meet the team
               </TLink>

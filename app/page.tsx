@@ -1,8 +1,10 @@
 import HeroAnatomy from "@/components/home/HeroAnatomy";
 import { Approach, Capabilities, ContactCTA, Positioning, SelectedWork, Standards } from "@/components/home/Sections";
 import { site } from "@/content/site";
+import { getVisibleProjects } from "@/lib/visibility";
 
-export default function Home() {
+export default async function Home() {
+  const visible = await getVisibleProjects();
   // Structured data for search engines: the business (Organization) and the site (WebSite), linked by stable ids.
   // Only facts the owner has confirmed: no street address, ratings, clients or founding date.
   const sameAs = site.social.map((l) => l.href).filter((h) => h.includes("facebook.com"));
@@ -40,9 +42,9 @@ export default function Home() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <HeroAnatomy />
+      <HeroAnatomy showWork={visible.length > 0} />
       <Positioning />
-      <SelectedWork />
+      {visible.length > 0 && <SelectedWork projects={visible} />}
       <Capabilities />
       <Approach />
       <Standards />

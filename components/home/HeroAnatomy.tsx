@@ -16,7 +16,7 @@ const CAM = {
 // Label order top → bottom matches the anatomy copy.
 const LABEL_LAYERS = ["foh", "menu", "res", "boh"];
 
-export default function HeroAnatomy() {
+export default function HeroAnatomy({ showWork = true }: { showWork?: boolean }) {
   const root = useRef<HTMLElement>(null);
   const introPlayed = useRef(false);
 
@@ -175,9 +175,11 @@ export default function HeroAnatomy() {
             <TLink href="/contact" className="btn btn-primary">
               Start a project <span className="btn-arrow" aria-hidden="true">→</span>
             </TLink>
-            <TLink href="/work" className="btn btn-ghost">
-              See the work
-            </TLink>
+            {showWork && (
+              <TLink href="/work" className="btn btn-ghost">
+                See the work
+              </TLink>
+            )}
           </div>
         </div>
 

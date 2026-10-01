@@ -6,7 +6,8 @@ import TLink from "@/components/layout/TLink";
 import LensMedia from "@/components/work/LensMedia";
 import ProjectMock from "@/components/work/ProjectMock";
 import NextProject from "@/components/work/NextProject";
-import { getNextProject, getProject, projects } from "@/content/projects";
+import { getProject, projects } from "@/content/projects";
+import { getVisibleProjects } from "@/lib/visibility";
 import { ContactCTA } from "@/components/home/Sections";
 
 type Params = { slug: string };
@@ -18,7 +19,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
   const { slug } = await params;
   const p = getProject(slug);
-  if (!p) return {};
+  if (!p || !(await getVisibleProjects()).some((v) => v.slug === slug)) return {};
   return {
     title: `${p.title} · ${p.kind}`,
     description: p.summary,
@@ -58,9 +59,11 @@ function Chapter({ label, children }: { label: string; children: React.ReactNode
 export default async function ProjectPage({ params }: { params: Promise<Params> }) {
   const { slug } = await params;
   const p = getProject(slug);
-  if (!p) notFound();
-  const next = getNextProject(p.slug);
-  const n = projects.indexOf(p) + 1;
+  const visible = await getVisibleProjects();
+  // A project that is switched off has no page.
+  if (!p || !visible.some((v) => v.slug === slug)) notFound();
+  // "Next project" cycles through the visible ones, and is left out when this is the only one.
+  const next = visible.length > 1 ? visible[(visible.findIndex((v) => v.slug === slug) + 1) % visible.length] : null;
 
   const meta: [string, React.ReactNode][] = [
     ["Client", p.client],
@@ -195,7 +198,7 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
 
       </article>
 
-      <NextProject project={next} />
+      {next && <NextProject project={next} />}
       <ContactCTA />
     </>
   );

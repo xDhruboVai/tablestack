@@ -9,8 +9,9 @@ import Wordmark from "./Wordmark";
 import { nav, site } from "@/content/site";
 import { EASE, prefersReducedMotion } from "@/lib/motion";
 
-export default function Nav() {
+export default function Nav({ showWork = true }: { showWork?: boolean }) {
   const pathname = usePathname();
+  const links = showWork ? nav : nav.filter((n) => n.href !== "/work");
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const panel = useRef<HTMLDivElement>(null);
@@ -91,7 +92,7 @@ export default function Nav() {
           </TLink>
 
           <nav aria-label="Primary" className="hidden items-center gap-9 md:flex">
-            {nav.map((item) => (
+            {links.map((item) => (
               <TLink
                 key={item.href}
                 href={item.href}
@@ -139,7 +140,7 @@ export default function Nav() {
         <div className="px-page flex h-full flex-col justify-between pb-8 pt-[calc(var(--nav-h)+5svh)]">
           <nav aria-label="Mobile">
             <ul className="flex flex-col gap-1">
-              {[{ label: "Home", href: "/" }, ...nav].map((item) => (
+              {[{ label: "Home", href: "/" }, ...links].map((item) => (
                 <li key={item.href} className="split-line">
                   <TLink
                     href={item.href}

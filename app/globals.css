@@ -2143,3 +2143,46 @@ line.wf-window {
 .why-item .list-bar {
   align-self: start;
 }
+
+/* ─── Hidden work-admin page: on/off switch ─────────────────── */
+.work-switch {
+  position: relative;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  width: 92px;
+  height: 44px;
+  padding-inline: 14px;
+  border: 1px solid var(--rule-strong);
+  border-radius: 999px;
+  justify-content: flex-start;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--fg-2);
+  cursor: pointer;
+  transition: background-color 0.25s, border-color 0.25s, color 0.25s;
+}
+.work-switch-thumb {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--fg-2);
+  transition: transform 0.3s var(--ease-out-quart), background-color 0.25s;
+}
+.work-switch[aria-checked="true"] {
+  justify-content: flex-end;
+  background: var(--fg);
+  border-color: var(--fg);
+  color: var(--bg);
+}
+.work-switch[aria-checked="true"] .work-switch-thumb {
+  transform: translateX(-48px);
+  background: var(--accent);
+}
+.work-switch:disabled {
+  cursor: progress;
+  opacity: 0.7;
+}
