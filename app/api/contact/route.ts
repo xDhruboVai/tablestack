@@ -9,6 +9,7 @@ import { NextResponse } from "next/server";
 type Body = {
   name?: string;
   email?: string;
+  phone?: string;
   business?: string;
   needs?: string[];
   budget?: string;
@@ -33,6 +34,7 @@ export async function POST(req: Request) {
   const data = {
     name: clean(body.name, 120),
     email: clean(body.email, 200),
+    phone: clean(body.phone, 60),
     business: clean(body.business, 200),
     needs: Array.isArray(body.needs) ? body.needs.map((n) => clean(n, 60)).filter(Boolean).slice(0, 8) : [],
     budget: clean(body.budget, 60),

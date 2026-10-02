@@ -24,6 +24,7 @@ function doPost(e) {
 
     var clientName = text(payload.name, 120);
     var clientEmail = text(payload.email, 200);
+    var phone = text(payload.phone, 60);
     var business = text(payload.business, 200);
     var needs = Array.isArray(payload.needs) ? payload.needs.map(function (item) {
       return text(item, 60);
@@ -46,6 +47,7 @@ function doPost(e) {
       timestamp,
       clientName,
       clientEmail,
+      phone,
       business,
       needs,
       budget,
@@ -68,6 +70,7 @@ function doPost(e) {
     var details = [
       "Name: " + clientName,
       "Email: " + clientEmail,
+      "Contact number: " + (phone || "n/a"),
       "Business: " + (business || "n/a"),
       "Needs: " + (needs || "n/a"),
       "Budget: " + (budget || "n/a"),

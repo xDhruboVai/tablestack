@@ -8,6 +8,7 @@ import { EASE, prefersReducedMotion } from "@/lib/motion";
 type Fields = {
   name: string;
   email: string;
+  phone: string;
   business: string;
   needs: string[];
   budget: string;
@@ -18,7 +19,7 @@ type Fields = {
 type Errors = Partial<Record<keyof Fields, string>>;
 type Status = "idle" | "sending" | "sent" | "error";
 
-const EMPTY: Fields = { name: "", email: "", business: "", needs: [], budget: "", timeline: "", message: "", website: "" };
+const EMPTY: Fields = { name: "", email: "", phone: "", business: "", needs: [], budget: "", timeline: "", message: "", website: "" };
 
 function validate(f: Fields): Errors {
   const e: Errors = {};
@@ -137,6 +138,10 @@ export default function ContactForm() {
           <label htmlFor={`${id}-email`}>Email *</label>
           <input {...field("email")} type="email" autoComplete="email" inputMode="email" value={f.email} onChange={(e) => set("email", e.target.value)} />
           <Err k="email" />
+        </div>
+        <div className="field">
+          <label htmlFor={`${id}-phone`}>Contact number</label>
+          <input {...field("phone")} type="tel" autoComplete="tel" inputMode="tel" value={f.phone} onChange={(e) => set("phone", e.target.value)} />
         </div>
         <div className="field sm:col-span-2">
           <label htmlFor={`${id}-business`}>Business name</label>
@@ -264,6 +269,7 @@ function Ticket({
   const rows: [string, string][] = [
     ["BUSINESS", d.business || "n/a"],
     ["NAME", d.name],
+    ["PHONE", d.phone || "n/a"],
     ["NEEDS", d.needs.length ? d.needs.join(", ") : "Tell us on the call"],
     ["BUDGET", d.budget || "TBD"],
     ["TIMING", d.timeline || "TBD"],
