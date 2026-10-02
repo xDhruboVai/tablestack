@@ -317,7 +317,7 @@ const realProjects: Project[] = [
     stack: ["Next.js", "Tailwind CSS", "Vercel"],
     summary:
       "A loud, saucy site for a six-branch smash burger chain, in English and Bangla, with the full menu and every branch in one place.",
-    liveUrl: "https://smashed-burgers-six.vercel.app/en",
+    liveUrl: "https://smashed-burgers-six.vercel.app",
     challenge:
       "Six branches, one menu across 13 categories, and a brand that runs on attitude. The site had to sell the food on sight, and make a big menu easy to browse on a phone.",
     approach:
