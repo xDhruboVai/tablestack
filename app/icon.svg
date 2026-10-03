@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
   <!-- Favicon placeholder - replace with your final mark -->
-  <rect width="32" height="32" rx="7" fill="#15130F"/>
-  <path d="M16 5 27 10.5 16 16 5 10.5Z" fill="#E0432A"/>
-  <path d="M5 15.5 16 21 27 15.5" fill="none" stroke="#F2EEE6" stroke-width="2.2" stroke-linejoin="round"/>
-  <path d="M5 20.5 16 26 27 20.5" fill="none" stroke="#F2EEE6" stroke-width="2.2" stroke-linejoin="round"/>
+  <rect width="32" height="32" rx="7" fill="#0D0F07"/>
+  <path d="M16 5 27 10.5 16 16 5 10.5Z" fill="#E43F25"/>
+  <path d="M5 15.5 16 21 27 15.5" fill="none" stroke="#EEE8E3" stroke-width="2.2" stroke-linejoin="round"/>
+  <path d="M5 20.5 16 26 27 20.5" fill="none" stroke="#EEE8E3" stroke-width="2.2" stroke-linejoin="round"/>
 </svg>

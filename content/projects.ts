@@ -131,7 +131,7 @@ const placeholderProjects: Project[] = [
     outcome:
       "Replace with the real outcome. Describe what changed for the client in their words: a quote, what the team now handles themselves, the launch date. Only include numbers you can verify.",
     art: {
-      palette: { bg: "#1B1512", fg: "#F4E9DC", accent: "#E8672A", soft: "#3A2A22" },
+      palette: { bg: "#180E0D", fg: "#F7E3D8", accent: "#DF6325", soft: "#43271B" },
       type: "serif",
       motif: "flame",
       layout: "poster",
@@ -170,7 +170,7 @@ const placeholderProjects: Project[] = [
     outcome:
       "Replace with the real outcome. Describe what changed (for example, how pre-orders are handled now) using the client’s words. Only include numbers you can verify.",
     art: {
-      palette: { bg: "#F3E6CF", fg: "#23285A", accent: "#D9542B", soft: "#E8D3AE" },
+      palette: { bg: "#EEE1C8", fg: "#1E2551", accent: "#D34E25", soft: "#EDCEA6" },
       type: "condensed",
       motif: "loaf",
       layout: "split",
@@ -209,7 +209,7 @@ const placeholderProjects: Project[] = [
     outcome:
       "Replace with the real outcome. Describe how release day works now, in the client’s words. Only include numbers you can verify.",
     art: {
-      palette: { bg: "#0E0E0E", fg: "#EDEAE3", accent: "#C4452F", soft: "#232220" },
+      palette: { bg: "#0A0507", fg: "#F1F0DA", accent: "#BD412B", soft: "#1E1D28" },
       type: "serif",
       motif: "enso",
       layout: "center",
@@ -248,7 +248,7 @@ const placeholderProjects: Project[] = [
     outcome:
       "Replace with the real outcome. Describe how the team manages three locations now. Only include numbers you can verify.",
     art: {
-      palette: { bg: "#E6EBDD", fg: "#1F3A2B", accent: "#E9A93A", soft: "#CBD6BE" },
+      palette: { bg: "#EDE5D9", fg: "#283322", accent: "#F0AD33", soft: "#C6D1BA" },
       type: "sans",
       motif: "leaf",
       layout: "grid",
@@ -287,7 +287,7 @@ const placeholderProjects: Project[] = [
     outcome:
       "Replace with the real outcome, in the client’s words. Only include numbers you can verify.",
     art: {
-      palette: { bg: "#F4F1EA", fg: "#1D1D1B", accent: "#3D55F0", soft: "#E3DDD0" },
+      palette: { bg: "#F9EDE5", fg: "#171614", accent: "#344EE8", soft: "#DEDACD" },
       type: "mono",
       motif: "book",
       layout: "grid",
@@ -332,7 +332,7 @@ const realProjects: Project[] = [
     outcome:
       "Launched in English and Bangla, with every branch and the full menu on one fast, mobile-first site.",
     art: {
-      palette: { bg: "#0B0A09", fg: "#FBF4E6", accent: "#F6B81A", soft: "#1A1713" },
+      palette: { bg: "#0E0400", fg: "#F3EBDF", accent: "#EFB316", soft: "#13120B" },
       type: "condensed",
       motif: "flame",
       layout: "poster",
@@ -420,7 +420,7 @@ const realProjects: Project[] = [
     outcome:
       "Launched with all three branches, the full menu, online booking and pre-orders, in English and Bangla.",
     art: {
-      palette: { bg: "#224A4F", fg: "#F3ECE1", accent: "#E6C24A", soft: "#1B3B3F" },
+      palette: { bg: "#1B464B", fg: "#EAE9DE", accent: "#E0B947", soft: "#13343B" },
       type: "serif",
       motif: "leaf",
       layout: "split",

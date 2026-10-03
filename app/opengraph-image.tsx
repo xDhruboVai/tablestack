@@ -16,17 +16,17 @@ export default function OG() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          background: "#F2EEE6",
-          color: "#15130F",
+          background: "#EEE8E3",
+          color: "#0D0F07",
           padding: "64px 72px",
           fontFamily: "serif",
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: 16, fontSize: 30 }}>
           <svg width="44" height="44" viewBox="0 0 32 32">
-            <path d="M16 3 29 9.5 16 16 3 9.5Z" fill="#E0432A" />
-            <path d="M3 15.5 16 22 29 15.5" fill="none" stroke="#15130F" strokeWidth="2.2" />
-            <path d="M3 21.5 16 28 29 21.5" fill="none" stroke="#15130F" strokeWidth="2.2" />
+            <path d="M16 3 29 9.5 16 16 3 9.5Z" fill="#E43F25" />
+            <path d="M3 15.5 16 22 29 15.5" fill="none" stroke="#0D0F07" strokeWidth="2.2" />
+            <path d="M3 21.5 16 28 29 21.5" fill="none" stroke="#0D0F07" strokeWidth="2.2" />
           </svg>
           <span style={{ display: "flex" }}>
             <span style={{ fontStyle: "italic" }}>Table</span>
@@ -35,7 +35,7 @@ export default function OG() {
         </div>
         <div style={{ display: "flex", flexDirection: "column", fontSize: 104, lineHeight: 0.95, letterSpacing: -3 }}>
           <span>Websites first.</span>
-          <span style={{ color: "#E0432A", fontStyle: "italic" }}>Tools when needed.</span>
+          <span style={{ color: "#E43F25", fontStyle: "italic" }}>Tools when needed.</span>
         </div>
       </div>
     ),

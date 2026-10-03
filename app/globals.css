@@ -6,24 +6,24 @@
    Back of house (data-mode="boh") = the same site, blueprint mode.
    ───────────────────────────────────────────────────────────── */
 :root {
-  --linen: #f2eee6;
-  --paper: #faf7f1;
-  --ink: #15130f;
-  --tomato: #e0432a;
+  --linen: #eee8e3;
+  --paper: #fff2ed;
+  --ink: #0d0f07;
+  --tomato: #e43f25;
 
   --bg: var(--linen);
   --surface: var(--paper);
   --fg: var(--ink);
-  --fg-2: #3d3831;
-  --muted: #655e53;
-  --rule: rgb(21 19 15 / 0.16);
-  --rule-strong: rgb(21 19 15 / 0.42);
+  --fg-2: #35332b;
+  --muted: #6a6659;
+  --rule: rgb(13 15 7 / 0.16);
+  --rule-strong: rgb(13 15 7 / 0.42);
   --accent: var(--tomato);
   /* Small accent text needs more contrast than the display red (WCAG AA ≥ 4.5:1) */
-  --accent-text: #b93a22;
-  --accent-text-inv: #ea5a42;
+  --accent-text: #b0311e;
+  --accent-text-inv: #e25439;
   --on-accent: var(--ink);
-  --hatch: rgb(21 19 15 / 0.07);
+  --hatch: rgb(13 15 7 / 0.07);
 
   --pad: clamp(16px, 3.2vw, 48px);
   --nav-h: 64px;
@@ -31,16 +31,16 @@
 }
 
 html[data-mode="boh"] {
-  --bg: #15130f;
-  --surface: #1c1915;
-  --fg: #f2eee6;
-  --fg-2: #d3ccbf;
-  --muted: #a39b8f;
-  --rule: rgb(242 238 230 / 0.14);
-  --rule-strong: rgb(242 238 230 / 0.4);
-  --hatch: rgb(242 238 230 / 0.06);
-  --accent-text: #ea5a42;
-  --accent-text-inv: #b93a22;
+  --bg: #0d0f07;
+  --surface: #13120c;
+  --fg: #eee8e3;
+  --fg-2: #d0c4b9;
+  --muted: #a09288;
+  --rule: rgb(238 232 227 / 0.14);
+  --rule-strong: rgb(238 232 227 / 0.4);
+  --hatch: rgb(238 232 227 / 0.06);
+  --accent-text: #e25439;
+  --accent-text-inv: #b0311e;
   color-scheme: dark;
 }
 
@@ -498,7 +498,7 @@ html.motion:not(.anim-ready) :is([data-reveal], [data-split], [data-intro]) {
   aspect-ratio: 16 / 10;
   pointer-events: none;
   opacity: 0;
-  box-shadow: 0 30px 60px -20px rgb(21 19 15 / 0.35);
+  box-shadow: 0 30px 60px -20px rgb(13 15 7 / 0.35);
 }
 @media (hover: none), (max-width: 767px) {
   .work-preview {
@@ -622,13 +622,13 @@ html.motion:not(.anim-ready) :is([data-reveal], [data-split], [data-intro]) {
 .ticket {
   position: relative;
   padding: 26px 22px 34px;
-  background: #fbf9f4;
-  color: #15130f;
+  background: #f8f6ee;
+  color: #0d0f07;
   font-family: var(--font-mono);
   font-size: 12px;
   line-height: 1.6;
   letter-spacing: 0.02em;
-  box-shadow: 0 18px 30px -18px rgb(21 19 15 / 0.35);
+  box-shadow: 0 18px 30px -18px rgb(13 15 7 / 0.35);
   mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / 14px 100%;
 }
 .ticket-stamp {
@@ -653,7 +653,7 @@ html.motion:not(.anim-ready) :is([data-reveal], [data-split], [data-intro]) {
   color: var(--linen);
 }
 html[data-mode="boh"] .cap-dark {
-  background: #0d0c0a;
+  background: #0a0503;
 }
 .cap-row {
   display: grid;
@@ -687,7 +687,7 @@ html[data-mode="boh"] .cap-dark {
   color: var(--linen);
 }
 html[data-mode="boh"] .cta-block {
-  background: #0d0c0a;
+  background: #0a0503;
   border-top: 1px solid var(--rule);
 }
 .cta-email {
@@ -707,7 +707,7 @@ html[data-mode="boh"] .cta-block {
   color: var(--ink);
 }
 .btn-ghost-invert {
-  border: 1px solid rgb(242 238 230 / 0.4);
+  border: 1px solid rgb(238 232 227 / 0.4);
   color: var(--linen);
 }
 .btn-ghost-invert:hover,
@@ -724,7 +724,7 @@ html[data-mode="boh"] body::before {
   z-index: 1;
   pointer-events: none;
   /* Dot-grid "graph paper" behind the page in back-of-house mode */
-  background-image: radial-gradient(circle, rgb(242 238 230 / 0.17) 1px, transparent 1.5px);
+  background-image: radial-gradient(circle, rgb(238 232 227 / 0.17) 1px, transparent 1.5px);
   background-size: 24px 24px;
   background-position: 12px 12px;
 }
@@ -1598,7 +1598,7 @@ line.wf-window {
 }
 .cap-dark,
 .cta-block {
-  --accent-text: #ea5a42;
+  --accent-text: #e25439;
 }
 .page-door {
   --accent-text: var(--accent-text-inv);
@@ -1662,9 +1662,9 @@ line.wf-window {
 /* ─── Approach: the page assembles itself ──────────────────── */
 @layer components {
   .asm {
-    --note-1: #f6d38a;
-    --note-2: #f3c2ae;
-    --note-3: #cfe3a6;
+    --note-1: #f0ce81;
+    --note-2: #ebb9aa;
+    --note-3: #ccdb9f;
     /* Scroll room: the pinned block plus about half a screen per step. */
     min-height: calc(100svh - var(--nav-h) + var(--steps, 4) * 45svh);
   }
@@ -1844,7 +1844,7 @@ line.wf-window {
     opacity: 1;
   }
   .asm-photo circle {
-    fill: color-mix(in srgb, var(--accent) 80%, #f6d38a);
+    fill: color-mix(in srgb, var(--accent) 80%, #f0ce81);
   }
   .asm-photo path {
     fill: color-mix(in srgb, var(--accent) 45%, var(--ink));
@@ -1894,11 +1894,11 @@ line.wf-window {
     border-color: transparent;
   }
   html[data-mode="boh"] .tone-ink .stack-inner {
-    background: #0d0c0a;
+    background: #0a0503;
   }
   .tone-accent .stack-inner {
     /* A touch lighter than the accent so the dark text passes AA contrast (4.87:1). */
-    background: #e64e36;
+    background: #e0462f;
     color: var(--ink);
     border-color: transparent;
   }

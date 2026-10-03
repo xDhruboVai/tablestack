@@ -20,7 +20,7 @@ const FONTS = {
 const MONO = { fontFamily: "var(--font-space-mono), monospace" };
 const SANS = { fontFamily: "var(--font-schibsted), sans-serif" };
 
-const BP = { bg: "#15130F", line: "rgba(242,238,230,0.16)", text: "#F2EEE6", dim: "rgba(242,238,230,0.55)", accent: "#E0432A" };
+const BP = { bg: "#0D0F07", line: "rgba(238,232,227,0.16)", text: "#EEE8E3", dim: "rgba(238,232,227,0.55)", accent: "#E43F25" };
 
 export function Motif({
   name,
@@ -277,7 +277,7 @@ function DesktopBoh({ project }: { project: Project }) {
       {Array.from({ length: 18 }, (_, i) => (
         <path key={i} d={`M0 ${44 + i * 40}H1200`} stroke={BP.line} strokeOpacity="0.4" />
       ))}
-      <rect width="1200" height="44" fill="#1E1B17" />
+      <rect width="1200" height="44" fill="#151512" />
       <text x="24" y="28" fontSize="13" fill={BP.dim} style={MONO}>
         {project.slug}.com / app/page.tsx
       </text>
@@ -291,7 +291,7 @@ function DesktopBoh({ project }: { project: Project }) {
       </text>
       {regions.map(([x, y, w, h, label], i) => (
         <g key={i}>
-          <rect x={x} y={y} width={w} height={h} fill="rgba(224,67,42,0.06)" stroke={BP.accent} strokeDasharray="6 5" />
+          <rect x={x} y={y} width={w} height={h} fill="rgba(228,63,37,0.06)" stroke={BP.accent} strokeDasharray="6 5" />
           <rect x={x} y={y} width={Math.min(w, label.length * 8.2 + 16)} height="22" fill={BP.accent} />
           <text x={x + 8} y={y + 15} fontSize="12" fill={BP.bg} style={MONO}>
             {label}
@@ -478,7 +478,7 @@ function BohFrame({ project }: { project: Project }) {
       })}
       {nodes.map(([x, y, t, s], i) => (
         <g key={t} transform={`translate(${x} ${y})`}>
-          <rect width="220" height="100" fill={i === 2 ? BP.accent : "#1F1C18"} stroke={i === 2 ? BP.accent : BP.text} strokeOpacity="0.5" />
+          <rect width="220" height="100" fill={i === 2 ? BP.accent : "#231914"} stroke={i === 2 ? BP.accent : BP.text} strokeOpacity="0.5" />
           <text x="18" y="44" fontSize="20" fill={i === 2 ? BP.bg : BP.text} style={{ ...SANS, fontWeight: 600 }}>
             {t}
           </text>

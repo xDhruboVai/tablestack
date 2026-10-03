@@ -141,7 +141,7 @@ export default function AboutPage() {
             <h3 className="display mt-3 text-[clamp(1.8rem,2.4vw,2.4rem)]">What your team gets</h3>
             <ul className="mt-8">
               {sides.team.map((g) => (
-                <li key={g} className="flex items-baseline gap-4 border-t border-[rgb(242_238_230/0.16)] py-4 text-[1.1rem]">
+                <li key={g} className="flex items-baseline gap-4 border-t border-[rgb(238_232_227/0.16)] py-4 text-[1.1rem]">
                   <span className="list-bar" aria-hidden="true" />
                   {g}
                 </li>
