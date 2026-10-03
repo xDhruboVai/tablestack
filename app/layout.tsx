@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Instrument_Serif, Schibsted_Grotesk, Space_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { site } from "@/content/site";
 import { TransitionProvider } from "@/components/layout/Transition";
@@ -86,6 +87,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         </TransitionProvider>
         <Loader />
         <RevealRoot />
+        <Analytics />
       </body>
     </html>
   );
