@@ -182,7 +182,7 @@ export const integrations = [
 export const testimonials: { quote: string; name: string; role: string }[] = [];
 
 /**
- * The team, shown on the About page. Photos live in /public/team; `focus` is the crop point (object-position).
+ * The team, shown on the About page.
  * `whatsapp` is the local number as shown; the link uses the international form (880 + number without the 0).
  */
 export const team = [
@@ -194,8 +194,6 @@ export const team = [
     study: "BRAC University, CSE",
     graduation: "Expected graduation May 2027",
     github: "https://github.com/xDhruboVai",
-    photo: "/team/dihan.webp",
-    focus: "50% 30%",
   },
   {
     name: "Saalim Saadman",
@@ -205,18 +203,14 @@ export const team = [
     study: "UCSI University Bangladesh Branch Campus, CS",
     graduation: "Expected graduation September 2028",
     github: "https://github.com/Saadmantheretroenjoyer",
-    photo: "/team/saalim.jpg",
-    focus: "90% 40%",
+    portfolio: "https://saalim.space/",
   },
   {
     name: "Nahin Hasan",
-    role: "Management, Client Relations & PR",
     facebook: "https://www.facebook.com/nahin.hasan.5220/",
     whatsapp: "01716934401",
     study: "North South University, BBA (Marketing)",
     graduation: "Expected graduation August 2028",
-    photo: "/team/nahin.jpg",
-    focus: "50% 38%",
   },
 ] as const;
 

@@ -1,6 +1,7 @@
 import SectionLabel from "@/components/ui/SectionLabel";
 import ToolMarquee from "@/components/ui/ToolMarquee";
 import TLink from "@/components/layout/TLink";
+import GlowLink from "@/components/ui/GlowLink";
 import WorkCard from "@/components/work/WorkCard";
 import StandardsChecklist from "./StandardsChecklist";
 import ScrollWords from "./ScrollWords";
@@ -178,9 +179,7 @@ export function ContactCTA() {
               {site.email}
             </a>
             <div className="flex flex-wrap gap-3">
-              <TLink href="/contact" className="btn btn-invert">
-                Start a project <span className="btn-arrow">→</span>
-              </TLink>
+              <GlowLink href="/contact" tone="invert">Start a project</GlowLink>
               <a {...bookCall} className="btn btn-ghost-invert">
                 Book a call
               </a>

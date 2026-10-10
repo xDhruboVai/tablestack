@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { createScope, createTimeline, onScroll, stagger, utils, splitText } from "animejs";
 import ExplodedTable, { LABEL_X, labelY, toPct } from "./ExplodedTable";
 import TLink from "@/components/layout/TLink";
+import GlowLink from "@/components/ui/GlowLink";
 import { anatomy, site } from "@/content/site";
 import { EASE, onIntroDone } from "@/lib/motion";
 
@@ -172,9 +173,7 @@ export default function HeroAnatomy({ showWork = true }: { showWork?: boolean })
           </p>
 
           <div className="mt-7 flex flex-wrap items-center gap-3 lg:mt-9" data-intro data-intro-fade>
-            <TLink href="/contact" className="btn btn-primary">
-              Start a project <span className="btn-arrow" aria-hidden="true">→</span>
-            </TLink>
+            <GlowLink href="/contact">Start a project</GlowLink>
             {showWork && (
               <TLink href="/work" className="btn btn-ghost">
                 See the work

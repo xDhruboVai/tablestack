@@ -1,10 +1,9 @@
 import { pageMeta } from "@/lib/seo";
-import Image from "next/image";
 import SectionLabel from "@/components/ui/SectionLabel";
 import DotField from "@/components/about/DotField";
 import StackCards from "@/components/ui/StackCards";
 import ToolMarquee from "@/components/ui/ToolMarquee";
-import SocialIcon from "@/components/ui/SocialIcon";
+import TeamLinks from "@/components/about/TeamLinks";
 import { ContactCTA } from "@/components/home/Sections";
 import { about, site, team } from "@/content/site";
 
@@ -73,45 +72,15 @@ export default function AboutPage() {
         <h2 id="team-h" className="display mt-10 text-[clamp(2.4rem,4.8vw,5.2rem)] md:mt-14" data-split="lines">
           The people <em className="text-accent">behind it.</em>
         </h2>
-        {/* Three across once there are three people; until then two wider cards, not an empty column. */}
-        <ul className={`mt-14 grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 md:mt-20 ${team.length >= 3 ? "lg:grid-cols-3" : "lg:max-w-[64rem]"}`}>
+        {/* Compact text-only profiles. */}
+        <ul className={`mt-14 grid auto-rows-fr grid-cols-1 gap-5 sm:grid-cols-2 md:mt-20 ${team.length >= 3 ? "lg:grid-cols-3" : "lg:max-w-[64rem]"}`}>
           {team.map((m, i) => (
             <li key={m.name} className="team-card" data-reveal="rise" data-delay={i * 120}>
-              <div className="team-photo" data-reveal="mask">
-                <Image src={m.photo} alt={m.name} fill style={{ objectPosition: m.focus }} sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 100vw" />
-              </div>
-              <h3 className="mt-5 text-[clamp(1.35rem,1.8vw,1.6rem)] font-semibold tracking-[-0.03em]">{m.name}</h3>
-              <p className="mt-1 font-medium text-[var(--accent-text)]">{m.role}</p>
+              <h3 className="text-[clamp(1.35rem,1.8vw,1.6rem)] font-semibold tracking-[-0.03em]">{m.name}</h3>
+              {"role" in m && <p className="mt-1 font-medium text-[var(--accent-text)]">{m.role}</p>}
               <p className="mt-3 text-fg-2">{m.study}</p>
               <p className="text-muted">{m.graduation}</p>
-              <ul className="mt-5 flex flex-wrap gap-2">
-                {"github" in m && (
-                  <li>
-                    <a href={m.github} target="_blank" rel="noopener noreferrer" className="team-chip">
-                      <SocialIcon name="github" />
-                      GitHub<span className="sr-only"> profile of {m.name} (opens in a new tab)</span>
-                    </a>
-                  </li>
-                )}
-                <li>
-                  <a href={m.facebook} target="_blank" rel="noopener noreferrer" className="team-chip">
-                    <SocialIcon name="facebook" />
-                    Facebook<span className="sr-only"> profile of {m.name} (opens in a new tab)</span>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href={`https://wa.me/880${m.whatsapp.slice(1)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="team-chip"
-                    title={`WhatsApp ${m.whatsapp.slice(0, 5)} ${m.whatsapp.slice(5)}`}
-                  >
-                    <SocialIcon name="whatsapp" />
-                    WhatsApp<span className="sr-only"> {m.name} on {m.whatsapp} (opens in a new tab)</span>
-                  </a>
-                </li>
-              </ul>
+              <TeamLinks member={m} />
             </li>
           ))}
         </ul>

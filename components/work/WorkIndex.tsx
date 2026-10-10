@@ -18,7 +18,7 @@ export default function WorkIndex({ projects }: { projects: Project[] }) {
   const [filter, setFilter] = useState<string>("All");
   // Filters come from the projects themselves, and only appear once there's more than one category.
   const categories = useMemo(() => [...new Set(projects.map((p) => p.category))], [projects]);
-  const [view, setView] = useState<"list" | "grid">("list");
+  const [view, setView] = useState<"list" | "grid">("grid");
   const [hovered, setHovered] = useState<string | null>(null);
   // The preview renders into <body>: ancestors with transforms (scroll reveals) would otherwise
   // trap a position:fixed element and let later sections paint over it.
@@ -97,7 +97,7 @@ export default function WorkIndex({ projects }: { projects: Project[] }) {
 
   return (
     <div>
-      <div className="flex flex-col gap-5 border-b border-rule pb-6 sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
         <div role="group" aria-label="Filter projects" className="flex flex-wrap gap-2">
           {(categories.length > 1 ? ["All", ...categories] : []).map((f) => {
             const count = f === "All" ? projects.length : projects.filter((p) => p.category === f).length;
@@ -161,7 +161,7 @@ export default function WorkIndex({ projects }: { projects: Project[] }) {
             })}
           </ol>
         ) : (
-          <div className="grid grid-cols-1 gap-x-6 gap-y-16 pt-12 md:grid-cols-2">
+          <div className="work-index-grid grid grid-cols-1 gap-x-6 gap-y-16 pt-12 md:grid-cols-2">
             {shown.map((p, i) => (
               <div key={p.slug} data-item className={i % 2 === 1 ? "md:mt-24" : ""}>
                 <WorkCard project={p} index={projects.indexOf(p)} aspect="aspect-[16/10]" />
