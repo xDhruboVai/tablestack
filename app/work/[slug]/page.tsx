@@ -77,14 +77,9 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
     <>
       <article>
         <header className="px-page pt-[calc(var(--nav-h)+7svh)]" data-annot={`page · /work/${p.slug}`}>
-          <div className="flex items-center justify-between gap-4">
-            <TLink href="/work" className="eyebrow link-draw">
-              ← All work
-            </TLink>
-            <span className="eyebrow text-muted" data-reveal="scramble">
-              {p.category}
-            </span>
-          </div>
+          <TLink href="/work" className="eyebrow link-draw">
+            ← All work
+          </TLink>
 
           {p.placeholder && (
             <p className="eyebrow mt-8 inline-flex items-center gap-2 border border-dashed border-accent px-3 py-2 text-accent" data-reveal="fade">
@@ -133,13 +128,10 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
         </div>
 
         <section className="px-page pt-16 md:pt-24" aria-labelledby="gallery-h">
-          <div className="flex items-end justify-between gap-6 border-t border-rule pt-10">
+          <div className="border-t border-rule pt-10">
             <h2 id="gallery-h" className="display text-[clamp(2.2rem,4vw,4rem)]" data-split="lines">
               Gallery
             </h2>
-            <p className="eyebrow text-muted" data-reveal="fade">
-              {p.gallery.length} frames
-            </p>
           </div>
           <div className="media-fit mt-10 grid grid-cols-1 gap-6 md:grid-cols-2">
             {p.gallery.map((g, i) => (

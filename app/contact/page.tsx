@@ -12,8 +12,7 @@ export default function ContactPage() {
   return (
     <section className="px-page contact-page" aria-labelledby="contact-h" data-annot="page · /contact">
       <div className="contact-page-heading">
-        <p className="eyebrow">Contact</p>
-        <h1 id="contact-h" className="display mt-6" data-split="lines">
+        <h1 id="contact-h" className="display" data-split="lines">
           Tell us what you’re <em className="text-accent">building.</em>
         </h1>
         <p className="body-lg mt-8 max-w-[39ch]">

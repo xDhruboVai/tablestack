@@ -1,4 +1,3 @@
-import SectionLabel from "@/components/ui/SectionLabel";
 import ToolMarquee from "@/components/ui/ToolMarquee";
 import TLink from "@/components/layout/TLink";
 import GlowLink from "@/components/ui/GlowLink";
@@ -16,16 +15,12 @@ export function Positioning() {
       <h2 id="pos-label" className="sr-only">
         What we do
       </h2>
-      <SectionLabel index="01" label="The studio" />
-      <div className="mt-10 grid grid-cols-12 gap-x-6 md:mt-16">
+      <div className="grid grid-cols-12 gap-x-6">
         {/* Full width so the long statement doesn't leave an empty column beside it */}
         <ScrollWords
           text={positioning}
           className="col-span-12 text-[clamp(1.7rem,3.6vw,3.8rem)] font-semibold leading-[1.08] tracking-[-0.04em] lg:col-span-11"
         />
-        <p className="eyebrow col-span-12 mt-6 text-muted md:col-span-4 md:col-start-9 md:mt-8 md:text-right" data-reveal="fade">
-          Websites first. Tools when needed.
-        </p>
       </div>
     </section>
   );
@@ -36,8 +31,7 @@ export function SelectedWork({ projects }: { projects: Project[] }) {
   const featured = projects.slice(0, 4);
   return (
     <section className="px-page relative pb-20 md:pb-28" aria-labelledby="work-title" data-annot="section · selected work">
-      <SectionLabel index="02" label="Selected work" />
-      <div className="mt-10 flex flex-col gap-6 md:mt-14 md:flex-row md:items-end md:justify-between">
+      <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
         <h2 id="work-title" className="display text-[clamp(2.8rem,7vw,7.5rem)]" data-split="chars">
           {featured.length === 2 ? "Two sites you can" : "Sites you can"} <em className="text-accent">open and use.</em>
         </h2>
@@ -61,19 +55,16 @@ const services = [
     type: "web",
     title: "Websites",
     body: "Clear pages built for phones, with content and language options that fit your business.",
-    cue: "What customers see",
   },
   {
     type: "flow",
     title: "Menus, forms & bookings",
     body: "Enquiries, booking requests and pre-orders designed around what customers and staff actually do.",
-    cue: "What customers do",
   },
   {
     type: "tools",
     title: "Tools behind the site",
     body: "Editable content, admin screens, databases or automation when the project needs them.",
-    cue: "What your team uses",
   },
 ] as const;
 
@@ -90,8 +81,7 @@ function ServiceVisual({ type }: { type: (typeof services)[number]["type"] }) {
 export function Capabilities() {
   return (
     <section id="services" className="px-page relative scroll-mt-[var(--nav-h)] pb-20 md:pb-28" aria-labelledby="cap-title" data-annot="section · capabilities">
-      <SectionLabel index="03" label="What we build" />
-      <div className="mt-10 grid grid-cols-12 gap-x-6 md:mt-14">
+      <div className="grid grid-cols-12 gap-x-6">
         <h2 id="cap-title" className="display col-span-12 text-[clamp(2.6rem,6vw,6.4rem)] md:col-span-8" data-split="lines">
           Start with the <em className="text-accent">actual need.</em>
         </h2>
@@ -104,7 +94,6 @@ export function Capabilities() {
           <article className={`service-panel service-panel-${service.type}`} key={service.title}>
             <ServiceVisual type={service.type} />
             <div className="service-panel-copy">
-              <p className="eyebrow">{service.cue}</p>
               <h3>{service.title}</h3>
               <p>{service.body}</p>
             </div>
@@ -116,10 +105,9 @@ export function Capabilities() {
 }
 
 /* ── (04) Approach ─────────────────────────────────────────── */
-export function Approach({ index = "04" }: { index?: string }) {
+export function Approach() {
   return (
     <section className="px-page relative pb-20 pt-16 md:pb-28 md:pt-24" aria-labelledby="app-title" data-annot="section · approach">
-      <SectionLabel index={index} label="Approach" />
       <ApproachAssemble />
     </section>
   );
@@ -130,8 +118,7 @@ export function Standards() {
   return (
     <section className="relative pb-20 md:pb-28" aria-labelledby="std-title" data-annot="section · standards">
       <div className="px-page">
-        <SectionLabel index="05" label="What to expect" />
-        <div className="mt-10 grid grid-cols-12 gap-x-6 md:mt-14">
+        <div className="grid grid-cols-12 gap-x-6">
           <h2 id="std-title" className="display col-span-12 text-[clamp(2.6rem,5.6vw,6rem)] md:col-span-7" data-split="lines">
             What you can <em className="text-accent">expect.</em>
           </h2>
@@ -141,9 +128,9 @@ export function Standards() {
       </div>
 
       <div className="mt-20 md:mt-28" aria-labelledby="int-title">
-        <p id="int-title" className="eyebrow px-page text-muted" data-reveal="scramble">
+        <h2 id="int-title" className="px-page font-display text-[clamp(1.5rem,2vw,2rem)] font-semibold" data-reveal="fade">
           What we build with
-        </p>
+        </h2>
         <ToolMarquee className="mt-6" />
       </div>
 

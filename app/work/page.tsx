@@ -21,8 +21,7 @@ export default async function WorkPage() {
       <section className="px-page pb-24 pt-[calc(var(--nav-h)+8svh)] md:pb-32" aria-labelledby="work-h" data-annot="page · /work">
         <div className={`work-page-intro ${projects.length < 2 ? "work-page-intro-single" : ""}`}>
           <div>
-            <p className="eyebrow text-muted">Selected work</p>
-            <h1 id="work-h" className="display mt-6 text-[clamp(4rem,11vw,11rem)]" data-split="chars">
+            <h1 id="work-h" className="display text-[clamp(4rem,11vw,11rem)]" data-split="chars">
               Work<em className="work-title-dot text-accent">.</em>
             </h1>
             <p className="body-lg mt-8 max-w-[39ch]" data-split="lines">

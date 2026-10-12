@@ -4,7 +4,6 @@ import type { PointerEvent } from "react";
 import { standards } from "@/content/site";
 
 const scopeParts = ["Pages", "Features", "Timeline", "Quote"];
-const cardLabels = ["Before we build", "See it early", "Straight answers", "Every screen", "Stay in control", "Fully yours"];
 
 /** The supplied bento layout and spotlight idea, adapted to TableStack's six project promises. */
 export default function StandardsShowcase() {
@@ -23,7 +22,6 @@ export default function StandardsShowcase() {
           onPointerMove={trackPointer}
         >
           <div className="standard-card-content">
-            <p className="standard-card-label eyebrow">{cardLabels[index]}</p>
             <h3 className="standard-card-title">{item.k}</h3>
             <p className="standard-card-description">{item.v}</p>
           </div>

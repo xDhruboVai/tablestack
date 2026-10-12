@@ -14,10 +14,7 @@ export default function BlogIndex() {
   return (
     <>
       <section className="px-page pb-20 pt-[calc(var(--nav-h)+8svh)] md:pb-28" aria-labelledby="blog-h">
-        <p className="eyebrow text-muted" data-reveal="fade">
-          Guides from {site.name}
-        </p>
-        <h1 id="blog-h" className="display mt-6 text-[clamp(2.8rem,8vw,9rem)]" data-split="chars">
+        <h1 id="blog-h" className="display text-[clamp(2.8rem,8vw,9rem)]" data-split="chars">
           Blog
         </h1>
         <ul className="mt-14 border-t border-rule md:mt-20">

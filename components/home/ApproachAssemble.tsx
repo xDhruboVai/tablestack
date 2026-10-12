@@ -43,7 +43,7 @@ export default function ApproachAssemble({ titleId = "app-title" }: { titleId?: 
   }, []);
 
   return (
-    <div className="mt-10 md:mt-14">
+    <div>
       <h2 id={titleId} className="display text-[clamp(2.6rem,5vw,5.6rem)]" data-split="lines">
         How a project <em className="text-accent">runs.</em>
       </h2>
@@ -51,8 +51,6 @@ export default function ApproachAssemble({ titleId = "app-title" }: { titleId?: 
       <div ref={track} className="asm mt-8 md:mt-10" style={{ ["--steps" as string]: approach.length }}>
         <div ref={pin} className="asm-pin">
           <div className="asm-scene" data-stage={active} aria-hidden="true">
-            <p className="asm-scene-label">The work, taking shape</p>
-
             <div className="asm-sheet asm-sheet--brief">
               <p className="asm-sheet-label">Brief</p>
               <div className="asm-brief-content">
@@ -100,13 +98,11 @@ export default function ApproachAssemble({ titleId = "app-title" }: { titleId?: 
             </ol>
 
             <div key={active} className="asm-detail-copy">
-              <p className="asm-detail-kicker">{STAGES[active].tab}</p>
               <h3>{STAGES[active].headline}</h3>
               <p>{approach[active].body}</p>
             </div>
 
             <div className="asm-outcome">
-              <p>You see</p>
               <strong>{STAGES[active].outcome}</strong>
             </div>
           </div>

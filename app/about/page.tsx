@@ -1,5 +1,4 @@
 import { pageMeta } from "@/lib/seo";
-import SectionLabel from "@/components/ui/SectionLabel";
 import DotField from "@/components/about/DotField";
 import StackCards from "@/components/ui/StackCards";
 import ToolMarquee from "@/components/ui/ToolMarquee";
@@ -38,10 +37,7 @@ export default function AboutPage() {
   return (
     <>
       <section className="px-page pb-24 pt-[calc(var(--nav-h)+10svh)] md:pb-28" aria-labelledby="about-h" data-annot="page · /about">
-        <p className="eyebrow text-muted" data-reveal="scramble">
-          About Us
-        </p>
-        <h1 id="about-h" className="display mt-6 text-[clamp(2.8rem,8vw,9rem)]" data-split="chars">
+        <h1 id="about-h" className="display text-[clamp(2.8rem,8vw,9rem)]" data-split="chars">
           Websites first. <em className="text-accent">Tools when needed.</em>
         </h1>
         <div className="mt-12 grid grid-cols-12 gap-x-6 gap-y-12 md:mt-20 md:gap-y-16">
@@ -68,8 +64,7 @@ export default function AboutPage() {
 
       {/* Team */}
       <section className="px-page pb-16 md:pb-20" aria-labelledby="team-h">
-        <SectionLabel index="01" label="Who we are" />
-        <h2 id="team-h" className="display mt-10 text-[clamp(2.4rem,4.8vw,5.2rem)] md:mt-14" data-split="lines">
+        <h2 id="team-h" className="display text-[clamp(2.4rem,4.8vw,5.2rem)]" data-split="lines">
           The people <em className="text-accent">behind it.</em>
         </h2>
         <ul className="mt-10 grid auto-rows-fr grid-cols-1 gap-5 md:mt-12 lg:grid-cols-2">
@@ -93,8 +88,7 @@ export default function AboutPage() {
 
       {/* The two sides - the idea behind the name */}
       <section className="px-page pb-20 md:pb-28" aria-labelledby="sides-h">
-        <SectionLabel index="02" label="The idea" />
-        <h2 id="sides-h" className="display mt-10 max-w-[16ch] text-[clamp(2.4rem,4.8vw,5.2rem)] md:mt-14" data-split="lines">
+        <h2 id="sides-h" className="display max-w-[16ch] text-[clamp(2.4rem,4.8vw,5.2rem)]" data-split="lines">
           Table, plus <em className="text-accent">tech stack.</em>
         </h2>
         <div className="mt-14 grid grid-cols-1 border border-rule md:mt-20 md:grid-cols-2" data-reveal="rise">
@@ -127,9 +121,8 @@ export default function AboutPage() {
 
       {/* Principles */}
       <section className="px-page pb-20 md:pb-28" aria-labelledby="principles-h">
-        <SectionLabel index="03" label="What makes us different" />
-        <h2 id="principles-h" className="sr-only">
-          Principles
+        <h2 id="principles-h" className="display text-[clamp(2.4rem,4.8vw,5.2rem)]" data-split="lines">
+          What makes us different.
         </h2>
         <div className="mt-12 md:mt-16">
           <StackCards items={about.principles} extra={<DotField />} />
@@ -138,8 +131,7 @@ export default function AboutPage() {
 
       <section className="pb-20 md:pb-28" aria-labelledby="tools-h">
         <div className="px-page">
-          <SectionLabel index="04" label="What we build with" />
-          <h2 id="tools-h" className="sr-only">
+          <h2 id="tools-h" className="font-display text-[clamp(1.5rem,2vw,2rem)] font-semibold">
             What we build with
           </h2>
         </div>

@@ -92,9 +92,6 @@ export default function HeroAnatomy({ showWork = true }: { showWork?: boolean })
         scroll.add(tick, { scaleY: [0, 1], duration: 50, ease: EASE.out }, at + 110);
         scroll.add(labels[i], { opacity: [0, 1], x: [-14, 0], duration: 120, ease: EASE.out }, at + 80);
       });
-      scroll.add("[data-fig]", { opacity: [0, 1], duration: 120 }, 520);
-      scroll.add("[data-fig]", { opacity: 1, duration: 1 }, 1000); // hold the final frame
-
       /* ── Intro: headline rises, table assembles slab by slab ─ */
       const title = el.querySelectorAll<HTMLElement>(".hl");
       const split = splitText(Array.from(title), { words: false, chars: true });
@@ -206,9 +203,6 @@ export default function HeroAnatomy({ showWork = true }: { showWork?: boolean })
           </div>
         </div>
 
-        <p className="hero-fig eyebrow px-page text-muted" data-fig aria-hidden="true">
-          Fig. 01 · Anatomy of a business website
-        </p>
         <div className="hero-hint px-page" data-hint aria-hidden="true">
           <span className="eyebrow flex items-center gap-3 text-muted">
             <span className="hero-hint-line" /> Scroll to see how it’s built
