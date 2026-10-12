@@ -23,7 +23,7 @@ export default async function WorkPage() {
           <div>
             <p className="eyebrow text-muted">Selected work</p>
             <h1 id="work-h" className="display mt-6 text-[clamp(4rem,11vw,11rem)]" data-split="chars">
-              Work<em className="text-accent">.</em>
+              Work<em className="work-title-dot text-accent">.</em>
             </h1>
             <p className="body-lg mt-8 max-w-[39ch]" data-split="lines">
               {projects.length === 2

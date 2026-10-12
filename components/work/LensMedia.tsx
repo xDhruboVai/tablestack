@@ -110,9 +110,6 @@ export default function LensMedia({
       {project.placeholder && (
         <span className="eyebrow absolute left-3 top-3 bg-[var(--bg)] px-2 py-1 !text-[13px] text-fg">Placeholder</span>
       )}
-      <span className="lens-tip eyebrow" aria-hidden="true">
-        Hover to see how it’s built
-      </span>
     </div>
   );
 }

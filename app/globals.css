@@ -869,12 +869,13 @@ html:not([data-mode="boh"]) .boh-only {
   position: fixed;
   inset: 0 0 auto 0;
   z-index: 60;
+  background: var(--bg);
   transition: background-color 0.4s var(--ease-out-quart), border-color 0.4s var(--ease-out-quart),
     backdrop-filter 0.4s;
-  border-bottom: 1px solid transparent;
+  border-bottom: 1px solid var(--rule);
 }
 .site-nav.is-scrolled {
-  background: color-mix(in srgb, var(--bg) 94%, transparent);
+  background: color-mix(in srgb, var(--bg) 98%, transparent);
   backdrop-filter: blur(14px) saturate(1.2);
   -webkit-backdrop-filter: blur(14px) saturate(1.2);
   border-bottom-color: var(--rule);
@@ -1269,10 +1270,17 @@ line.wf-window {
   letter-spacing: -0.025em;
 }
 .standard-card-featured {
+  flex-direction: row;
+  align-items: center;
+  gap: clamp(24px, 4vw, 60px);
   min-height: 320px;
   border-color: transparent;
   background: var(--fg);
   color: var(--bg);
+}
+.standard-card-featured .standard-card-content {
+  flex: 1 1 55%;
+  min-width: 0;
 }
 .standard-card-featured::before {
   background: radial-gradient(420px circle at var(--spot-x, 50%) var(--spot-y, 50%), rgb(228 63 37 / 0.27), transparent 75%);
@@ -1281,25 +1289,36 @@ line.wf-window {
   color: var(--accent-text-inv);
 }
 .standard-card-featured .standard-card-title {
-  font-size: clamp(3.25rem, 11cqi, 5.5rem);
+  font-size: clamp(3rem, 6cqi, 4.5rem);
 }
 .standard-card-featured .standard-card-description {
   max-width: 36ch;
   color: var(--bg);
-  font-size: clamp(1.1rem, 3cqi, 1.45rem);
+  font-size: clamp(1.1rem, 2cqi, 1.35rem);
 }
 .standard-scope-parts {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 36px;
+  display: grid;
+  flex: 0 1 39%;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  min-width: 0;
 }
 .standard-scope-parts span {
-  border: 1px solid currentColor;
-  border-radius: 999px;
-  padding: 8px 13px;
-  font-size: 13px;
-  line-height: 1;
+  display: flex;
+  align-items: flex-end;
+  min-height: clamp(84px, 7.5vw, 112px);
+  border: 1px solid color-mix(in srgb, var(--bg) 35%, transparent);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--bg) 7%, transparent);
+  padding: 16px;
+  font-size: clamp(14px, 1.2vw, 18px);
+  font-weight: 600;
+  line-height: 1.2;
+}
+@media (max-width: 679px) {
+  .standard-card-featured { flex-direction: column; align-items: stretch; }
+  .standard-scope-parts { width: 100%; margin-top: 12px; }
+  .standard-scope-parts span { min-height: 72px; }
 }
 @media (min-width: 680px) {
   .standards-grid {
@@ -1698,18 +1717,9 @@ line.wf-window {
     background: linear-gradient(135deg, color-mix(in srgb, var(--fg) 5%, var(--surface)), var(--surface) 48%);
   }
   .team-card-role {
-    display: flex;
-    align-items: center;
-    gap: 10px;
     color: var(--accent-text);
     font-size: 15px;
     font-weight: 600;
-  }
-  .team-card-role::before {
-    content: "";
-    width: 22px;
-    height: 2px;
-    background: var(--accent);
   }
   .team-card-name {
     margin-top: 16px;
@@ -2190,6 +2200,7 @@ line.wf-window {
 .project-tile:hover .project-tile-arrow,
 .project-tile:focus-within .project-tile-arrow { transform: translate(2px, -2px); border-color: var(--accent); background: var(--accent); color: var(--ink); }
 .work-page-intro { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .9fr); align-items: center; gap: clamp(30px, 5vw, 85px); }
+.work-title-dot { font-size: .65em; font-style: normal; }
 .work-page-intro-single { grid-template-columns: minmax(0, 1fr); }
 .project-montage { position: relative; height: clamp(330px, 32vw, 520px); }
 .project-montage-frame {
