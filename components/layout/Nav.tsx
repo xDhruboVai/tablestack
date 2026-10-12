@@ -91,15 +91,17 @@ export default function Nav({ showWork = true }: { showWork?: boolean }) {
             <Wordmark />
           </TLink>
 
-          <nav aria-label="Primary" className="hidden items-center gap-9 md:flex">
+          <nav aria-label="Primary" className="gradient-nav hidden items-center md:flex">
             {links.map((item) => (
               <TLink
                 key={item.href}
                 href={item.href}
-                className="link-draw nav-link"
+                className="gradient-nav-link nav-link"
                 aria-current={isActive(item.href) ? "page" : undefined}
               >
-                {item.label}
+                <span className="gradient-nav-glow" aria-hidden="true" />
+                <span className="gradient-nav-face">{item.label}</span>
+                <span className="gradient-nav-back" aria-hidden="true">{item.label}</span>
               </TLink>
             ))}
           </nav>

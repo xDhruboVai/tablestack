@@ -880,6 +880,85 @@ html:not([data-mode="boh"]) .boh-only {
   -webkit-backdrop-filter: blur(14px) saturate(1.2);
   border-bottom-color: var(--rule);
 }
+.gradient-nav {
+  position: relative;
+  gap: 2px;
+  padding: 4px;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--surface) 78%, transparent);
+  box-shadow: 0 8px 24px rgb(10 10 10 / 0.05);
+}
+.gradient-nav-link {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 36px;
+  padding: 7px 18px;
+  border-radius: 999px;
+  line-height: 1.1;
+  perspective: 600px;
+  isolation: isolate;
+  transition: background-color 0.3s, color 0.3s;
+}
+.gradient-nav-link[aria-current="page"] {
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  color: var(--accent-text);
+}
+.gradient-nav-link:focus-visible {
+  border-radius: 999px;
+}
+.gradient-nav-glow {
+  position: absolute;
+  inset: -11px;
+  z-index: -1;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgb(228 63 37 / 0.25) 0%, rgb(228 63 37 / 0.1) 43%, transparent 72%);
+  opacity: 0;
+  transform: scale(0.72);
+  pointer-events: none;
+  transition: opacity 0.45s, transform 0.55s var(--ease-out-quart);
+}
+.gradient-nav-face,
+.gradient-nav-back {
+  grid-area: 1 / 1;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  transition: transform 0.55s var(--ease-out-quart), opacity 0.4s;
+}
+.gradient-nav-face {
+  transform-origin: center bottom;
+}
+.gradient-nav-back {
+  color: var(--accent-text);
+  opacity: 0;
+  transform: rotateX(90deg);
+  transform-origin: center top;
+}
+.gradient-nav-link:is(:hover, :focus-visible) .gradient-nav-glow {
+  opacity: 1;
+  transform: scale(1.6);
+}
+.gradient-nav-link:is(:hover, :focus-visible) .gradient-nav-face {
+  opacity: 0;
+  transform: rotateX(-90deg);
+}
+.gradient-nav-link:is(:hover, :focus-visible) .gradient-nav-back {
+  opacity: 1;
+  transform: rotateX(0);
+}
+html[data-mode="boh"] .gradient-nav {
+  box-shadow: 0 8px 24px rgb(0 0 0 / 0.25);
+}
+@media (prefers-reduced-motion: reduce) {
+  .gradient-nav-link:is(:hover, :focus-visible) .gradient-nav-face {
+    opacity: 1;
+    transform: none;
+  }
+  .gradient-nav-link:is(:hover, :focus-visible) .gradient-nav-back {
+    opacity: 0;
+  }
+}
 .menu-btn {
   display: grid;
   place-items: center;
