@@ -2,12 +2,12 @@ import SectionLabel from "@/components/ui/SectionLabel";
 import ToolMarquee from "@/components/ui/ToolMarquee";
 import TLink from "@/components/layout/TLink";
 import GlowLink from "@/components/ui/GlowLink";
-import WorkCard from "@/components/work/WorkCard";
-import StandardsChecklist from "./StandardsChecklist";
+import ProjectTile from "@/components/work/ProjectTile";
+import StandardsShowcase from "./StandardsShowcase";
 import ScrollWords from "./ScrollWords";
 import ApproachAssemble from "./ApproachAssemble";
 import type { Project } from "@/content/projects";
-import { bookCall, pillars, positioning, site, testimonials } from "@/content/site";
+import { bookCall, positioning, site, testimonials } from "@/content/site";
 
 /* ── (01) Positioning ──────────────────────────────────────── */
 export function Positioning() {
@@ -32,15 +32,6 @@ export function Positioning() {
 }
 
 /* ── (02) Selected work ────────────────────────────────────── */
-const LAYOUT = [
-  // Every frame is 16:10, the shape of a desktop screenshot, so nothing gets cropped away.
-  // The stagger comes from column widths and vertical offsets instead.
-  { col: "md:col-span-7", aspect: "aspect-[16/10]", offset: "" },
-  { col: "md:col-span-5 md:col-start-8", aspect: "aspect-[16/10]", offset: "md:mt-[6vw]" },
-  { col: "md:col-span-5 md:col-start-2", aspect: "aspect-[16/10]", offset: "md:mt-[4vw]" },
-  { col: "md:col-span-6 md:col-start-7", aspect: "aspect-[16/10]", offset: "md:mt-[12vw]" },
-];
-
 export function SelectedWork({ projects }: { projects: Project[] }) {
   const featured = projects.slice(0, 4);
   return (
@@ -48,7 +39,7 @@ export function SelectedWork({ projects }: { projects: Project[] }) {
       <SectionLabel index="02" label="Selected work" />
       <div className="mt-10 flex flex-col gap-6 md:mt-14 md:flex-row md:items-end md:justify-between">
         <h2 id="work-title" className="display text-[clamp(2.8rem,7vw,7.5rem)]" data-split="chars">
-          The work
+          {featured.length === 2 ? "Two sites you can" : "Sites you can"} <em className="text-accent">open and use.</em>
         </h2>
         <div className="flex flex-col items-start gap-4 md:items-end md:pb-4">
           <TLink href="/work" className="btn btn-ghost" data-reveal="rise">
@@ -57,34 +48,41 @@ export function SelectedWork({ projects }: { projects: Project[] }) {
         </div>
       </div>
 
-      <div className="mt-14 grid grid-cols-1 gap-x-6 gap-y-16 md:mt-20 md:grid-cols-12 md:gap-y-0">
-        {featured.map((p, i) => (
-          <div key={p.slug} className={`${LAYOUT[i % 4].col} ${LAYOUT[i % 4].offset}`}>
-            <WorkCard project={p} index={i} aspect={LAYOUT[i % 4].aspect} />
-          </div>
-        ))}
+      <div className={`project-tile-grid mt-14 md:mt-20 ${featured.length === 1 ? "project-tile-grid-single" : ""}`}>
+        {featured.map((p) => <ProjectTile project={p} key={p.slug} />)}
       </div>
     </section>
   );
 }
 
 /* ── (03) Capabilities ─────────────────────────────────────── */
-function PillarColumn({ data, dark }: { data: (typeof pillars)[number]; dark?: boolean }) {
+const services = [
+  {
+    type: "web",
+    title: "Websites",
+    body: "Clear pages built for phones, with content and language options that fit your business.",
+    cue: "What customers see",
+  },
+  {
+    type: "flow",
+    title: "Menus, forms & bookings",
+    body: "Enquiries, booking requests and pre-orders designed around what customers and staff actually do.",
+    cue: "What customers do",
+  },
+  {
+    type: "tools",
+    title: "Tools behind the site",
+    body: "Editable content, admin screens, databases or automation when the project needs them.",
+    cue: "What your team uses",
+  },
+] as const;
+
+function ServiceVisual({ type }: { type: (typeof services)[number]["type"] }) {
   return (
-    <div className={`cap-col relative px-6 py-10 md:px-8 md:py-12 ${dark ? "cap-dark" : "bg-surface"}`}>
-      <p className="eyebrow opacity-70">{data.sub}</p>
-      <h3 className="display mt-2 text-[clamp(1.8rem,2.4vw,2.4rem)]">{data.title}</h3>
-      <ul className="mt-8">
-        {data.items.map((item) => (
-          <li key={item.name} className="pillar-row">
-            <span className="list-bar mt-[0.35em]" aria-hidden="true" />
-            <span>
-              <span className="cap-name block text-[clamp(1.02rem,1.2vw,1.15rem)] font-medium">{item.name}</span>
-              <span className="mt-1 block text-[15px] opacity-75">{item.note}</span>
-            </span>
-          </li>
-        ))}
-      </ul>
+    <div className={`service-visual service-visual-${type}`} aria-hidden="true">
+      {type === "web" && <><span className="visual-browser-bar" /><span className="visual-web-title" /><span className="visual-web-copy" /><span className="visual-web-button" /></>}
+      {type === "flow" && <><span className="visual-flow-step">01</span><span className="visual-flow-connector" /><span className="visual-flow-step">02</span><span className="visual-flow-connector" /><span className="visual-flow-step">03</span></>}
+      {type === "tools" && <><span className="visual-tool-card visual-tool-card-back" /><span className="visual-tool-card visual-tool-card-front"><i /><i /><i /></span><span className="visual-tool-dot" /></>}
     </div>
   );
 }
@@ -92,19 +90,25 @@ function PillarColumn({ data, dark }: { data: (typeof pillars)[number]; dark?: b
 export function Capabilities() {
   return (
     <section id="services" className="px-page relative scroll-mt-[var(--nav-h)] pb-20 md:pb-28" aria-labelledby="cap-title" data-annot="section · capabilities">
-      <SectionLabel index="03" label="Capabilities" />
+      <SectionLabel index="03" label="What we build" />
       <div className="mt-10 grid grid-cols-12 gap-x-6 md:mt-14">
         <h2 id="cap-title" className="display col-span-12 text-[clamp(2.6rem,6vw,6.4rem)] md:col-span-8" data-split="lines">
-          What we <em className="text-accent">build.</em>
+          Start with the <em className="text-accent">actual need.</em>
         </h2>
         <p className="body-lg col-span-12 mt-6 max-w-[40ch] md:col-span-4 md:mt-0 md:self-end" data-split="lines">
-          Three areas, one team. Websites, data and AI, scoped to what your business actually needs.
+          Websites first, with the right tools behind them.
         </p>
       </div>
-      {/* One column per area: light, dark, light. */}
-      <div className="mt-14 grid grid-cols-1 gap-px border border-rule bg-[var(--rule)] md:mt-20 lg:grid-cols-3" data-reveal="rise">
-        {pillars.map((p, i) => (
-          <PillarColumn key={p.title} data={p} dark={i % 2 === 1} />
+      <div className="service-panel-grid mt-14 md:mt-20" data-reveal="rise">
+        {services.map((service) => (
+          <article className={`service-panel service-panel-${service.type}`} key={service.title}>
+            <ServiceVisual type={service.type} />
+            <div className="service-panel-copy">
+              <p className="eyebrow">{service.cue}</p>
+              <h3>{service.title}</h3>
+              <p>{service.body}</p>
+            </div>
+          </article>
         ))}
       </div>
     </section>
@@ -114,7 +118,7 @@ export function Capabilities() {
 /* ── (04) Approach ─────────────────────────────────────────── */
 export function Approach({ index = "04" }: { index?: string }) {
   return (
-    <section className="px-page relative pb-20 md:pb-28" aria-labelledby="app-title" data-annot="section · approach">
+    <section className="px-page relative pb-20 pt-16 md:pb-28 md:pt-24" aria-labelledby="app-title" data-annot="section · approach">
       <SectionLabel index={index} label="Approach" />
       <ApproachAssemble />
     </section>
@@ -133,7 +137,7 @@ export function Standards() {
           </h2>
         </div>
 
-        <StandardsChecklist />
+        <StandardsShowcase />
       </div>
 
       <div className="mt-20 md:mt-28" aria-labelledby="int-title">

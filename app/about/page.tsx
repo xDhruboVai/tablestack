@@ -9,7 +9,7 @@ import { about, site, team } from "@/content/site";
 
 export const metadata = pageMeta({
   title: "About Us",
-  description: `Meet ${site.name}: three people in Dhaka, Bangladesh who design and build websites, software, databases and AI tools. See who we are and how we work.`,
+  description: `Meet ${site.name}: a small team in Dhaka, Bangladesh building websites, software, databases and AI tools. See who we are and how we work.`,
   path: "/about",
 });
 
@@ -67,20 +67,25 @@ export default function AboutPage() {
       </section>
 
       {/* Team */}
-      <section className="px-page pb-20 md:pb-28" aria-labelledby="team-h">
+      <section className="px-page pb-16 md:pb-20" aria-labelledby="team-h">
         <SectionLabel index="01" label="Who we are" />
         <h2 id="team-h" className="display mt-10 text-[clamp(2.4rem,4.8vw,5.2rem)] md:mt-14" data-split="lines">
           The people <em className="text-accent">behind it.</em>
         </h2>
-        {/* Compact text-only profiles. */}
-        <ul className={`mt-14 grid auto-rows-fr grid-cols-1 gap-5 sm:grid-cols-2 md:mt-20 ${team.length >= 3 ? "lg:grid-cols-3" : "lg:max-w-[64rem]"}`}>
+        <ul className="mt-10 grid auto-rows-fr grid-cols-1 gap-5 md:mt-12 lg:grid-cols-2">
           {team.map((m, i) => (
             <li key={m.name} className="team-card" data-reveal="rise" data-delay={i * 120}>
-              <h3 className="text-[clamp(1.35rem,1.8vw,1.6rem)] font-semibold tracking-[-0.03em]">{m.name}</h3>
-              {"role" in m && <p className="mt-1 font-medium text-[var(--accent-text)]">{m.role}</p>}
-              <p className="mt-3 text-fg-2">{m.study}</p>
-              <p className="text-muted">{m.graduation}</p>
-              <TeamLinks member={m} />
+              <div>
+                {"role" in m && <p className="team-card-role">{m.role}</p>}
+                <h3 className="team-card-name">{m.name}</h3>
+              </div>
+              <div className="team-card-details">
+                <div>
+                  <p className="text-fg-2">{m.study}</p>
+                  <p className="text-muted">{m.graduation}</p>
+                </div>
+                <TeamLinks member={m} />
+              </div>
             </li>
           ))}
         </ul>

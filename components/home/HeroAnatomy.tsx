@@ -168,8 +168,8 @@ export default function HeroAnatomy({ showWork = true }: { showWork?: boolean })
           </h1>
 
           <p className="body-lg mt-6 max-w-[36ch] lg:mt-8" data-intro data-intro-fade>
-            TableStack is a small web team in Bangladesh. We build websites, software, databases and AI tools for all
-            kinds of businesses and corporations.
+            TableStack is a small web team in Bangladesh. We build websites and the tools behind them, from bilingual
+            menus and branch pages to booking flows and admin screens.
           </p>
 
           <div className="mt-7 flex flex-wrap items-center gap-3 lg:mt-9" data-intro data-intro-fade>

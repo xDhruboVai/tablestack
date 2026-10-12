@@ -55,12 +55,11 @@ Pages in the sitemap (all return 200 and name themselves as canonical):
 - `https://tablestackbd.com/work/pinewood`
 - `https://tablestackbd.com/about`
 - `https://tablestackbd.com/contact`
-- `https://tablestackbd.com/why-tablestack`
 - `https://tablestackbd.com/faq`
 - `https://tablestackbd.com/blog`
 - `https://tablestackbd.com/blog/how-much-does-a-website-cost-in-bangladesh`
 
-Deliberately not in the sitemap: `/portfolio` and `/services` (redirects), `/api/contact`, the 404 page.
+Deliberately not in the sitemap: `/portfolio`, `/services`, and `/why-tablestack` (redirects), `/api/contact`, the 404 page.
 
 `lastmod` is only given for the blog post, which has a real date. The other pages have no reliable
 "last changed" date, and Google's guidance is to leave it out rather than guess.

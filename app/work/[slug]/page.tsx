@@ -189,7 +189,7 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
               ))}
             </ul>
           </Chapter>
-          <Chapter label="Outcome">
+          <Chapter label="Delivered">
             <p className="body-lg !text-[clamp(1.2rem,1.7vw,1.6rem)] !leading-[1.45]" data-split="lines">
               {p.outcome}
             </p>

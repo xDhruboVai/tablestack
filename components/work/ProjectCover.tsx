@@ -12,11 +12,13 @@ export default function ProjectCover({
   project,
   sizes = "(min-width: 768px) 50vw, 100vw",
   priority = false,
+  eager = false,
   decorative = false,
 }: {
   project: Project;
   sizes?: string;
   priority?: boolean;
+  eager?: boolean;
   decorative?: boolean;
 }) {
   const cover = project.media?.cover;
@@ -45,6 +47,7 @@ export default function ProjectCover({
         fill
         sizes={sizes}
         priority={priority}
+        loading={eager ? "eager" : undefined}
         className="object-cover"
       />
     </div>

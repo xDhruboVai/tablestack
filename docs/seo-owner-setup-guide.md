@@ -47,7 +47,6 @@ Public pages, all returning 200 [Live]:
 | Work | `https://tablestackbd.com/work` |
 | Smashed Burgers | `https://tablestackbd.com/work/smashed-burgers` |
 | Pinewood | `https://tablestackbd.com/work/pinewood` |
-| Why TableStack | `https://tablestackbd.com/why-tablestack` |
 | FAQ | `https://tablestackbd.com/faq` |
 | Blog | `https://tablestackbd.com/blog` |
 | Blog post | `https://tablestackbd.com/blog/how-much-does-a-website-cost-in-bangladesh` |

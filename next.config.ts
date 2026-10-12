@@ -15,7 +15,7 @@ const nextConfig: NextConfig = {
       },
       { source: "/portfolio", destination: "/work", permanent: true },
       { source: "/services", destination: "/#services", permanent: true },
-      { source: "/why-choose-tablestack", destination: "/why-tablestack", permanent: true },
+      { source: "/why-choose-tablestack", destination: "/about", permanent: true },
     ];
   },
 };

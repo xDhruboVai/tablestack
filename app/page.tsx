@@ -25,7 +25,7 @@ export default async function Home() {
         address: { "@type": "PostalAddress", addressLocality: site.city, addressCountry: "BD" },
         areaServed: { "@type": "Country", name: "Bangladesh" },
         sameAs,
-        knowsAbout: ["Web development", "Web application development", "UI/UX design", "E-commerce websites", "Business software", "Database design", "AI tools", "Workflow automation"],
+        knowsAbout: ["Website design", "Web development", "Bilingual websites", "Online menus", "Booking flows", "Database-backed websites"],
       },
       {
         "@type": "WebSite",

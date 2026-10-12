@@ -1,52 +1,43 @@
 import { pageMeta } from "@/lib/seo";
 import ContactForm from "@/components/contact/ContactForm";
-import CopyEmail from "@/components/contact/CopyEmail";
-import NextSteps from "@/components/contact/NextSteps";
-import { bookCall, site } from "@/content/site";
+import { site } from "@/content/site";
 
 export const metadata = pageMeta({
   title: "Contact",
-  description: `Start a project with ${site.name}. Send a short brief, email ${site.email}, book a call or message us on WhatsApp.`,
+  description: `Tell ${site.name} what you are building. Send a short brief or email ${site.email}.`,
   path: "/contact",
 });
 
 export default function ContactPage() {
   return (
-    <section className="px-page pb-28 pt-[calc(var(--nav-h)+10svh)] md:pb-40" aria-labelledby="contact-h" data-annot="page · /contact">
-      <p className="eyebrow flex items-center gap-3 text-fg-2" data-reveal="scramble">
-        <span className="live-dot" aria-hidden="true" /> {site.availability}
-      </p>
-      <h1 id="contact-h" className="display mt-6 text-[clamp(2.8rem,9vw,9.5rem)]" data-split="chars">
-        Start a <em className="text-accent">project.</em>
-      </h1>
+    <section className="px-page contact-page" aria-labelledby="contact-h" data-annot="page · /contact">
+      <div className="contact-page-heading">
+        <p className="eyebrow">Contact</p>
+        <h1 id="contact-h" className="display mt-6" data-split="lines">
+          Tell us what you’re <em className="text-accent">building.</em>
+        </h1>
+        <p className="body-lg mt-8 max-w-[39ch]">
+          A few sentences are enough to start. We’ll reply to discuss the scope and next steps.
+        </p>
+      </div>
 
-      <div className="mt-14 grid grid-cols-12 gap-x-6 gap-y-16 md:mt-20">
-        <div className="col-span-12 lg:col-span-5">
-          <div className="lg:sticky lg:top-[calc(var(--nav-h)+32px)]">
-            <p className="eyebrow text-muted">Rather just email?</p>
-            <a href={`mailto:${site.email}`} className="cta-email mt-3 inline-block font-display text-[clamp(1.5rem,2.6vw,2.6rem)] font-bold leading-tight tracking-[-0.035em]" data-reveal="rise">
-              {site.email}
-            </a>
-            <div className="mt-5 flex flex-wrap gap-3" data-reveal="rise" data-delay="100">
-              <CopyEmail email={site.email} />
-              <a {...bookCall} className="btn btn-ghost">
-                Book a call
-              </a>
-            </div>
-
-            <div className="mt-14">
-              <p className="eyebrow text-muted">What happens next</p>
-              <NextSteps />
-            </div>
-          </div>
+      <div className="contact-page-grid">
+        <div className="contact-brief-card">
+          <p className="eyebrow text-accent">Short brief</p>
+          <h2 className="display mt-3">What do you need?</h2>
+          <ContactForm />
         </div>
-
-        <div className="col-span-12 lg:col-span-6 lg:col-start-7" data-reveal="rise" data-annot="<ContactForm />">
-          <h2 className="text-[clamp(1.6rem,2.4vw,2.2rem)] font-medium tracking-[-0.03em]">Send a short brief</h2>
-          <div className="mt-2">
-            <ContactForm />
+        <aside className="contact-page-aside">
+          <div>
+            <p className="eyebrow">Prefer email?</p>
+            <a className="contact-page-email" href={`mailto:${site.email}`}>{site.email}</a>
+            <p className="mt-5 text-fg-2">Based in Dhaka, Bangladesh.</p>
           </div>
-        </div>
+          <div className="contact-aside-next">
+            <p className="eyebrow">After you get in touch</p>
+            <p className="mt-4 text-fg-2">We discuss what you need, agree on the work, and share the next step.</p>
+          </div>
+        </aside>
       </div>
     </section>
   );

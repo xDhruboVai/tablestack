@@ -34,11 +34,11 @@ export const site = {
   ],
   tagline: "Websites built around the way your business works.",
   // Shown in Google results and link previews (keep under about 160 characters).
-  seoTitle: "TableStack | Web Development & AI Solutions in Bangladesh",
+  seoTitle: "TableStack | Websites and Web Tools in Bangladesh",
   seoDescription:
-    "TableStack is a Bangladesh web development team building custom websites, business software, databases, and AI tools. Explore our work and discuss your project.",
+    "TableStack is a Dhaka web team building websites and the tools behind them. Explore published work with menus, bookings and branch pages.",
   description:
-    "A small web team in Bangladesh. We build websites, software and databases for all kinds of businesses and corporations, plus the tools behind them when you need them.",
+    "A small web team in Bangladesh. We build websites and the tools behind them, from bilingual menus and branch pages to booking flows and admin screens.",
 } as const;
 
 /** Props for every "Book a call" link: the booking page in a new tab, or an email while there's no link. */
@@ -54,7 +54,6 @@ export const nav = [
 
 /** Extra pages, linked from the footer only. */
 export const footerNav = [
-  { label: "Why TableStack", href: "/why-tablestack" },
   { label: "FAQ", href: "/faq" },
   { label: "Blog", href: "/blog" },
 ] as const;
@@ -85,7 +84,7 @@ export const anatomy = [
 
 /** Wrap words in *asterisks* for accent italic, **double asterisks** for bold. */
 export const positioning =
-  "We build websites, databases and AI tools for *businesses of every size.* **Clear scope. A working result.**";
+  "We build websites and the tools behind them. Recent work includes bilingual menus, branch pages, bookings and pre-orders. **Clear scope. A working result.**";
 
 /** What we do: three areas, five services each. `note` is the plain-language line under each service. */
 export const pillars = [
@@ -205,13 +204,6 @@ export const team = [
     github: "https://github.com/Saadmantheretroenjoyer",
     portfolio: "https://saalim.space/",
   },
-  {
-    name: "Nahin Hasan",
-    facebook: "https://www.facebook.com/nahin.hasan.5220/",
-    whatsapp: "01716934401",
-    study: "North South University, BBA (Marketing)",
-    graduation: "Expected graduation August 2028",
-  },
 ] as const;
 
 /** About page. */
@@ -253,5 +245,5 @@ export const inquiry = {
   ],
   // Budget ranges in BDT.
   budgets: ["Under Tk 25,000", "Under Tk 35,000", "Under Tk 50,000", "Tk 50,000+"],
-  timelines: ["ASAP", "1–2 months", "3+ months", "Flexible"],
+  timelines: ["ASAP", "1 to 2 months", "3+ months", "Flexible"],
 } as const;

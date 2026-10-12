@@ -1,7 +1,7 @@
 import { pageMeta } from "@/lib/seo";
 import { site } from "@/content/site";
-import WorkIndex from "@/components/work/WorkIndex";
-import BuildTicker from "@/components/work/BuildTicker";
+import ProjectTile from "@/components/work/ProjectTile";
+import ProjectMontage from "@/components/work/ProjectMontage";
 import { notFound } from "next/navigation";
 import { getVisibleProjects } from "@/lib/visibility";
 import { ContactCTA } from "@/components/home/Sections";
@@ -16,39 +16,25 @@ export default async function WorkPage() {
   const projects = await getVisibleProjects();
   // No projects switched on: the Work page doesn't exist.
   if (projects.length === 0) notFound();
-  const anyPlaceholder = projects.some((p) => p.placeholder);
   return (
     <>
-      <section className="px-page pb-24 pt-[calc(var(--nav-h)+6svh)] md:pb-28" aria-labelledby="work-h" data-annot="page · /work">
-        {/* Title on the left, intro beside it on the right, so the header stays compact. */}
-        <div className="grid grid-cols-12 items-end gap-x-6 gap-y-6">
-          <div className="col-span-12 flex items-start gap-4 md:col-span-7">
-            <h1 id="work-h" className="display text-[clamp(4rem,14vw,13rem)]" data-split="chars">
-              Work
+      <section className="px-page pb-24 pt-[calc(var(--nav-h)+8svh)] md:pb-32" aria-labelledby="work-h" data-annot="page · /work">
+        <div className={`work-page-intro ${projects.length < 2 ? "work-page-intro-single" : ""}`}>
+          <div>
+            <p className="eyebrow text-muted">Selected work</p>
+            <h1 id="work-h" className="display mt-6 text-[clamp(4rem,11vw,11rem)]" data-split="chars">
+              Work<em className="text-accent">.</em>
             </h1>
-            <span className="mt-[1.2vw] text-[clamp(1.1rem,1.6vw,1.6rem)] font-semibold tabular-nums text-[var(--accent-text)]" data-reveal="scramble">
-              {projects.length} {projects.length === 1 ? "project" : "projects"}
-            </span>
-          </div>
-          <div className="col-span-12 md:col-span-5 md:pb-[1.2vw]">
-            <p className="body-lg max-w-[44ch]" data-split="lines">
-              Our ongoing works so far. We’re a young team, so the list is short and there’s more in progress.
+            <p className="body-lg mt-8 max-w-[39ch]" data-split="lines">
+              {projects.length === 2
+                ? "Two websites we’ve shipped in Dhaka. Open each project to see the pages and features for yourself."
+                : "Open each project to see the pages and features for yourself."}
             </p>
-            {anyPlaceholder && (
-              <p className="eyebrow mt-4 text-muted" data-reveal="fade">
-                Sample projects shown. Replace with real work before launch.
-              </p>
-            )}
           </div>
+          <ProjectMontage projects={projects} />
         </div>
-
-        <div className="mt-12 md:mt-16" data-reveal="rise">
-          <WorkIndex projects={projects} />
-        </div>
-
-        {/* The list is short for now, so follow it with the range of work we take on. */}
-        <div className="mt-16 md:mt-20" data-reveal="rise">
-          <BuildTicker />
+        <div className={`project-tile-grid mt-16 md:mt-24 ${projects.length === 1 ? "project-tile-grid-single" : ""}`} data-reveal="rise">
+          {projects.map((project) => <ProjectTile project={project} headingLevel={2} key={project.slug} />)}
         </div>
       </section>
       <ContactCTA />
