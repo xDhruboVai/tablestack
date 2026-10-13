@@ -15,22 +15,20 @@ export default async function WorkAdminPage() {
   const hidden = unlocked ? await getHiddenSlugs(true) : new Set<string>();
 
   return (
-    <section className="px-page pb-24 pt-[calc(var(--nav-h)+8svh)]" aria-labelledby="wa-h">
-      <p className="eyebrow text-muted">Team only</p>
-      <h1 id="wa-h" className="display mt-4 text-[clamp(2.4rem,4.68vw,4.29rem)]">
-        Work <em className="text-accent">switches.</em>
+    <section className="admin-page" aria-labelledby="wa-h">
+      <h1 id="wa-h" className="sr-only">
+        Work switches
       </h1>
-      <p className="body-lg mt-6 max-w-[52ch]">
-        Turn a project off and it disappears from the site, including its own page. Turn every project off and the Work page and its links
-        disappear too.
-      </p>
-      <WorkToggles
-        key={unlocked ? "open" : "locked"}
-        unlocked={unlocked}
-        loginReady={adminLoginReady}
-        storageReady={storageReady}
-        items={unlocked ? projects.map((p) => ({ slug: p.slug, title: p.title, kind: p.kind, visible: !hidden.has(p.slug) })) : []}
-      />
+      {/* Only the card: the sign-in box, or the list of switches once signed in. */}
+      <div className={`contact-brief-card admin-card ${unlocked ? "admin-card-open" : ""}`}>
+        <WorkToggles
+          key={unlocked ? "open" : "locked"}
+          unlocked={unlocked}
+          loginReady={adminLoginReady}
+          storageReady={storageReady}
+          items={unlocked ? projects.map((p) => ({ slug: p.slug, title: p.title, kind: p.kind, concept: Boolean(p.concept), visible: !hidden.has(p.slug) })) : []}
+        />
+      </div>
     </section>
   );
 }

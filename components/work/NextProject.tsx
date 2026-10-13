@@ -10,7 +10,7 @@ export default function NextProject({ project }: { project: Project }) {
         <div className="col-span-12 md:col-span-7">
           <p className="eyebrow text-accent">Next project →</p>
           <p className="display mt-4 text-[clamp(3rem,6.63vw,7.02rem)] transition-[font-style] group-hover:italic">{project.title}</p>
-          <p className="eyebrow mt-3 text-muted">{project.kind}</p>
+          <p className="eyebrow mt-3 text-muted">{project.concept ? `Concept · ${project.kind}` : project.kind}</p>
         </div>
         <div className="col-span-12 md:col-span-5">
           <div className="next-project-media aspect-[16/10] overflow-hidden">

@@ -2512,6 +2512,46 @@ html[data-mode="boh"] .about-stack-item:nth-child(2) .about-stack-card {
   transform: translateX(48px);
   background: var(--accent);
 }
+/* ─── Admin page: one card in the middle of the screen ─────── */
+.admin-page {
+  display: grid;
+  place-items: center;
+  min-height: 100svh;
+  padding: calc(var(--nav-h) + 40px) var(--pad) clamp(56px, 8svh, 96px);
+}
+.admin-card { width: min(100%, 440px); }
+.admin-card-open { width: min(100%, 620px); }
+/* ─── Admin card: the list of projects and their switches ──── */
+.admin-card-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+.admin-count { margin-top: clamp(20px, 2vw, 30px); color: var(--fg-2); }
+.admin-list { display: grid; gap: 10px; margin-top: 18px; }
+.admin-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 16px 16px 16px 20px;
+  border: 1px solid var(--rule);
+  border-radius: 16px;
+  background: var(--bg);
+}
+/* A project that is off is dimmed, so the list reads at a glance. */
+.admin-row:not([data-on]) .admin-row-title,
+.admin-row:not([data-on]) .admin-row-kind { opacity: 0.55; }
+.admin-row-title {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 1.4vw, 1.4rem);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.035em;
+}
+.admin-row-title .concept-tag { padding: 6px 10px; font-family: var(--font-sans); font-size: 11px; }
+.admin-row-kind { margin-top: 5px; font-size: 15px; color: var(--fg-2); }
+.admin-foot { margin-top: 22px; font-size: 14px; color: var(--muted); }
 .work-switch:disabled {
   cursor: progress;
   opacity: 0.7;
@@ -2526,6 +2566,31 @@ html[data-mode="boh"] .about-stack-item:nth-child(2) .about-stack-card {
 .project-tile-grid-single { grid-template-columns: minmax(0, min(100%, 680px)); }
 .project-tile { min-width: 0; }
 .project-tile-link { display: block; }
+/* Marks a site we designed on our own initiative, wherever it appears. */
+.concept-tag {
+  display: inline-block;
+  padding: 8px 13px;
+  border-radius: 99px;
+  background: var(--ink);
+  color: var(--linen);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+html[data-mode="boh"] .concept-tag { background: var(--linen); color: var(--ink); }
+.project-tile-tag { position: absolute; left: 12px; top: 12px; z-index: 2; box-shadow: 0 0 0 1px rgb(242 239 234 / 0.35); }
+html[data-mode="boh"] .project-tile-tag { background: var(--ink); color: var(--linen); }
+.concept-note {
+  max-width: 46ch;
+  padding: 14px 18px;
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--fg) 6%, transparent);
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--fg-2);
+}
 .project-tile-media {
   position: relative;
   overflow: hidden;

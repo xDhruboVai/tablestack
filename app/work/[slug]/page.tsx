@@ -20,21 +20,22 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   const { slug } = await params;
   const p = getProject(slug);
   if (!p || !(await getVisibleProjects()).some((v) => v.slug === slug)) return {};
+  const title = p.concept ? `${p.title} (concept) · ${p.kind}` : `${p.title} · ${p.kind}`;
   return {
-    title: `${p.title} · ${p.kind}`,
+    title,
     description: p.summary,
     alternates: { canonical: `/work/${p.slug}` },
     openGraph: {
       type: "article",
       siteName: site.name,
-      title: `${p.title} · ${p.kind}`,
+      title,
       description: p.summary,
       url: `/work/${p.slug}`,
       images: [p.media?.cover ? { url: p.media.cover, alt: p.media.coverAlt ?? p.title } : { url: "/opengraph-image" }],
     },
     twitter: {
       card: "summary_large_image",
-      title: `${p.title} · ${p.kind}`,
+      title,
       description: p.summary,
       images: [p.media?.cover ?? "/opengraph-image"],
     },
@@ -73,6 +74,7 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
 
           <div className="mt-8 grid grid-cols-12 items-center gap-x-6 gap-y-10 md:mt-10">
             <div className="col-span-12 lg:col-span-5">
+              {p.concept && <p className="concept-tag mb-5">Concept</p>}
               <h1 className="display text-[clamp(2.8rem,4.06vw,4.21rem)]" data-split="chars">
                 {p.title}
               </h1>
@@ -82,11 +84,17 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
               {p.liveUrl && (
                 <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-3" data-reveal="rise">
                   <a href={p.liveUrl} target="_blank" rel="noreferrer" className="btn btn-primary">
-                    Visit the live site <span className="btn-arrow">↗</span>
+                    {p.concept ? "Open the concept site" : "Visit the live site"} <span className="btn-arrow">↗</span>
                     <span className="sr-only"> (opens in a new tab)</span>
                   </a>
                   <span className="text-[15px] text-muted">{new URL(p.liveUrl).host}</span>
                 </div>
+              )}
+              {p.concept && (
+                <p className="concept-note mt-8" data-reveal="fade">
+                  We designed and built this on our own initiative, to show what we would make for {p.title}. The restaurant did not commission it, and
+                  it is not their official website.
+                </p>
               )}
               <dl className="mt-10 flex flex-wrap gap-x-10 gap-y-5" data-reveal="fade">
                 {facts.map(([k, v]) => (
@@ -143,7 +151,7 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
         <section className="px-page grid grid-cols-12 gap-x-6 gap-y-12 py-16 md:py-24" data-annot="section · brief + built">
           <div className="col-span-12 md:col-span-5">
             <h2 className="display text-[clamp(2rem,2.65vw,2.65rem)]" data-split="lines">
-              The brief
+              {p.concept ? "The idea" : "The brief"}
             </h2>
             <p className="mt-6 max-w-[44ch] text-[clamp(1.1rem,1.4vw,1.35rem)] leading-[1.5] text-fg-2" data-split="lines">
               {p.challenge}

@@ -2,7 +2,8 @@
  * ─────────────────────────────────────────────────────────────
  *  PROJECTS
  *
- *  `realProjects` is live client work and is what the site shows.
+ *  `realProjects` is client work. `conceptProjects` are sites we designed on our own
+ *  initiative for real restaurants; they are always labelled "Concept".
  *  `placeholderProjects` are fictional samples kept only as a template
  *  for the case-study structure. They're hidden while SHOW_PLACEHOLDERS
  *  is false, and are labeled "Placeholder" if you ever turn them on.
@@ -42,6 +43,8 @@ export type GalleryItem = {
 export type Project = {
   slug: string;
   placeholder: boolean;
+  /** Designed on our own initiative, not commissioned by the business. Shown with a "Concept" label everywhere. */
+  concept?: boolean;
   title: string;
   client: string;
   kind: string;
@@ -487,8 +490,221 @@ const realProjects: Project[] = [
   },
 ];
 
-export const projects: Project[] =
-  SHOW_PLACEHOLDERS || realProjects.length === 0 ? [...realProjects, ...placeholderProjects] : realProjects;
+/* ── Concept sites ─────────────────────────────────────────────
+   Designed and built on our own initiative for real Dhaka restaurants. None was commissioned, and none is
+   the restaurant's official website. Each is labelled "Concept" wherever it appears. */
+const conceptGallery = (slug: string, items: [file: string, frame: GalleryItem["frame"], caption: string, alt: string][]): GalleryItem[] =>
+  items.map(([file, frame, caption, alt], i) => ({ src: `/work/${slug}/${file}.jpg`, frame, caption, alt, spec: "", wide: i === 0 }));
+
+const conceptProjects: Project[] = [
+  {
+    slug: "brisket-and-bistro",
+    placeholder: false,
+    concept: true,
+    title: "Brisket & Bistro",
+    client: "Concept, not commissioned",
+    kind: "Brisket and steak restaurant",
+    category: "Food & drink",
+    year: "2026",
+    location: "Dhanmondi, Dhaka",
+    services: ["Website design", "Concept build"],
+    stack: [],
+    summary:
+      "A concept website for a brisket and steak restaurant in Dhanmondi. The full menu with prices, the dining room, and how to find it on Level 5.",
+    liveUrl: "https://brisket-and-bistro.vercel.app/",
+    challenge:
+      "A restaurant on the fifth floor of a shopping centre is easy to walk past. The site had to show the food, list every dish and drink with its price, and make calling for a table or getting directions a single tap.",
+    approach: "Dark, close-up food photography with tall condensed type in cream and gold, then a warm cream page for the menu itself.",
+    execution: [
+      "All 114 dishes and drinks in seven sections, with prices in taka",
+      "A search box for the menu",
+      "Brisket by the half kilo or the kilo, with what comes with it",
+      "Photos of the dining room",
+      "Directions to Level 5, step by step, with a map link",
+      "Menu, Call and Directions buttons at the bottom of the phone screen",
+    ],
+    outcome: "A concept: the menu, the room and the way in, on one site.",
+    art: {
+      palette: { bg: "#241B17", fg: "#F5EFE5", accent: "#BF9A5A", soft: "#6D242C" },
+      type: "condensed",
+      motif: "flame",
+      layout: "poster",
+      tagline: "Smoked. Grilled. Glazed.",
+      dishes: [
+        ["Brisket, half kilo", "2,250"],
+        ["Tomahawk", "2,695"],
+        ["Cordon Bleu", "620"],
+      ],
+    },
+    media: {
+      cover: "/work/brisket-and-bistro/cover.jpg",
+      coverAlt: "Brisket & Bistro concept homepage: the headline Smoked. Grilled. Glazed. over a close-up of grilled steak",
+    },
+    gallery: conceptGallery("brisket-and-bistro", [
+      ["home", "desktop", "Brisket by weight, on a computer", "A plate of sliced brisket beside half-kilo and kilo prices"],
+      ["mobile", "mobile", "Home and menu on a phone", "Two phones showing the Brisket & Bistro homepage and the top of the menu"],
+      ["menu", "menu", "The menu, with search", "Menu page with section tabs, a search box and the Brisket & Steaks list with prices"],
+      ["detail", "detail", "The dining room", "A grid of photos of the dining room beside the heading Settle in. Stay a little longer."],
+      ["visit", "boh", "Finding Level 5", "Visit page with three numbered steps to Level 5, a call button and the address"],
+    ]),
+  },
+  {
+    slug: "shang-high",
+    placeholder: false,
+    concept: true,
+    title: "Shang High",
+    client: "Concept, not commissioned",
+    kind: "Pan-Asian restaurant, four outlets",
+    category: "Food & drink",
+    year: "2026",
+    location: "Dhaka, Bangladesh",
+    services: ["Website design", "Concept build"],
+    stack: [],
+    summary:
+      "A concept website for a Pan-Asian restaurant with four outlets in Dhaka. Dumplings, wok dishes and drinks, with a menu you can search and a page for every outlet.",
+    liveUrl: "https://shang-high-ivory.vercel.app/",
+    challenge:
+      "Four outlets, each with its own address, hours and delivery app. The site had to match a loud, playful brand and still make it quick to find a dish or the nearest outlet.",
+    approach: "Bright purple and yellow, big condensed headlines and food photographed from above, so the site is as loud as the brand.",
+    execution: [
+      "The menu in seven sections, with photos and prices",
+      "Search, and a switch that shows popular picks only",
+      "Each outlet with its address, opening hours, phone number and map",
+      "Order Online asks which outlet, then opens that outlet’s delivery app",
+      "The story from a food cart in 2023 to four outlets",
+      "Locations and Order Online buttons at the bottom of the phone screen",
+    ],
+    outcome: "A concept: one menu and four outlets, in the brand’s own voice.",
+    art: {
+      palette: { bg: "#180921", fg: "#FFF6E8", accent: "#FFC94A", soft: "#7B16B5" },
+      type: "condensed",
+      motif: "enso",
+      layout: "center",
+      tagline: "Big flavours. Good company.",
+      dishes: [
+        ["Prawn Har Gow", "499"],
+        ["Chicken Dumpling in Chili Oil", "395"],
+        ["Langkawi Iced Milo", "350"],
+      ],
+    },
+    media: {
+      cover: "/work/shang-high/cover.jpg",
+      coverAlt: "Shang High concept homepage: two bowls of noodles on bright purple around the headline Big flavours. Good company.",
+    },
+    gallery: conceptGallery("shang-high", [
+      ["home", "desktop", "Popular dishes on the home page", "Six dishes and drinks as photo cards with names and prices"],
+      ["mobile", "mobile", "Home and menu on a phone", "Two phones showing the Shang High homepage and the menu with search"],
+      ["menu", "menu", "The menu, with photos", "Menu page with a section list, search and dumpling cards with prices"],
+      ["detail", "detail", "A pairing suggestion", "An iced Milo and a basket of dumplings beside the two prices"],
+      ["visit", "boh", "Outlets and opening hours", "Locations page with a card for each outlet showing address, hours and delivery app"],
+    ]),
+  },
+  {
+    slug: "rustic-eatery",
+    placeholder: false,
+    concept: true,
+    title: "Rustic Eatery",
+    client: "Concept, not commissioned",
+    kind: "Restaurant, four branches",
+    category: "Food & drink",
+    year: "2026",
+    location: "Dhaka, Bangladesh",
+    services: ["Website design", "Concept build"],
+    stack: [],
+    summary:
+      "A concept website for a Dhaka restaurant with four branches. One menu for every branch, a monthly offer with a countdown, and where to find each branch.",
+    liveUrl: "https://rustic-eatery-iota.vercel.app/",
+    challenge:
+      "Rustic announces a new platter every month on Facebook. The site gives that offer a home, next to one menu shared by all four branches and clear directions to each.",
+    approach: "Warm cream pages, red brush-stroke labels and the restaurant’s own overhead food photos, kept simple so the offer and the menu lead.",
+    execution: [
+      "50 dishes in eight sections, with prices",
+      "Tap a section to show only those dishes",
+      "This month’s platter with its price, dates and days left",
+      "Earlier monthly platters kept on the Offers page",
+      "Each branch with its address, delivery hours, directions and map",
+      "Menu, Offers, Visit and Order buttons at the bottom of the phone screen",
+    ],
+    outcome: "A concept: the monthly offer, the menu and four branches in one place.",
+    art: {
+      palette: { bg: "#F7F0E4", fg: "#28211D", accent: "#C1272D", soft: "#EADFCB" },
+      type: "sans",
+      motif: "leaf",
+      layout: "grid",
+      tagline: "Good food. Better company.",
+      dishes: [
+        ["Katsu & Fries", "465"],
+        ["Cream of Mushroom", "445"],
+        ["Calamari Pops", "525"],
+      ],
+    },
+    media: {
+      cover: "/work/rustic-eatery/cover.jpg",
+      coverAlt: "Rustic Eatery concept homepage: three photo panels for this month’s platter, the menu and the branches",
+    },
+    gallery: conceptGallery("rustic-eatery", [
+      ["home", "desktop", "This month’s offer", "Offers page with the October platter, its price, dates and a days-left tag"],
+      ["mobile", "mobile", "Home and menu on a phone", "Two phones showing the Rustic Eatery homepage and the soups section of the menu"],
+      ["menu", "menu", "The menu, by section", "Menu page with section buttons and the Soups and Wings lists with prices"],
+      ["detail", "detail", "The platter in detail", "Offer page listing what is in the platter and which branches have it"],
+      ["visit", "boh", "Branches and delivery hours", "Locations page with the Dhanmondi and Banani branches, hours and map buttons"],
+    ]),
+  },
+  {
+    slug: "the-backyard-chef",
+    placeholder: false,
+    concept: true,
+    title: "The Backyard Chef",
+    client: "Concept, not commissioned",
+    kind: "Japanese restaurant, two branches",
+    category: "Food & drink",
+    year: "2026",
+    location: "Dhaka, Bangladesh",
+    services: ["Website design", "Concept build"],
+    stack: [],
+    summary:
+      "A concept website for a sushi and ramen restaurant with two branches in Dhaka. A menu for each branch, sharing platters, and how to find both.",
+    liveUrl: "https://tbc-the-backyard-chef.vercel.app/",
+    challenge:
+      "Two branches, each with its own menu and prices. The site had to let people pick their branch first, then find one dish among more than a hundred without endless scrolling.",
+    approach: "The restaurant’s mural wall opens the site; after that, quiet off-white pages with one red accent keep the long menu easy to read.",
+    execution: [
+      "A menu for each branch: switch between Lalmatia and Uttara",
+      "119 dishes and drinks on the Lalmatia menu, in eight sections, with search",
+      "Sharing platters you can tap through on the home page",
+      "Each branch with its address, phone number, map and delivery link",
+      "Menu, Locations and Order buttons at the bottom of the phone screen",
+    ],
+    outcome: "A concept: two branches, two menus, one site.",
+    art: {
+      palette: { bg: "#20201D", fg: "#FAF8F2", accent: "#E5341D", soft: "#3A322A" },
+      type: "sans",
+      motif: "enso",
+      layout: "split",
+      tagline: "Roll in. Stay a while.",
+      dishes: [
+        ["Grand Sushi Boat", "2,599"],
+        ["Sake Nigiri", "539"],
+        ["California Roll", "539"],
+      ],
+    },
+    media: {
+      cover: "/work/the-backyard-chef/cover.jpg",
+      focusX: 0,
+      coverAlt: "The Backyard Chef concept homepage: the headline Roll in. Stay a while. over the restaurant’s painted mural wall",
+    },
+    gallery: conceptGallery("the-backyard-chef", [
+      ["home", "desktop", "Sharing platters on the home page", "A sushi boat photo beside a list of four platters with prices"],
+      ["mobile", "mobile", "Home and menu on a phone", "Two phones showing The Backyard Chef homepage and the Lalmatia menu"],
+      ["menu", "menu", "The Lalmatia menu", "Menu page with a branch switch, search, section buttons and the Maki list with prices"],
+      ["detail", "detail", "Nigiri, four to a plate", "Four illustrated nigiri cards with names and prices"],
+      ["visit", "boh", "The two branches", "Lalmatia and Uttara cards with address, phone number and order buttons"],
+    ]),
+  },
+];
+
+const shown = [...realProjects, ...conceptProjects];
+export const projects: Project[] = SHOW_PLACEHOLDERS || shown.length === 0 ? [...shown, ...placeholderProjects] : shown;
 
 export const featuredSlugs = projects.slice(0, 4).map((p) => p.slug);
 

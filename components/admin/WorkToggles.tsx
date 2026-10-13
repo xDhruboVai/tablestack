@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-type Item = { slug: string; title: string; kind: string; visible: boolean };
+type Item = { slug: string; title: string; kind: string; concept: boolean; visible: boolean };
 
 async function post(body: object) {
   try {
@@ -19,7 +19,7 @@ async function post(body: object) {
   }
 }
 
-/** The admin page: username/password gate, then one on/off switch per project. */
+/** The card on the admin page: a sign-in form, then one on/off switch per project. */
 export default function WorkToggles({
   unlocked,
   loginReady,
@@ -40,14 +40,17 @@ export default function WorkToggles({
 
   if (!loginReady || !storageReady) {
     return (
-      <div className="form-alert mt-10 max-w-[60ch]" role="status">
-        <p className="font-medium">Not set up yet.</p>
-        <p className="mt-1 text-fg-2">
-          {!storageReady && "Storage isn’t connected (NEXT_PUBLIC_SUPABASE_URL and a project key are missing). "}
-          {!loginReady && "No admin credentials are set (WORK_ADMIN_USERNAME and WORK_ADMIN_PASSWORD are missing). "}
-          Until then every project stays visible.
-        </p>
-      </div>
+      <>
+        <p className="eyebrow text-accent">Setup needed</p>
+        <h2 className="display mt-3">Not connected yet.</h2>
+        <div className="form-alert mt-8" role="status">
+          <p className="text-fg-2">
+            {!storageReady && "Storage isn’t connected (NEXT_PUBLIC_SUPABASE_URL and a project key are missing). "}
+            {!loginReady && "No admin credentials are set (WORK_ADMIN_USERNAME and WORK_ADMIN_PASSWORD are missing). "}
+            Until then every project stays visible.
+          </p>
+        </div>
+      </>
     );
   }
 
@@ -61,40 +64,51 @@ export default function WorkToggles({
       if (!err) router.refresh();
     };
     return (
-      <form onSubmit={submit} className="mt-10 max-w-[22rem]" noValidate>
-        <div className="field">
-          <label htmlFor="wa-username">Username</label>
-          <input
-            id="wa-username"
-            type="text"
-            autoComplete="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            aria-invalid={error ? true : undefined}
-            aria-describedby={error ? "wa-login-err" : undefined}
-          />
-        </div>
-        <div className="field mt-4">
-          <label htmlFor="wa-password">Password</label>
-          <input
-            id="wa-password"
-            type="password"
-            autoComplete="current-password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            aria-invalid={error ? true : undefined}
-            aria-describedby={error ? "wa-login-err" : undefined}
-          />
-        </div>
-        {error && (
-          <p id="wa-login-err" className="field-error mt-4" role="alert">
-            {error}
-          </p>
-        )}
-        <button type="submit" className="btn btn-primary mt-6" disabled={busy === "login" || !username || !password}>
-          {busy === "login" ? "Checking" : "Sign in"}
-        </button>
-      </form>
+      <>
+        <p className="eyebrow text-accent">Team only</p>
+        <h2 className="display mt-3">Sign in</h2>
+        <form onSubmit={submit} className="contact-brief-form" noValidate>
+          <div className="contact-brief-fields">
+            <div className="field contact-brief-wide">
+              <label htmlFor="wa-username">Username</label>
+              <input
+                id="wa-username"
+                type="text"
+                autoComplete="username"
+                autoCapitalize="none"
+                spellCheck={false}
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                aria-invalid={error ? true : undefined}
+                aria-describedby={error ? "wa-login-err" : undefined}
+              />
+            </div>
+            <div className="field contact-brief-wide">
+              <label htmlFor="wa-password">Password</label>
+              <input
+                id="wa-password"
+                type="password"
+                autoComplete="current-password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                aria-invalid={error ? true : undefined}
+                aria-describedby={error ? "wa-login-err" : undefined}
+              />
+            </div>
+          </div>
+          {error && (
+            <p id="wa-login-err" className="form-alert mt-6" role="alert">
+              {error}
+            </p>
+          )}
+          <div className="contact-brief-actions">
+            <button type="submit" className="btn btn-primary" disabled={busy === "login" || !username || !password} aria-busy={busy === "login"}>
+              {busy === "login" ? "Checking…" : "Sign in"} <span className="btn-arrow" aria-hidden="true">→</span>
+            </button>
+            <p>You stay signed in on this device for 30 days.</p>
+          </div>
+        </form>
+      </>
     );
   }
 
@@ -117,30 +131,41 @@ export default function WorkToggles({
   const shown = state.filter((i) => i.visible).length;
 
   return (
-    <div className="mt-10 max-w-[44rem]">
-      <p className="text-fg-2" aria-live="polite">
-        {shown === 0
-          ? "Every project is off. The Work page and its links are hidden."
-          : `${shown} of ${state.length} ${state.length === 1 ? "project" : "projects"} showing.`}
+    <>
+      <div className="admin-card-head">
+        <div>
+          <p className="eyebrow text-accent">Signed in</p>
+          <h2 className="display mt-3">Projects</h2>
+        </div>
+        <button
+          type="button"
+          className="btn btn-ghost"
+          disabled={busy !== null}
+          onClick={async () => {
+            setBusy("signout");
+            const err = await post({ signOut: true });
+            setBusy(null);
+            setError(err);
+            if (!err) router.refresh();
+          }}
+        >
+          Sign out
+        </button>
+      </div>
+      <p className="admin-count" aria-live="polite">
+        {shown === 0 ? "Every project is off. The Work page and its links are hidden." : `${shown} of ${state.length} ${state.length === 1 ? "project is" : "projects are"} showing.`}
       </p>
-      <ul className="mt-6 border-t border-rule">
+      <ul className="admin-list">
         {state.map((i) => (
-          <li key={i.slug} className="flex items-center justify-between gap-6 border-b border-rule py-5">
+          <li key={i.slug} className="admin-row" data-on={i.visible || undefined}>
             <div className="min-w-0">
-              <p id={`wa-${i.slug}`} className="text-[clamp(1.25rem,1.8vw,1.6rem)] font-semibold tracking-[-0.025em]">
+              <p id={`wa-${i.slug}`} className="admin-row-title">
                 {i.title}
+                {i.concept && <span className="concept-tag">Concept</span>}
               </p>
-              <p className="mt-1 text-fg-2">{i.kind}</p>
+              <p className="admin-row-kind">{i.kind}</p>
             </div>
-            <button
-              type="button"
-              role="switch"
-              aria-checked={i.visible}
-              aria-labelledby={`wa-${i.slug}`}
-              className="work-switch"
-              disabled={busy !== null}
-              onClick={() => toggle(i.slug)}
-            >
+            <button type="button" role="switch" aria-checked={i.visible} aria-labelledby={`wa-${i.slug}`} className="work-switch" disabled={busy !== null} onClick={() => toggle(i.slug)}>
               <span className="work-switch-thumb" aria-hidden="true" />
               <span className="work-switch-label">{i.visible ? "On" : "Off"}</span>
             </button>
@@ -152,21 +177,7 @@ export default function WorkToggles({
           {error}
         </p>
       )}
-      <p className="mt-6 text-[15px] text-muted">Changes save straight away and show on the site within a few seconds.</p>
-      <button
-        type="button"
-        className="btn btn-ghost mt-8"
-        disabled={busy !== null}
-        onClick={async () => {
-          setBusy("signout");
-          const err = await post({ signOut: true });
-          setBusy(null);
-          setError(err);
-          if (!err) router.refresh();
-        }}
-      >
-        Sign out
-      </button>
-    </div>
+      <p className="admin-foot">Changes save straight away and show on the site within a few seconds.</p>
+    </>
   );
 }
