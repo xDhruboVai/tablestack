@@ -78,7 +78,7 @@ export default async function PostPage() {
 
             <h2>How we quote</h2>
             <p>At {site.name}, we discuss the business and agree on pages, features and a timeline before quoting. You see layouts and a working preview before launch. We spell out any ongoing support separately.</p>
-            <p>To get a number for your project, <TLink href="/contact" className="inline-link">send us a short brief</TLink>.{showWork && <> You can also <TLink href="/work" className="inline-link">open our ongoing work</TLink> to see the kind of sites we build.</>}</p>
+            <p>To get a number for your project, <TLink href="/contact" className="inline-link">send us a short brief</TLink>.{showWork && <> You can also <TLink href="/work" className="inline-link">open our concept sites</TLink> to see the kind of sites we build.</>}</p>
           </div>
         </div>
       </article>

@@ -2,8 +2,9 @@
  * ─────────────────────────────────────────────────────────────
  *  PROJECTS
  *
- *  `realProjects` is client work. `conceptProjects` are sites we designed on our own
- *  initiative for real restaurants; they are always labelled "Concept".
+ *  Every project shown is a concept: a site we designed and built on our own initiative
+ *  for a real restaurant. None was commissioned, and each is labelled "Concept" wherever it
+ *  appears. A commissioned project would simply leave `concept` unset.
  *  `placeholderProjects` are fictional samples kept only as a template
  *  for the case-study structure. They're hidden while SHOW_PLACEHOLDERS
  *  is false, and are labeled "Placeholder" if you ever turn them on.
@@ -308,13 +309,14 @@ const placeholderProjects: Project[] = [
   },
 ];
 
-/* ── Live client work ──────────────────────────────────────── */
+/* ── The first two concept sites ───────────────────────────── */
 const realProjects: Project[] = [
   {
     slug: "smashed-burgers",
     placeholder: false,
+    concept: true,
     title: "Smashed Burgers",
-    client: "Smashed Burgers Dhaka",
+    client: "Concept, not commissioned",
     kind: "Smash burger chain, six branches",
     category: "Food & drink",
     year: "2026",
@@ -322,7 +324,7 @@ const realProjects: Project[] = [
     services: ["Website design", "Full-stack build", "English + Bangla"],
     stack: ["Next.js", "Tailwind CSS", "Vercel"],
     summary:
-      "The website for a burger chain with six branches in Dhaka. The full menu and every branch in one place, in English and Bangla.",
+      "A concept website for a burger chain with six branches in Dhaka. The full menu and every branch in one place, in English and Bangla.",
     liveUrl: "https://smashed-burgers-six.vercel.app",
     challenge:
       "Six branches share one big menu. The site had to show the food well, make that menu easy to browse on a phone, and tell customers where each branch is.",
@@ -336,7 +338,7 @@ const realProjects: Project[] = [
       "Customer reviews from Google Maps",
     ],
     outcome:
-      "Every branch and the full menu on one fast, mobile-first site, in English and Bangla.",
+      "A concept: every branch and the full menu on one mobile-first site, in English and Bangla.",
     art: {
       palette: { bg: "#0E0400", fg: "#F3EBDF", accent: "#EFB316", soft: "#13120B" },
       type: "condensed",
@@ -401,8 +403,9 @@ const realProjects: Project[] = [
   {
     slug: "pinewood",
     placeholder: false,
+    concept: true,
     title: "Pinewood",
-    client: "Pinewood Cafe + Kitchen",
+    client: "Concept, not commissioned",
     kind: "Café and restaurant, three branches",
     category: "Food & drink",
     year: "2026",
@@ -410,10 +413,10 @@ const realProjects: Project[] = [
     services: ["Website design", "Full-stack build", "Reservations + pre-orders", "Menu system", "English + Bangla"],
     stack: ["Next.js", "Tailwind CSS", "Vercel"],
     summary:
-      "The website for a Dhaka café and restaurant with three branches. Customers can browse the menu, book a table and order before they arrive.",
+      "A concept website for a Dhaka café and restaurant with three branches. Visitors can browse the menu, book a table and order before they arrive.",
     liveUrl: "https://pinewood-theta.vercel.app/",
     challenge:
-      "Three branches keep the same hours but not always the same prices. The menu is long, and the team confirms every booking by phone. Customers needed all of that to be clear.",
+      "Three branches keep the same hours but not always the same prices, and the menu is long. The site had to make all of that clear, and show how booking a table online could work.",
     approach:
       "The design takes its cues from the rooms: deep pine green, warm cream, handwritten script for the personal touches and a clean sans for the details. The menu is built as data rather than a PDF, so dishes can be filtered and priced per branch.",
     execution: [
@@ -425,7 +428,7 @@ const realProjects: Project[] = [
       "English and Bangla throughout, with a login for staff",
     ],
     outcome:
-      "All three branches, the full menu, online booking and pre-orders, in English and Bangla.",
+      "A concept: all three branches, the full menu, online booking and pre-orders, in English and Bangla.",
     art: {
       palette: { bg: "#1B464B", fg: "#EAE9DE", accent: "#E0B947", soft: "#13343B" },
       type: "serif",
@@ -490,9 +493,9 @@ const realProjects: Project[] = [
   },
 ];
 
-/* ── Concept sites ─────────────────────────────────────────────
-   Designed and built on our own initiative for real Dhaka restaurants. None was commissioned, and none is
-   the restaurant's official website. Each is labelled "Concept" wherever it appears. */
+/* ── More concept sites ────────────────────────────────────────
+   Like the two above: designed and built on our own initiative for real Dhaka restaurants. None was
+   commissioned, and none is the restaurant's official website. */
 const conceptGallery = (slug: string, items: [file: string, frame: GalleryItem["frame"], caption: string, alt: string][]): GalleryItem[] =>
   items.map(([file, frame, caption, alt], i) => ({ src: `/work/${slug}/${file}.jpg`, frame, caption, alt, spec: "", wide: i === 0 }));
 

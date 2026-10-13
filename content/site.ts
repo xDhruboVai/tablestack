@@ -36,7 +36,7 @@ export const site = {
   // Shown in Google results and link previews (keep under about 160 characters).
   seoTitle: "TableStack | Websites and Web Tools in Bangladesh",
   seoDescription:
-    "TableStack is a Dhaka web team building websites and the tools behind them. Explore our ongoing work with menus, bookings and branch pages.",
+    "TableStack is a Dhaka web team building websites and the tools behind them. Explore our concept sites with menus, bookings and branch pages.",
   description:
     "A small web team in Bangladesh. We build websites and the tools behind them, from bilingual menus and branch pages to booking flows and admin screens.",
 } as const;

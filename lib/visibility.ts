@@ -15,6 +15,13 @@ const KEY = process.env.SUPABASE_SERVICE_ROLE_KEY ?? process.env.NEXT_PUBLIC_SUP
 const USERNAME = process.env.WORK_ADMIN_USERNAME?.trim();
 const PASSWORD = process.env.WORK_ADMIN_PASSWORD?.trim();
 
+// The admin page's address: letters, numbers and dashes only. WORK_ADMIN_PATH overrides the built-in one,
+// which is used when the setting is missing or malformed. (Anyone who can read this code can read that
+// built-in address, so set WORK_ADMIN_PATH if the code is ever shared.)
+const DEFAULT_DOOR = "91839012381290381";
+const DOOR = process.env.WORK_ADMIN_PATH?.trim().toLowerCase() ?? "";
+export const ADMIN_PATH = /^[a-z0-9][a-z0-9-]{2,63}$/.test(DOOR) ? DOOR : DEFAULT_DOOR;
+
 export const VISIBILITY_TAG = "work-visibility";
 export const ADMIN_COOKIE = "ts_work_admin";
 export const storageReady = Boolean(URL && KEY);

@@ -2514,13 +2514,15 @@ html[data-mode="boh"] .about-stack-item:nth-child(2) .about-stack-card {
 }
 /* ─── Admin page: one card in the middle of the screen ─────── */
 .admin-page {
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   min-height: 100svh;
   padding: calc(var(--nav-h) + 40px) var(--pad) clamp(56px, 8svh, 96px);
 }
-.admin-card { width: min(100%, 440px); }
-.admin-card-open { width: min(100%, 620px); }
+/* The card borrows the contact card's look but not its place in the contact page's two columns. */
+.admin-page .admin-card { grid-column: auto; grid-row: auto; flex: 0 1 440px; width: auto; max-width: 100%; margin-inline: auto; }
+.admin-page .admin-card-open { flex-basis: 620px; }
 /* ─── Admin card: the list of projects and their switches ──── */
 .admin-card-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
 .admin-count { margin-top: clamp(20px, 2vw, 30px); color: var(--fg-2); }

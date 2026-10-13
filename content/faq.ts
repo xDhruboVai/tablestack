@@ -10,7 +10,7 @@ export const faqs = [
   },
   {
     q: "Can the site be in Bangla and English?",
-    a: "Yes. Both Smashed Burgers and Pinewood have language switches on their sites.",
+    a: "Yes. Our Smashed Burgers and Pinewood concept sites both have an English and Bangla switch.",
   },
   {
     q: "Can we update content ourselves?",

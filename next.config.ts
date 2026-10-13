@@ -1,6 +1,9 @@
 import type { NextConfig } from "next";
 
 const isDev = process.env.NODE_ENV === "development";
+// The admin page's address (same rule as lib/visibility.ts).
+const door = process.env.WORK_ADMIN_PATH?.trim().toLowerCase() ?? "";
+const adminPath = /^[a-z0-9][a-z0-9-]{2,63}$/.test(door) ? door : "91839012381290381";
 // Vercel preview deployments load Vercel's own feedback toolbar; the live site does not.
 const isPreview = process.env.VERCEL_ENV === "preview";
 
@@ -48,15 +51,16 @@ const nextConfig: NextConfig = {
         ],
       },
       {
-        // The admin page and the form endpoints are never cached or listed by search engines.
-        source: "/(admin|api)/:path*",
+        // The form endpoints are never cached or listed by search engines.
+        source: "/api/:path*",
         headers: [
           { key: "Cache-Control", value: "no-store" },
           { key: "X-Robots-Tag", value: "noindex, nofollow" },
         ],
       },
       {
-        source: "/admin",
+        // Nor is the admin page, wherever it lives.
+        source: `/${adminPath}`,
         headers: [
           { key: "Cache-Control", value: "no-store" },
           { key: "X-Robots-Tag", value: "noindex, nofollow" },

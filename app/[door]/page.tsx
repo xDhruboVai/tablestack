@@ -1,16 +1,26 @@
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
+import { notFound } from "next/navigation";
 import WorkToggles from "@/components/admin/WorkToggles";
 import { projects } from "@/content/projects";
-import { ADMIN_COOKIE, adminLoginReady, cookieIsValid, getHiddenSlugs, storageReady } from "@/lib/visibility";
+import { ADMIN_COOKIE, ADMIN_PATH, adminLoginReady, cookieIsValid, getHiddenSlugs, storageReady } from "@/lib/visibility";
 
-export const metadata: Metadata = {
-  title: "Work switches",
-  robots: { index: false, follow: false, nocache: true },
-};
+/**
+ * The team page for switching projects on and off. Its address is not fixed in the code: it is whatever
+ * WORK_ADMIN_PATH is set to (see .env.example). Any other one-word address lands here too and gets the
+ * ordinary "page not found", so nothing shows that an admin page exists.
+ */
+type Params = Promise<{ door: string }>;
+
 export const dynamic = "force-dynamic";
 
-export default async function WorkAdminPage() {
+export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
+  if ((await params).door !== ADMIN_PATH) return { title: "Page not found", robots: { index: false, follow: true } };
+  return { title: "Work switches", robots: { index: false, follow: false, nocache: true } };
+}
+
+export default async function WorkAdminPage({ params }: { params: Params }) {
+  if ((await params).door !== ADMIN_PATH) notFound();
   const unlocked = cookieIsValid((await cookies()).get(ADMIN_COOKIE)?.value);
   const hidden = unlocked ? await getHiddenSlugs(true) : new Set<string>();
 

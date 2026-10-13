@@ -8,7 +8,7 @@ import { ContactCTA } from "@/components/home/Sections";
 
 export const metadata = pageMeta({
   title: "Work",
-  description: `Websites ${site.name} is building for businesses in Bangladesh, plus concept designs, each with a short write-up and a link to open the site.`,
+  description: `Websites ${site.name} has designed and built as concepts for restaurants in Dhaka, each with a short write-up and a link to open the site.`,
   path: "/work",
 });
 
@@ -25,9 +25,9 @@ export default async function WorkPage() {
               Work<em className="work-title-dot text-accent">.</em>
             </h1>
             <p className="body-lg mt-8 max-w-[39ch]" data-split="lines">
-              {projects.some((p) => p.concept)
-                ? "Ongoing client work, plus concept sites we designed on our own initiative. Open each one to see the pages and features for yourself."
-                : "Our ongoing works so far. Open each project to see the pages and features for yourself."}
+              {projects.every((p) => p.concept)
+                ? "Concept sites we designed and built on our own initiative for restaurants in Dhaka. Open each one to see the pages and features for yourself."
+                : "Our work so far, including concept sites we designed on our own initiative. Open each one to see the pages and features for yourself."}
             </p>
           </div>
           <ProjectMontage projects={projects} />
