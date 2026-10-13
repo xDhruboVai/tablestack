@@ -41,11 +41,16 @@ export type GalleryItem = {
   wide?: boolean;
 };
 
+/** How a project's screenshots are presented on its page (components/work/Shot.tsx). */
+export type ProjectLook = "brand" | "studio" | "angled" | "plain";
+
 export type Project = {
   slug: string;
   placeholder: boolean;
   /** Designed on our own initiative, not commissioned by the business. Shown with a "Concept" label everywhere. */
   concept?: boolean;
+  /** One look for all of this project's screenshots. Left out, projects take the looks in turn. */
+  look?: ProjectLook;
   title: string;
   client: string;
   kind: string;
@@ -315,6 +320,7 @@ const realProjects: Project[] = [
     slug: "smashed-burgers",
     placeholder: false,
     concept: true,
+    look: "studio",
     title: "Smashed Burgers",
     client: "Concept, not commissioned",
     kind: "Smash burger chain, six branches",
@@ -404,6 +410,7 @@ const realProjects: Project[] = [
     slug: "pinewood",
     placeholder: false,
     concept: true,
+    look: "brand",
     title: "Pinewood",
     client: "Concept, not commissioned",
     kind: "Café and restaurant, three branches",
@@ -504,6 +511,7 @@ const conceptProjects: Project[] = [
     slug: "brisket-and-bistro",
     placeholder: false,
     concept: true,
+    look: "angled",
     title: "Brisket & Bistro",
     client: "Concept, not commissioned",
     kind: "Brisket and steak restaurant",
@@ -555,6 +563,7 @@ const conceptProjects: Project[] = [
     slug: "shang-high",
     placeholder: false,
     concept: true,
+    look: "plain",
     title: "Shang High",
     client: "Concept, not commissioned",
     kind: "Pan-Asian restaurant, four outlets",
@@ -606,6 +615,7 @@ const conceptProjects: Project[] = [
     slug: "rustic-eatery",
     placeholder: false,
     concept: true,
+    look: "brand",
     title: "Rustic Eatery",
     client: "Concept, not commissioned",
     kind: "Restaurant, four branches",
@@ -657,6 +667,7 @@ const conceptProjects: Project[] = [
     slug: "the-backyard-chef",
     placeholder: false,
     concept: true,
+    look: "angled",
     title: "The Backyard Chef",
     client: "Concept, not commissioned",
     kind: "Japanese restaurant, two branches",

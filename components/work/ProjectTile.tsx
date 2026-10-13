@@ -1,5 +1,6 @@
 import TLink from "@/components/layout/TLink";
 import ProjectCover from "./ProjectCover";
+import { BrowserBar, siteHost, stageColors } from "./Shot";
 import type { Project } from "@/content/projects";
 
 const descriptions: Record<string, string> = {
@@ -17,13 +18,21 @@ export default function ProjectTile({ project, headingLevel = 3, eager = false }
   return (
     <article className="project-tile group">
       <TLink href={`/work/${project.slug}`} className="project-tile-link">
-        <div className="project-tile-media cover-host">
-          <ProjectCover project={project} eager={eager} sizes="(min-width: 768px) 50vw, 100vw" />
-          {project.concept && <span className="concept-tag project-tile-tag">Concept</span>}
+        {/* The site in a browser window, on the project's own colours. */}
+        <div className="project-tile-media" style={stageColors(project)}>
+          <div className="shot-win project-tile-win">
+            <BrowserBar host={siteHost(project)} />
+            <div className="shot-view cover-host aspect-[16/10]">
+              <ProjectCover project={project} eager={eager} sizes="(min-width: 768px) 40vw, 80vw" />
+            </div>
+          </div>
         </div>
         <div className="project-tile-info">
           <div>
-            <p className="eyebrow text-accent">{project.category} · {project.location}</p>
+            <p className="project-tile-meta eyebrow text-accent">
+              {project.concept && <span className="concept-tag">Concept</span>}
+              <span>{project.category} · {project.location}</span>
+            </p>
             <Heading className="display project-tile-title">{project.title}</Heading>
             <p className="project-tile-description">{descriptions[project.slug] ?? project.summary}</p>
           </div>

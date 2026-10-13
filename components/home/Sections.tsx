@@ -1,31 +1,43 @@
 import ToolList from "@/components/ui/ToolList";
 import TLink from "@/components/layout/TLink";
 import GlowLink from "@/components/ui/GlowLink";
-import ProjectTile from "@/components/work/ProjectTile";
+import ProjectCover from "@/components/work/ProjectCover";
+import { BrowserBar, siteHost } from "@/components/work/Shot";
 import ExpectList from "./ExpectList";
+import SiteFan from "./SiteFan";
 import ApproachAssemble from "./ApproachAssemble";
 import type { Project } from "@/content/projects";
 import { bookCall, site, testimonials } from "@/content/site";
 
 /* ── (02) Selected work ────────────────────────────────────── */
 export function SelectedWork({ projects }: { projects: Project[] }) {
-  const featured = projects.slice(0, 4);
+  // Each site as a browser window, drawn here so the turning row itself stays small.
+  const fan = projects.map((p) => ({
+    slug: p.slug,
+    title: p.title,
+    kind: p.kind,
+    concept: !!p.concept,
+    window: (
+      <div className="shot-win">
+        <BrowserBar host={siteHost(p)} />
+        <div className="shot-view cover-host aspect-[16/10]">
+          <ProjectCover project={p} decorative eager sizes="(min-width: 768px) 32vw, 66vw" />
+        </div>
+      </div>
+    ),
+  }));
   return (
     <section className="px-page relative pb-20 md:pb-24" aria-labelledby="work-title" data-annot="section · selected work">
       <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
         <h2 id="work-title" className="display text-[clamp(2.8rem,5.46vw,5.85rem)]" data-split="chars">
-          {featured.length === 2 ? "Two sites you can" : "Sites you can"} <em className="text-accent">open and use.</em>
+          {projects.length === 2 ? "Two sites you can" : "Sites you can"} <em className="text-accent">open and use.</em>
         </h2>
-        <div className="flex flex-col items-start gap-4 md:items-end md:pb-4">
-          <TLink href="/work" className="btn btn-ghost" data-reveal="rise">
-            All projects ({projects.length}) <span className="btn-arrow">→</span>
-          </TLink>
-        </div>
+        <TLink href="/work" className="btn btn-ghost md:mb-4" data-reveal="rise">
+          All projects ({projects.length}) <span className="btn-arrow">→</span>
+        </TLink>
       </div>
-
-      <div className={`project-tile-grid mt-14 md:mt-16 ${featured.length === 1 ? "project-tile-grid-single" : ""}`}>
-        {featured.map((p) => <ProjectTile project={p} key={p.slug} />)}
-      </div>
+      {/* Every site in a turning row. The big "Work." word that sat above it is set aside for now: WorkStage.tsx draws both together. */}
+      <SiteFan items={fan} />
     </section>
   );
 }

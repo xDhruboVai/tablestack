@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { site } from "@/content/site";
-import Image from "next/image";
 import { notFound } from "next/navigation";
 import TLink from "@/components/layout/TLink";
 import LensMedia from "@/components/work/LensMedia";
 import ProjectMock from "@/components/work/ProjectMock";
+import Shot, { BrowserBar, darkSite, lookFor, siteHost } from "@/components/work/Shot";
 import NextProject from "@/components/work/NextProject";
 import { getProject, projects } from "@/content/projects";
 import { getVisibleProjects } from "@/lib/visibility";
@@ -51,16 +51,10 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
   // "Next project" cycles through the visible ones, and is left out when this is the only one.
   const next = visible.length > 1 ? visible[(visible.findIndex((v) => v.slug === slug) + 1) % visible.length] : null;
 
-  const facts: [string, string][] = [
-    ["Business", p.kind],
-    ["Location", p.location],
-    ["Year", p.year],
-  ];
-
   return (
     <>
       <article>
-        {/* Wide screens: name, one plain sentence, the live link and three facts on the left; the site itself on the right. */}
+        {/* Wide screens: name, one plain sentence and the live link on the left; the site itself on the right. */}
         <header className="px-page pt-[calc(var(--nav-h)+6svh)]" data-annot={`page · /work/${p.slug}`}>
           <TLink href="/work" className="eyebrow link-draw tap-pad">
             ← All work
@@ -96,18 +90,13 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
                   it is not their official website.
                 </p>
               )}
-              <dl className="mt-10 flex flex-wrap gap-x-10 gap-y-5" data-reveal="fade">
-                {facts.map(([k, v]) => (
-                  <div key={k} className="max-w-[22ch]">
-                    <dt className="eyebrow text-muted">{k}</dt>
-                    <dd className="mt-1 leading-snug">{v}</dd>
-                  </div>
-                ))}
-              </dl>
             </div>
 
             <div className="group col-span-12 lg:col-span-7">
-              <LensMedia project={p} aspect="aspect-[16/10]" priority hoverScale={false} sizes="(min-width: 1024px) 58vw, 100vw" />
+              <div className="shot-hero" data-reveal="fade">
+                <BrowserBar host={siteHost(p)} light={!darkSite(p)} />
+                <LensMedia project={p} aspect="aspect-[16/10]" priority hoverScale={false} sizes="(min-width: 1024px) 58vw, 100vw" />
+              </div>
               <p className="hint-pointer eyebrow mt-3 text-muted">Move your cursor over the image.</p>
             </div>
           </div>
@@ -120,27 +109,33 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
               A closer look
             </h2>
           </div>
-          <div className="col-span-12 grid grid-cols-1 gap-6 md:grid-cols-2 lg:col-span-9">
+          <div className="col-span-12 grid grid-cols-1 gap-x-6 gap-y-8 md:grid-cols-2 lg:col-span-9">
             {p.gallery.map((g, i) => (
               <figure key={i} className={g.wide ? "md:col-span-2" : ""}>
-                <div
-                  className={`relative overflow-hidden bg-surface ${g.wide ? "aspect-[16/10]" : "aspect-square"}`}
-                  data-reveal="mask"
-                  data-annot={`<Frame kind="${g.frame}" />`}
-                >
-                  <div data-mask-inner className="absolute inset-0">
-                    {g.src ? (
-                      <Image src={g.src} alt={g.alt} fill sizes={g.wide ? "(min-width: 1024px) 75vw, 100vw" : "(min-width: 1024px) 37vw, (min-width: 768px) 50vw, 100vw"} className="object-cover" />
-                    ) : (
+                {g.src ? (
+                  <Shot
+                    project={p}
+                    src={g.src}
+                    alt={g.alt}
+                    wide={g.wide}
+                    // One look for the whole page. Phone pictures always stand on their own.
+                    look={g.frame === "mobile" ? "plain" : lookFor(p)}
+                    behind={p.gallery.find((o) => o.frame === "menu")?.src ?? p.media?.cover}
+                  />
+                ) : (
+                  <div
+                    className={`relative overflow-hidden bg-surface ${g.wide ? "aspect-[16/10]" : "aspect-square"}`}
+                    data-reveal="mask"
+                    data-annot={`<Frame kind="${g.frame}" />`}
+                  >
+                    <div data-mask-inner className="absolute inset-0">
                       <ProjectMock project={p} frame={g.frame} slice title={`${g.alt} (placeholder artwork)`} />
-                    )}
-                  </div>
-                  {!g.src && (
+                    </div>
                     <span className="eyebrow absolute bottom-3 left-3 max-w-[calc(100%-24px)] bg-[var(--bg)] px-2 py-1 !text-[13px] text-fg">
                       Replace: {g.spec}
                     </span>
-                  )}
-                </div>
+                  </div>
+                )}
                 <figcaption className="eyebrow mt-3 text-muted">{g.caption}</figcaption>
               </figure>
             ))}
