@@ -1,10 +1,12 @@
 import { pageMeta } from "@/lib/seo";
 import DotField from "@/components/about/DotField";
 import StackCards from "@/components/ui/StackCards";
-import ToolMarquee from "@/components/ui/ToolMarquee";
+import ToolList from "@/components/ui/ToolList";
 import TeamLinks from "@/components/about/TeamLinks";
+import GlowLink from "@/components/ui/GlowLink";
+import { MARK_GAPS, MARK_SLAB, MARK_VIEWBOX } from "@/components/layout/Wordmark";
 import { ContactCTA } from "@/components/home/Sections";
-import { about, site, team } from "@/content/site";
+import { about, bookCall, site, team } from "@/content/site";
 
 export const metadata = pageMeta({
   title: "About Us",
@@ -33,33 +35,55 @@ const facts = [
   ["How we work", "Discuss, design, build, launch"],
 ];
 
+/**
+ * The logo mark with one half lit: the top slab for what customers see, the two below it for what the
+ * team works with. The other half stays faint.
+ */
+function SideMark({ side }: { side: "front" | "back" }) {
+  return (
+    <svg className="side-mark" viewBox={MARK_VIEWBOX} aria-hidden="true">
+      <mask id={`side-gaps-${side}`} maskUnits="userSpaceOnUse" x="0" y="0" width="920" height="652">
+        <rect width="920" height="652" fill="#fff" />
+        <path d={MARK_GAPS} stroke="#000" strokeWidth="12.5" />
+      </mask>
+      <g mask={`url(#side-gaps-${side})`} className="side-mark-base">
+        <path d={MARK_SLAB(320)} />
+        <path d={MARK_SLAB(160)} />
+      </g>
+      <path d={MARK_SLAB(0)} className="side-mark-top" />
+    </svg>
+  );
+}
+
 export default function AboutPage() {
   return (
     <>
-      <section className="px-page pb-24 pt-[calc(var(--nav-h)+10svh)] md:pb-24" aria-labelledby="about-h" data-annot="page · /about">
-        <h1 id="about-h" className="display text-[clamp(2.8rem,6.24vw,7.02rem)]" data-split="chars">
-          Websites first. <em className="text-accent">Tools when needed.</em>
-        </h1>
-        <div className="mt-12 grid grid-cols-12 gap-x-6 gap-y-12 md:mt-16 md:gap-y-16">
-          <p className="col-span-12 text-[clamp(1.5rem,2.03vw,2.03rem)] font-semibold leading-[1.14] tracking-[-0.035em] md:col-span-10 lg:col-span-9" data-split="lines">
+      {/* Hero: the pitch on the left, the quick facts as a small stack of cards on the right */}
+      <section className="about-hero px-page" aria-labelledby="about-h" data-annot="page · /about">
+        <div className="about-hero-copy">
+          <h1 id="about-h" className="about-hero-title display" data-split="chars">
+            Websites first. <em className="block text-accent">Tools when needed.</em>
+          </h1>
+          <p className="about-hero-intro" data-split="lines">
             {about.intro}
           </p>
-          {/* Quick facts as one row under the intro */}
-          <dl className="about-facts col-span-12" data-reveal="stagger">
-            {facts.map(([k, v]) => (
-              <div key={k}>
-                <dt className="eyebrow text-muted">{k}</dt>
-                <dd>{v}</dd>
-              </div>
-            ))}
-            <div>
-              <dt className="eyebrow text-muted">Status</dt>
-              <dd className="flex items-center gap-2">
-                <span className="live-dot" aria-hidden="true" /> {site.availability}
-              </dd>
-            </div>
-          </dl>
+          <div className="mt-8 flex flex-wrap items-center gap-3 md:mt-10" data-reveal="rise" data-delay="200">
+            <GlowLink href="/contact">Start a project</GlowLink>
+            <a {...bookCall} className="btn btn-ghost">
+              Book a call
+            </a>
+          </div>
         </div>
+        <ul className="about-stack" aria-label="TableStack at a glance" data-reveal="stagger" data-delay="250">
+          {facts.map(([k, v]) => (
+            <li key={k} className="about-stack-item">
+              <div className="about-stack-card">
+                <p className="about-stack-label">{k}</p>
+                <p className="about-stack-value">{v}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
       </section>
 
       {/* Team */}
@@ -91,31 +115,31 @@ export default function AboutPage() {
         <h2 id="sides-h" className="display max-w-[16ch] text-[clamp(2.4rem,3.74vw,4.06rem)]" data-split="lines">
           Table, plus <em className="text-accent">tech stack.</em>
         </h2>
-        <div className="mt-14 grid grid-cols-1 border border-rule md:mt-16 md:grid-cols-2" data-reveal="rise">
-          <div className="bg-surface p-6 md:p-12">
-            <p className="eyebrow text-accent">Front of house</p>
-            <h3 className="display mt-3 text-[clamp(1.8rem,1.87vw,1.87rem)]">What your customers get</h3>
-            <ul className="mt-8">
-              {sides.guests.map((g) => (
-                <li key={g} className="flex items-baseline gap-4 border-t border-rule py-4 text-[1.1rem]">
-                  <span className="list-bar" aria-hidden="true" />
-                  {g}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="cap-dark p-6 md:p-12">
-            <p className="eyebrow text-accent">Back of house</p>
-            <h3 className="display mt-3 text-[clamp(1.8rem,1.87vw,1.87rem)]">What your team gets</h3>
-            <ul className="mt-8">
-              {sides.team.map((g) => (
-                <li key={g} className="flex items-baseline gap-4 border-t border-[rgb(238_232_227/0.16)] py-4 text-[1.1rem]">
-                  <span className="list-bar" aria-hidden="true" />
-                  {g}
-                </li>
-              ))}
-            </ul>
-          </div>
+        <div className="sides mt-12 md:mt-14" data-reveal="stagger">
+          {(
+            [
+              ["front", "Front of house", "What your customers get", sides.guests],
+              ["back", "Back of house", "What your team gets", sides.team],
+            ] as const
+          ).map(([side, label, title, items]) => (
+            <div key={side} className={`side-card side-card-${side}`}>
+              <div className="side-card-top">
+                <p className="side-card-label">{label}</p>
+                <SideMark side={side} />
+              </div>
+              <h3 className="side-card-title display">{title}</h3>
+              <ul className="side-card-list">
+                {items.map((item) => (
+                  <li key={item}>
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M5 12.5l4.5 4.5L19 7.5" />
+                    </svg>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
       </section>
 
@@ -135,7 +159,7 @@ export default function AboutPage() {
             What we build with
           </h2>
         </div>
-        <ToolMarquee className="mt-6" />
+        <ToolList className="mt-8 md:mt-10" />
       </section>
 
       <ContactCTA />

@@ -144,7 +144,7 @@ export default function HeroAnatomy({ showWork = true }: { showWork?: boolean })
     <section ref={root} className="hero-track" aria-labelledby="hero-title" data-annot="section · hero · sticky scroll-scrub">
       <div className="hero-stage">
         <div className="hero-copy px-page" data-copy>
-          <h1 id="hero-title" className="display text-[clamp(2.3rem,9.8vw,3.8rem)] lg:text-[clamp(3.4rem,4.37vw,5.3rem)]" data-intro>
+          <h1 id="hero-title" className="display text-[clamp(2.3rem,9.8vw,3.8rem)] lg:text-[clamp(3.2rem,min(4.9vw,8.6svh),6.6rem)]" data-intro>
             <span className="split-line">
               <span className="hl">Websites built</span>
             </span>

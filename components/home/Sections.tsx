@@ -1,4 +1,4 @@
-import ToolMarquee from "@/components/ui/ToolMarquee";
+import ToolList from "@/components/ui/ToolList";
 import TLink from "@/components/layout/TLink";
 import GlowLink from "@/components/ui/GlowLink";
 import ProjectTile from "@/components/work/ProjectTile";
@@ -99,7 +99,6 @@ export function Standards() {
   return (
     <section className="relative pb-20 md:pb-24" aria-labelledby="std-title" data-annot="section · standards">
       <div className="px-page">
-        {/* The heading sits above the list, beside the panel, so the whole section fits on one screen. */}
         <ExpectList>
           <h2 id="std-title" className="expect-title display" data-split="lines">
             What you can <em className="text-accent">expect.</em>
@@ -111,7 +110,7 @@ export function Standards() {
         <h2 id="int-title" className="px-page text-center font-display text-[clamp(1.5rem,1.56vw,1.56rem)] font-semibold" data-reveal="fade">
           What we build with
         </h2>
-        <ToolMarquee className="mt-8 md:mt-10" />
+        <ToolList className="mt-8 md:mt-10" />
       </div>
 
       {testimonials.length > 0 && (

@@ -1,6 +1,7 @@
 import { ImageResponse } from "next/og";
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
+import { MARK_GAPS, MARK_SLAB, MARK_VIEWBOX } from "@/components/layout/Wordmark";
 import { site } from "@/content/site";
 
 export const alt = `${site.name}: Websites built around your business`;
@@ -8,8 +9,8 @@ export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 const ink = "#0A0A0A";
-const paper = "#EEE8E3";
-const red = "#E43F25";
+const paper = "#F2EFEA";
+const red = "#E44935";
 const displayFont = await readFile(join(process.cwd(), "assets/fonts/SchibstedGrotesk-ExtraBold.ttf"));
 
 export default function OG() {
@@ -39,10 +40,12 @@ export default function OG() {
           }}
         >
           <div style={{ display: "flex", alignItems: "center", gap: 17, fontSize: 36, fontWeight: 800, letterSpacing: -1.5 }}>
-            <svg width="47" height="47" viewBox="0 0 32 32">
-              <path d="M16 3 29 9.5 16 16 3 9.5Z" fill={red} />
-              <path d="M3 15.5 16 22 29 15.5" fill="none" stroke={paper} strokeWidth="2.2" />
-              <path d="M3 21.5 16 28 29 21.5" fill="none" stroke={paper} strokeWidth="2.2" />
+            {/* The logo mark. The gaps are painted in the background colour, which this image always has. */}
+            <svg width="62" height="44" viewBox={MARK_VIEWBOX}>
+              <path d={MARK_SLAB(320)} fill={paper} />
+              <path d={MARK_SLAB(160)} fill={paper} />
+              <path d={MARK_GAPS} stroke={ink} strokeWidth="12.5" />
+              <path d={MARK_SLAB(0)} fill={red} />
             </svg>
             <span>{site.name}</span>
           </div>

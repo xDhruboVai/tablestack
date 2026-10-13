@@ -20,7 +20,7 @@ const FONTS = {
 const MONO = { fontFamily: "var(--font-space-mono), monospace" };
 const SANS = { fontFamily: "var(--font-schibsted), sans-serif" };
 
-const BP = { bg: "#0D0F07", line: "rgba(238,232,227,0.16)", text: "#EEE8E3", dim: "rgba(238,232,227,0.55)", accent: "#E43F25" };
+const BP = { bg: "#0D0F07", line: "rgba(242,239,234,0.16)", text: "#F2EFEA", dim: "rgba(242,239,234,0.55)", accent: "#E44935" };
 
 export function Motif({
   name,
@@ -291,7 +291,7 @@ function DesktopBoh({ project }: { project: Project }) {
       </text>
       {regions.map(([x, y, w, h, label], i) => (
         <g key={i}>
-          <rect x={x} y={y} width={w} height={h} fill="rgba(228,63,37,0.06)" stroke={BP.accent} strokeDasharray="6 5" />
+          <rect x={x} y={y} width={w} height={h} fill="rgba(228,73,53,0.06)" stroke={BP.accent} strokeDasharray="6 5" />
           <rect x={x} y={y} width={Math.min(w, label.length * 8.2 + 16)} height="22" fill={BP.accent} />
           <text x={x + 8} y={y + 15} fontSize="12" fill={BP.bg} style={MONO}>
             {label}

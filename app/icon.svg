@@ -1,7 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <!-- Favicon placeholder - replace with your final mark -->
-  <rect width="32" height="32" rx="7" fill="#0D0F07"/>
-  <path d="M16 5 27 10.5 16 16 5 10.5Z" fill="#E43F25"/>
-  <path d="M5 15.5 16 21 27 15.5" fill="none" stroke="#EEE8E3" stroke-width="2.2" stroke-linejoin="round"/>
-  <path d="M5 20.5 16 26 27 20.5" fill="none" stroke="#EEE8E3" stroke-width="2.2" stroke-linejoin="round"/>
+  <!-- The logo mark on its off-white ground. Same shapes as components/layout/Wordmark.tsx. -->
+  <rect width="32" height="32" rx="7" fill="#F2EFEA"/>
+  <g transform="translate(3.6 7.14) scale(0.02696)">
+    <path d="M50.8 450.6L404.3 344.7A194 194 0 0 1 515.7 344.7L869.2 450.6A37 37 0 0 1 869.2 521.4L515.7 627.3A194 194 0 0 1 404.3 627.3L50.8 521.4A37 37 0 0 1 50.8 450.6Z" fill="#000"/>
+    <path d="M98.2 382.2L434.2 482.8" stroke="#F2EFEA" stroke-width="12.5"/>
+    <path d="M50.8 290.6L404.3 184.7A194 194 0 0 1 515.7 184.7L869.2 290.6A37 37 0 0 1 869.2 361.4L515.7 467.3A194 194 0 0 1 404.3 467.3L50.8 361.4A37 37 0 0 1 50.8 290.6Z" fill="#000"/>
+    <path d="M98.2 222.2L450.2 327.6" stroke="#F2EFEA" stroke-width="12.5"/>
+    <path d="M50.8 130.6L404.3 24.7A194 194 0 0 1 515.7 24.7L869.2 130.6A37 37 0 0 1 869.2 201.4L515.7 307.3A194 194 0 0 1 404.3 307.3L50.8 201.4A37 37 0 0 1 50.8 130.6Z" fill="#E44935"/>
+  </g>
 </svg>
