@@ -37,7 +37,6 @@ export const metadata: Metadata = {
   applicationName: site.name,
   // Keep Vercel preview and development deployments out of search results; only production is indexable.
   robots: process.env.VERCEL_ENV && process.env.VERCEL_ENV !== "production" ? { index: false, follow: false } : undefined,
-  alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     siteName: site.name,

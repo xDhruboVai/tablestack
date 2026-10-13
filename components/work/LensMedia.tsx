@@ -105,7 +105,8 @@ export default function LensMedia({
         </div>
       </div>
       <div className="lens-invert cover-host pointer-events-none absolute inset-0" aria-hidden="true">
-        <ProjectCover project={project} sizes={sizes} decorative />
+        {/* The same image file as the cover above, so loading it straight away costs no extra download. */}
+        <ProjectCover project={project} eager={priority} sizes={sizes} decorative />
       </div>
       {project.placeholder && (
         <span className="eyebrow absolute left-3 top-3 bg-[var(--bg)] px-2 py-1 !text-[13px] text-fg">Placeholder</span>

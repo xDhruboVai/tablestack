@@ -46,8 +46,8 @@ export default function ProjectCover({
         alt={decorative ? "" : project.media?.coverAlt ?? `${project.title} website`}
         fill
         sizes={sizes}
-        priority={priority}
-        loading={eager ? "eager" : undefined}
+        preload={priority}
+        loading={priority || eager ? "eager" : undefined}
         className="object-cover"
       />
     </div>

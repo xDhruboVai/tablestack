@@ -297,7 +297,7 @@
   position: relative;
   padding-bottom: 18px;
   color: #a6a49b;
-  font-size: clamp(11px, 0.95vw, 19px);
+  font-size: clamp(12px, 0.95vw, 19px);
   font-weight: 700;
   text-transform: uppercase;
   transition: color 0.35s;
@@ -458,7 +458,7 @@
 
   .asm-tabs li {
     padding-bottom: 12px;
-    font-size: 10px;
+    font-size: 12px;
   }
 
   .asm-detail-copy h3 {
@@ -514,7 +514,7 @@
 
   .asm-tabs li {
     padding-bottom: 6px;
-    font-size: 9px;
+    font-size: 12px;
   }
 
   .asm-detail-copy {

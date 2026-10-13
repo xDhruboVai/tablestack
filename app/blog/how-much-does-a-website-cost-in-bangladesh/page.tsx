@@ -33,7 +33,7 @@ export default async function PostPage() {
   return (
     <>
       <article className="px-page pb-20 pt-[calc(var(--nav-h)+7svh)] md:pb-24">
-        <TLink href="/blog" className="eyebrow link-draw">← All posts</TLink>
+        <TLink href="/blog" className="eyebrow link-draw tap-pad">← All posts</TLink>
         <h1 className="display mt-8 max-w-[18ch] text-[clamp(2.4rem,4.68vw,4.99rem)]" data-split="lines">
           How much does a website cost in <em className="text-accent">Bangladesh?</em>
         </h1>

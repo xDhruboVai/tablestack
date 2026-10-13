@@ -7,13 +7,14 @@ const descriptions: Record<string, string> = {
   pinewood: "Branch pricing, bookings and pre-orders across three cafés.",
 };
 
-export default function ProjectTile({ project, headingLevel = 3 }: { project: Project; headingLevel?: 2 | 3 }) {
+/** `eager` loads the cover straight away: use it where the tile is on screen when the page opens. */
+export default function ProjectTile({ project, headingLevel = 3, eager = false }: { project: Project; headingLevel?: 2 | 3; eager?: boolean }) {
   const Heading = headingLevel === 2 ? "h2" : "h3";
   return (
     <article className="project-tile group">
       <TLink href={`/work/${project.slug}`} className="project-tile-link">
         <div className="project-tile-media cover-host">
-          <ProjectCover project={project} sizes="(min-width: 768px) 50vw, 100vw" />
+          <ProjectCover project={project} eager={eager} sizes="(min-width: 768px) 50vw, 100vw" />
         </div>
         <div className="project-tile-info">
           <div>

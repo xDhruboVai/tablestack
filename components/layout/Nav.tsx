@@ -87,7 +87,7 @@ export default function Nav({ showWork = true }: { showWork?: boolean }) {
     <>
       <header className={`site-nav ${scrolled ? "is-scrolled" : ""}`} data-annot="<Nav /> fixed">
         <div className="px-page flex h-[var(--nav-h)] items-center justify-between gap-4">
-          <TLink href="/" aria-label={`${site.name}, home`} className="relative z-[70]">
+          <TLink href="/" aria-label={`${site.name}, home`} className="relative z-[70] flex items-center">
             <Wordmark />
           </TLink>
 

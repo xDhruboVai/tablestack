@@ -61,7 +61,7 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
       <article>
         {/* Wide screens: name, one plain sentence, the live link and three facts on the left; the site itself on the right. */}
         <header className="px-page pt-[calc(var(--nav-h)+6svh)]" data-annot={`page · /work/${p.slug}`}>
-          <TLink href="/work" className="eyebrow link-draw">
+          <TLink href="/work" className="eyebrow link-draw tap-pad">
             ← All work
           </TLink>
 

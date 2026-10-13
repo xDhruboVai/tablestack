@@ -347,6 +347,15 @@ svg {
 .link-draw[aria-current="page"] {
   background-size: 100% 1px;
 }
+/* A larger tap area for a small text link, without changing how it looks. */
+.tap-pad {
+  position: relative;
+}
+.tap-pad::after {
+  content: "";
+  position: absolute;
+  inset: -12px -10px;
+}
 
 /* ─── Motion: initial states (only when motion is allowed + JS ran) ── */
 html.motion [data-reveal]:not([data-revealed]) {
@@ -791,13 +800,6 @@ html.motion:not(.anim-ready) :is([data-reveal], [data-split], [data-intro]) {
 }
 
 /* ─── Capabilities menu ────────────────────────────────────── */
-.cap-dark {
-  background: var(--ink);
-  color: var(--linen);
-}
-html[data-mode="boh"] .cap-dark {
-  background: var(--bg);
-}
 .cap-row {
   display: grid;
   grid-template-columns: auto 1fr;
@@ -1382,6 +1384,10 @@ line.wf-window {
   color: var(--ink);
   transform: rotate(-1deg);
 }
+/* Small text on the red card stays at full strength so it is easy to read. */
+.about-stack-item:nth-child(3) .about-stack-label {
+  opacity: 1;
+}
 html[data-mode="boh"] .about-stack-item:nth-child(2) .about-stack-card {
   border-color: rgb(245 240 236 / 0.16);
   background: #1b1b1b;
@@ -1962,7 +1968,6 @@ html[data-mode="boh"] .about-stack-item:nth-child(2) .about-stack-card {
 .field-legend .text-accent {
   color: var(--accent-text);
 }
-.cap-dark,
 .cta-block {
   --accent-text: #e25439;
 }
@@ -2024,6 +2029,8 @@ html[data-mode="boh"] .about-stack-item:nth-child(2) .about-stack-card {
     bottom: 100%;
     left: 0;
     width: var(--preview-width);
+    /* Never wider than the card it belongs to, even before it has been measured. */
+    max-width: 100%;
     padding-bottom: 12px;
     opacity: 0;
     visibility: hidden;

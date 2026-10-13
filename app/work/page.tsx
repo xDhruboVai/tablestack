@@ -31,7 +31,7 @@ export default async function WorkPage() {
           <ProjectMontage projects={projects} />
         </div>
         <div className={`project-tile-grid mt-16 md:mt-20 ${projects.length === 1 ? "project-tile-grid-single" : ""}`} data-reveal="rise">
-          {projects.map((project) => <ProjectTile project={project} headingLevel={2} key={project.slug} />)}
+          {projects.map((project, i) => <ProjectTile project={project} headingLevel={2} eager={i < 2} key={project.slug} />)}
         </div>
       </section>
       <ContactCTA />

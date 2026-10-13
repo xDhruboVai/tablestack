@@ -147,7 +147,7 @@ export default function Footer({ showWork = true }: { showWork?: boolean }) {
         </p>
         <button
           type="button"
-          className="eyebrow link-draw self-start sm:self-auto"
+          className="eyebrow link-draw tap-pad self-start sm:self-auto"
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         >
           Back to top ↑

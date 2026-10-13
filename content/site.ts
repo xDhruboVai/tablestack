@@ -159,7 +159,7 @@ export const standards = [
   { k: "Ownership", v: "Your domain, content and accounts." },
 ] as const;
 
-/** Tools we build with. Text only - no third-party logos. */
+/** Tools we build with. Each one's logo and one-line description live in components/ui/ToolList.tsx. */
 export const integrations = [
   "Next.js",
   "React",

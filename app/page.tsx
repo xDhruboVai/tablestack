@@ -1,7 +1,11 @@
+import type { Metadata } from "next";
 import HeroAnatomy from "@/components/home/HeroAnatomy";
 import { Approach, Capabilities, ContactCTA, SelectedWork, Standards } from "@/components/home/Sections";
 import { site } from "@/content/site";
 import { getVisibleProjects } from "@/lib/visibility";
+
+// The home page is the canonical address for "/". Other pages set their own; the admin and not-found pages set none.
+export const metadata: Metadata = { alternates: { canonical: "/" } };
 
 export default async function Home() {
   const visible = await getVisibleProjects();

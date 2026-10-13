@@ -1,9 +1,9 @@
 /** TableStack wordmark: the logo mark beside the name in Schibsted Grotesk ExtraBold. */
 export default function Wordmark({ className = "" }: { className?: string }) {
   return (
-    <span className={`inline-flex items-center gap-2.5 ${className}`}>
+    <span className={`inline-flex items-center gap-2 ${className}`}>
       {/* At this size the hairline gaps of the artwork would vanish, so they are drawn a little wider. */}
-      <Mark className="h-[29px] w-[41px]" gap={26} />
+      <Mark className="h-[24px] w-[34px]" gap={30} />
       <span className="font-display text-[20px] font-extrabold leading-none tracking-[-0.045em]">TableStack</span>
     </span>
   );
