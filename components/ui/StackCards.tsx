@@ -62,7 +62,7 @@ export default function StackCards({ items, extra }: { items: readonly StackItem
               </span>
               <div className="stack-body">
                 {s.eyebrow && <p className="eyebrow stack-plain">{s.eyebrow}</p>}
-                <h3 className="display mt-3 text-[clamp(2.2rem,4.2vw,4.6rem)] italic">{s.title}</h3>
+                <h3 className="display mt-3 text-[clamp(2.2rem,3.28vw,3.59rem)] italic">{s.title}</h3>
                 <p className="mt-5 max-w-[42ch] text-[clamp(1.05rem,1.3vw,1.25rem)] leading-[1.55]">{s.body}</p>
               </div>
               <div className="stack-meter" aria-hidden="true">

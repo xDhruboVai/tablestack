@@ -6,7 +6,7 @@ export default function ProjectMontage({ projects }: { projects: Project[] }) {
   if (pair.length < 2) return null;
 
   return (
-    <div className="project-montage" aria-label="Screenshots of our published websites">
+    <div className="project-montage" aria-label="Screenshots of our ongoing websites">
       {pair.map((project, index) => (
         <figure className={`project-montage-frame project-montage-frame-${index + 1}`} key={project.slug}>
           <div className="project-montage-image cover-host">

@@ -92,7 +92,7 @@ export default function Nav({ showWork = true }: { showWork?: boolean }) {
           </TLink>
 
           <nav aria-label="Primary" className="gradient-nav hidden items-center md:flex">
-            {links.map((item) => (
+            {[{ label: "Home", href: "/" }, ...links].map((item) => (
               <TLink
                 key={item.href}
                 href={item.href}

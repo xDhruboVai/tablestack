@@ -17,7 +17,7 @@ export default async function WorkAdminPage() {
   return (
     <section className="px-page pb-24 pt-[calc(var(--nav-h)+8svh)]" aria-labelledby="wa-h">
       <p className="eyebrow text-muted">Team only</p>
-      <h1 id="wa-h" className="display mt-4 text-[clamp(2.4rem,6vw,5.5rem)]">
+      <h1 id="wa-h" className="display mt-4 text-[clamp(2.4rem,4.68vw,4.29rem)]">
         Work <em className="text-accent">switches.</em>
       </h1>
       <p className="body-lg mt-6 max-w-[52ch]">

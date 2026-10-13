@@ -13,11 +13,11 @@ export const metadata = pageMeta({
 export default function BlogIndex() {
   return (
     <>
-      <section className="px-page pb-20 pt-[calc(var(--nav-h)+8svh)] md:pb-28" aria-labelledby="blog-h">
-        <h1 id="blog-h" className="display text-[clamp(2.8rem,8vw,9rem)]" data-split="chars">
+      <section className="px-page pb-20 pt-[calc(var(--nav-h)+8svh)] md:pb-24" aria-labelledby="blog-h">
+        <h1 id="blog-h" className="display text-[clamp(2.8rem,6.24vw,7.02rem)]" data-split="chars">
           Blog
         </h1>
-        <ul className="mt-14 border-t border-rule md:mt-20">
+        <ul className="mt-14 border-t border-rule md:mt-16">
           {posts.map((p) => (
             <li key={p.slug} className="border-b border-rule" data-reveal="rise">
               <TLink href={`/blog/${p.slug}`} className="group grid grid-cols-12 gap-x-6 gap-y-3 py-8 md:py-10">
@@ -25,7 +25,7 @@ export default function BlogIndex() {
                   {formatDate(p.date)} · {p.readingTime}
                 </p>
                 <div className="col-span-12 md:col-span-9">
-                  <h2 className="display text-[clamp(1.7rem,3vw,3rem)] transition-colors group-hover:text-accent">{p.title}</h2>
+                  <h2 className="display text-[clamp(1.7rem,2.34vw,2.34rem)] transition-colors group-hover:text-accent">{p.title}</h2>
                   <p className="mt-3 max-w-[60ch] leading-[1.6] text-fg-2">{p.description}</p>
                 </div>
               </TLink>

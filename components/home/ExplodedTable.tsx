@@ -11,20 +11,22 @@ export const D = 180;
 export const LEG = 150;
 
 export const LAYERS = [
-  { id: "boh", z: 0, t: 18, explode: 0, tag: "04 · AI" },
-  { id: "res", z: 18, t: 10, explode: -130, tag: "03 · SOFTWARE + CLOUD" },
-  { id: "menu", z: 28, t: 10, explode: -260, tag: "02 · DATA" },
-  { id: "foh", z: 38, t: 12, explode: -390, tag: "01 · WEBSITE" },
+  { id: "boh", z: 0, t: 18, explode: 0, tag: "AI" },
+  { id: "res", z: 18, t: 10, explode: -130, tag: "SOFTWARE + CLOUD" },
+  { id: "menu", z: 28, t: 10, explode: -260, tag: "DATA" },
+  { id: "foh", z: 38, t: 12, explode: -390, tag: "WEBSITE" },
 ] as const;
 
 export const VIEWBOX = { x: -175, y: -470, w: 720, h: 880 };
 export const LEADER_END = 262;
+/** Space between a slab's corner and the dot that starts its label line. */
+const LEADER_GAP = 10;
 export const LABEL_X = 272;
 
-/** Where each layer's label sits once exploded, in viewBox units. */
+/** Where each layer's label sits once exploded, in viewBox units: level with the middle of the slab's front corner edge. */
 export function labelY(layerId: string) {
   const l = LAYERS.find((x) => x.id === layerId)!;
-  return W * 0.5 - (l.z + l.t) + l.explode;
+  return W * 0.5 - (l.z + l.t / 2) + l.explode;
 }
 
 export const toPct = {
@@ -221,7 +223,9 @@ export default function ExplodedTable({ className = "" }: { className?: string }
       {LAYERS.map((l) => {
         const Top = TOPS[l.id];
         const zt = l.z + l.t;
-        const [ax, ay] = iso(W, 0, zt);
+        // The label line sits level with the middle of the slab's right-hand corner edge, a small gap clear of it.
+        const [cornerX, ay] = iso(W, 0, l.z + l.t / 2);
+        const ax = cornerX + LEADER_GAP;
         return (
           <g key={l.id} data-layer={l.id} data-explode={l.explode}>
             <g data-drop>

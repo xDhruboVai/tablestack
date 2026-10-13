@@ -9,7 +9,7 @@ export default async function NotFound() {
   return (
     <section className="px-page flex min-h-[100svh] flex-col justify-center pb-20 pt-[calc(var(--nav-h)+6svh)]" aria-labelledby="nf-h">
       <p className="eyebrow text-accent">404 · Page not found</p>
-      <h1 id="nf-h" className="display mt-6 text-[clamp(2.6rem,8vw,8rem)]">
+      <h1 id="nf-h" className="display mt-6 text-[clamp(2.6rem,6.24vw,6.24rem)]">
         This page <em className="text-accent">isn’t here.</em>
       </h1>
       <p className="body-lg mt-8 max-w-[40ch]">

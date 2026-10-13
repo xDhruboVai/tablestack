@@ -163,7 +163,7 @@ export default function WorkIndex({ projects }: { projects: Project[] }) {
         ) : (
           <div className="work-index-grid grid grid-cols-1 gap-x-6 gap-y-16 pt-12 md:grid-cols-2">
             {shown.map((p, i) => (
-              <div key={p.slug} data-item className={i % 2 === 1 ? "md:mt-24" : ""}>
+              <div key={p.slug} data-item className={i % 2 === 1 ? "md:mt-20" : ""}>
                 <WorkCard project={p} index={projects.indexOf(p)} aspect="aspect-[16/10]" />
               </div>
             ))}

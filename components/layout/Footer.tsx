@@ -63,10 +63,10 @@ export default function Footer({ showWork = true }: { showWork?: boolean }) {
 
   return (
     <footer className="site-footer relative z-[2] overflow-hidden border-t border-rule" data-annot="<Footer />">
-      <div className="px-page grid grid-cols-2 gap-x-6 gap-y-10 pb-14 pt-16 md:grid-cols-12 md:pt-24">
+      <div className="px-page grid grid-cols-2 gap-x-6 gap-y-10 pb-14 pt-16 md:grid-cols-12 md:pt-20">
         <div className="col-span-2 md:col-span-5">
           <p className="eyebrow text-muted">Say hello</p>
-          <a href={`mailto:${site.email}`} className="footer-email mt-4 inline-block font-display text-[clamp(1.4rem,2vw,2rem)] font-bold leading-tight tracking-[-0.03em]">
+          <a href={`mailto:${site.email}`} className="footer-email mt-4 inline-block font-display text-[clamp(1.4rem,1.56vw,1.56rem)] font-bold leading-tight tracking-[-0.03em]">
             {site.email}
           </a>
           <p className="mt-4 max-w-[34ch] text-fg-2">{site.responseTime}</p>

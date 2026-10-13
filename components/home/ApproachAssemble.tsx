@@ -33,9 +33,18 @@ export default function ApproachAssemble({ titleId = "app-title" }: { titleId?: 
       if (!raf) raf = requestAnimationFrame(update);
     };
     update();
+    // The pinned block's height feeds the CSS that centres it on screen while it is stuck.
+    const measure = () => t.style.setProperty("--asm-pin-h", `${p.offsetHeight}px`);
+    measure();
+    const ro = new ResizeObserver(() => {
+      measure();
+      schedule();
+    });
+    ro.observe(p);
     window.addEventListener("scroll", schedule, { passive: true });
     window.addEventListener("resize", schedule);
     return () => {
+      ro.disconnect();
       window.removeEventListener("scroll", schedule);
       window.removeEventListener("resize", schedule);
       cancelAnimationFrame(raf);
@@ -44,12 +53,12 @@ export default function ApproachAssemble({ titleId = "app-title" }: { titleId?: 
 
   return (
     <div>
-      <h2 id={titleId} className="display text-[clamp(2.6rem,5vw,5.6rem)]" data-split="lines">
-        How a project <em className="text-accent">runs.</em>
-      </h2>
-
-      <div ref={track} className="asm mt-8 md:mt-10" style={{ ["--steps" as string]: approach.length }}>
+      <div ref={track} className="asm" style={{ ["--steps" as string]: approach.length }}>
         <div ref={pin} className="asm-pin">
+          {/* The title sits inside the pinned block, so it stays on screen while the steps play. */}
+          <h2 id={titleId} className="asm-title display" data-split="lines">
+            How a project <em className="text-accent">runs.</em>
+          </h2>
           <div className="asm-scene" data-stage={active} aria-hidden="true">
             <div className="asm-sheet asm-sheet--brief">
               <p className="asm-sheet-label">Brief</p>

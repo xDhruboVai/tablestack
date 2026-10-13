@@ -36,7 +36,7 @@ export const site = {
   // Shown in Google results and link previews (keep under about 160 characters).
   seoTitle: "TableStack | Websites and Web Tools in Bangladesh",
   seoDescription:
-    "TableStack is a Dhaka web team building websites and the tools behind them. Explore published work with menus, bookings and branch pages.",
+    "TableStack is a Dhaka web team building websites and the tools behind them. Explore our ongoing work with menus, bookings and branch pages.",
   description:
     "A small web team in Bangladesh. We build websites and the tools behind them, from bilingual menus and branch pages to booking flows and admin screens.",
 } as const;
@@ -81,10 +81,6 @@ export const anatomy = [
     body: "Agents and automation that take the manual work off your team. The tech stack in TableStack.",
   },
 ] as const;
-
-/** Wrap words in *asterisks* for accent italic, **double asterisks** for bold. */
-export const positioning =
-  "We build websites and the tools behind them. Recent work includes bilingual menus, branch pages, bookings and pre-orders. **Clear scope. A working result.**";
 
 /** What we do: three areas, five services each. `note` is the plain-language line under each service. */
 export const pillars = [

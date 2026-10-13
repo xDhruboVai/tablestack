@@ -41,21 +41,6 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   };
 }
 
-function Chapter({ label, children }: { label: string; children: React.ReactNode }) {
-  return (
-    <div className="grid grid-cols-12 gap-x-6 border-t border-rule py-12 md:py-20" data-annot={`section · ${label.toLowerCase()}`}>
-      <div className="col-span-12 mb-6 md:col-span-4 md:mb-0">
-        <div className="md:sticky md:top-[calc(var(--nav-h)+32px)]">
-          <h2 className="display text-[clamp(2rem,3vw,3rem)] italic" data-split="lines">
-            {label}
-          </h2>
-        </div>
-      </div>
-      <div className="col-span-12 md:col-span-7 md:col-start-6">{children}</div>
-    </div>
-  );
-}
-
 export default async function ProjectPage({ params }: { params: Promise<Params> }) {
   const { slug } = await params;
   const p = getProject(slug);
@@ -65,18 +50,17 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
   // "Next project" cycles through the visible ones, and is left out when this is the only one.
   const next = visible.length > 1 ? visible[(visible.findIndex((v) => v.slug === slug) + 1) % visible.length] : null;
 
-  const meta: [string, React.ReactNode][] = [
-    ["Client", p.client],
-    ["Type", p.kind],
-    ["Services", p.services.join(", ")],
-    ["Stack", p.stack.join(" · ")],
+  const facts: [string, string][] = [
+    ["Business", p.kind],
+    ["Location", p.location],
     ["Year", p.year],
   ];
 
   return (
     <>
       <article>
-        <header className="px-page pt-[calc(var(--nav-h)+7svh)]" data-annot={`page · /work/${p.slug}`}>
+        {/* Wide screens: name, one plain sentence, the live link and three facts on the left; the site itself on the right. */}
+        <header className="px-page pt-[calc(var(--nav-h)+6svh)]" data-annot={`page · /work/${p.slug}`}>
           <TLink href="/work" className="eyebrow link-draw">
             ← All work
           </TLink>
@@ -87,18 +71,14 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
             </p>
           )}
 
-          <p className="eyebrow mt-10 text-muted" data-reveal="scramble">
-            {p.kind} · {p.location}
-          </p>
-          <h1 className="display mt-4 text-[clamp(3.4rem,12vw,12rem)]" data-split="chars">
-            {p.title}
-          </h1>
-          <div className="mt-8 grid grid-cols-12 gap-x-6 gap-y-10 md:mt-10">
-            <div className="col-span-12 md:col-span-7">
-              <p className="text-[clamp(1.4rem,2.3vw,2.2rem)] font-medium leading-[1.15] tracking-[-0.025em]" data-split="lines">
+          <div className="mt-8 grid grid-cols-12 items-center gap-x-6 gap-y-10 md:mt-10">
+            <div className="col-span-12 lg:col-span-5">
+              <h1 className="display text-[clamp(2.8rem,4.06vw,4.21rem)]" data-split="chars">
+                {p.title}
+              </h1>
+              <p className="mt-6 max-w-[40ch] text-[clamp(1.15rem,1.5vw,1.45rem)] leading-[1.35] tracking-[-0.015em] text-fg-2" data-split="lines">
                 {p.summary}
               </p>
-              {/* The live site, as the main action of the page */}
               {p.liveUrl && (
                 <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-3" data-reveal="rise">
                   <a href={p.liveUrl} target="_blank" rel="noreferrer" className="btn btn-primary">
@@ -108,32 +88,31 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
                   <span className="text-[15px] text-muted">{new URL(p.liveUrl).host}</span>
                 </div>
               )}
+              <dl className="mt-10 flex flex-wrap gap-x-10 gap-y-5" data-reveal="fade">
+                {facts.map(([k, v]) => (
+                  <div key={k} className="max-w-[22ch]">
+                    <dt className="eyebrow text-muted">{k}</dt>
+                    <dd className="mt-1 leading-snug">{v}</dd>
+                  </div>
+                ))}
+              </dl>
             </div>
-            <dl className="col-span-12 grid grid-cols-2 gap-x-6 gap-y-5 md:col-span-4 md:col-start-9" data-reveal="stagger">
-              {meta.map(([k, v]) => (
-                <div key={k} className="border-t border-rule pt-3">
-                  <dt className="eyebrow text-muted">{k}</dt>
-                  <dd className="mt-1 text-[15px] leading-snug">{v}</dd>
-                </div>
-              ))}
-            </dl>
+
+            <div className="group col-span-12 lg:col-span-7">
+              <LensMedia project={p} aspect="aspect-[16/10]" priority hoverScale={false} sizes="(min-width: 1024px) 58vw, 100vw" />
+              <p className="hint-pointer eyebrow mt-3 text-muted">Move your cursor over the image.</p>
+            </div>
           </div>
         </header>
 
-        <div className="px-page mt-16 md:mt-24">
-          <div className="media-fit group">
-            <LensMedia project={p} aspect="aspect-[16/10]" priority hoverScale={false} sizes="(min-width: 1280px) 80vw, 100vw" />
-            <p className="hint-pointer eyebrow mt-3 text-muted">Move your cursor over the image.</p>
-          </div>
-        </div>
-
-        <section className="px-page pt-16 md:pt-24" aria-labelledby="gallery-h">
-          <div className="border-t border-rule pt-10">
-            <h2 id="gallery-h" className="display text-[clamp(2.2rem,4vw,4rem)]" data-split="lines">
-              Gallery
+        {/* The heading sits in a left rail on wide screens, so the screenshots stay a comfortable size. */}
+        <section className="px-page grid grid-cols-12 gap-x-6 gap-y-8 pt-16 md:pt-20" aria-labelledby="gallery-h">
+          <div className="col-span-12 lg:col-span-3">
+            <h2 id="gallery-h" className="display text-[clamp(2rem,2.65vw,2.65rem)] lg:sticky lg:top-[calc(var(--nav-h)+32px)]" data-split="lines">
+              A closer look
             </h2>
           </div>
-          <div className="media-fit mt-10 grid grid-cols-1 gap-6 md:grid-cols-2">
+          <div className="col-span-12 grid grid-cols-1 gap-6 md:grid-cols-2 lg:col-span-9">
             {p.gallery.map((g, i) => (
               <figure key={i} className={g.wide ? "md:col-span-2" : ""}>
                 <div
@@ -143,7 +122,7 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
                 >
                   <div data-mask-inner className="absolute inset-0">
                     {g.src ? (
-                      <Image src={g.src} alt={g.alt} fill sizes={g.wide ? "(min-width: 1280px) 80vw, 100vw" : "(min-width: 1280px) 40vw, (min-width: 768px) 50vw, 100vw"} className="object-cover" />
+                      <Image src={g.src} alt={g.alt} fill sizes={g.wide ? "(min-width: 1024px) 75vw, 100vw" : "(min-width: 1024px) 37vw, (min-width: 768px) 50vw, 100vw"} className="object-cover" />
                     ) : (
                       <ProjectMock project={p} frame={g.frame} slice title={`${g.alt} (placeholder artwork)`} />
                     )}
@@ -160,34 +139,30 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
           </div>
         </section>
 
-        <div className="px-page mt-16 pb-10 md:mt-24">
-          <Chapter label="Challenge">
-            <p className="body-lg !text-[clamp(1.2rem,1.7vw,1.6rem)] !leading-[1.45]" data-split="lines">
+        {/* What the client needed, and what a visitor can now do on the site. */}
+        <section className="px-page grid grid-cols-12 gap-x-6 gap-y-12 py-16 md:py-24" data-annot="section · brief + built">
+          <div className="col-span-12 md:col-span-5">
+            <h2 className="display text-[clamp(2rem,2.65vw,2.65rem)]" data-split="lines">
+              The brief
+            </h2>
+            <p className="mt-6 max-w-[44ch] text-[clamp(1.1rem,1.4vw,1.35rem)] leading-[1.5] text-fg-2" data-split="lines">
               {p.challenge}
             </p>
-          </Chapter>
-          <Chapter label="Approach">
-            <p className="body-lg !text-[clamp(1.2rem,1.7vw,1.6rem)] !leading-[1.45]" data-split="lines">
-              {p.approach}
-            </p>
-          </Chapter>
-          <Chapter label="Execution">
-            <ul data-reveal="stagger">
+          </div>
+          <div className="col-span-12 md:col-span-6 md:col-start-7">
+            <h2 className="display text-[clamp(2rem,2.65vw,2.65rem)]" data-split="lines">
+              What we built
+            </h2>
+            <ul className="mt-6 border-t border-rule" data-reveal="stagger">
               {p.execution.map((e) => (
-                <li key={e} className="flex items-baseline gap-5 border-b border-rule py-5 text-[clamp(1.05rem,1.4vw,1.3rem)]">
+                <li key={e} className="flex items-baseline gap-4 border-b border-rule py-4 text-[clamp(1.05rem,1.3vw,1.25rem)]">
                   <span className="list-bar" aria-hidden="true" />
                   {e}
                 </li>
               ))}
             </ul>
-          </Chapter>
-          <Chapter label="Delivered">
-            <p className="body-lg !text-[clamp(1.2rem,1.7vw,1.6rem)] !leading-[1.45]" data-split="lines">
-              {p.outcome}
-            </p>
-          </Chapter>
-        </div>
-
+          </div>
+        </section>
       </article>
 
       {next && <NextProject project={next} />}

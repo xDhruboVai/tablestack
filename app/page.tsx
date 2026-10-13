@@ -1,5 +1,5 @@
 import HeroAnatomy from "@/components/home/HeroAnatomy";
-import { Approach, Capabilities, ContactCTA, Positioning, SelectedWork, Standards } from "@/components/home/Sections";
+import { Approach, Capabilities, ContactCTA, SelectedWork, Standards } from "@/components/home/Sections";
 import { site } from "@/content/site";
 import { getVisibleProjects } from "@/lib/visibility";
 
@@ -43,7 +43,6 @@ export default async function Home() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <HeroAnatomy showWork={visible.length > 0} />
-      <Positioning />
       {visible.length > 0 && <SelectedWork projects={visible} />}
       <Capabilities />
       <Approach />

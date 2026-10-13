@@ -36,12 +36,12 @@ const facts = [
 export default function AboutPage() {
   return (
     <>
-      <section className="px-page pb-24 pt-[calc(var(--nav-h)+10svh)] md:pb-28" aria-labelledby="about-h" data-annot="page · /about">
-        <h1 id="about-h" className="display text-[clamp(2.8rem,8vw,9rem)]" data-split="chars">
+      <section className="px-page pb-24 pt-[calc(var(--nav-h)+10svh)] md:pb-24" aria-labelledby="about-h" data-annot="page · /about">
+        <h1 id="about-h" className="display text-[clamp(2.8rem,6.24vw,7.02rem)]" data-split="chars">
           Websites first. <em className="text-accent">Tools when needed.</em>
         </h1>
-        <div className="mt-12 grid grid-cols-12 gap-x-6 gap-y-12 md:mt-20 md:gap-y-16">
-          <p className="col-span-12 text-[clamp(1.5rem,2.6vw,2.6rem)] font-semibold leading-[1.14] tracking-[-0.035em] md:col-span-10 lg:col-span-9" data-split="lines">
+        <div className="mt-12 grid grid-cols-12 gap-x-6 gap-y-12 md:mt-16 md:gap-y-16">
+          <p className="col-span-12 text-[clamp(1.5rem,2.03vw,2.03rem)] font-semibold leading-[1.14] tracking-[-0.035em] md:col-span-10 lg:col-span-9" data-split="lines">
             {about.intro}
           </p>
           {/* Quick facts as one row under the intro */}
@@ -64,7 +64,7 @@ export default function AboutPage() {
 
       {/* Team */}
       <section className="px-page pb-16 md:pb-20" aria-labelledby="team-h">
-        <h2 id="team-h" className="display text-[clamp(2.4rem,4.8vw,5.2rem)]" data-split="lines">
+        <h2 id="team-h" className="display text-[clamp(2.4rem,3.74vw,4.06rem)]" data-split="lines">
           The people <em className="text-accent">behind it.</em>
         </h2>
         <ul className="mt-10 grid auto-rows-fr grid-cols-1 gap-5 md:mt-12 lg:grid-cols-2">
@@ -87,14 +87,14 @@ export default function AboutPage() {
       </section>
 
       {/* The two sides - the idea behind the name */}
-      <section className="px-page pb-20 md:pb-28" aria-labelledby="sides-h">
-        <h2 id="sides-h" className="display max-w-[16ch] text-[clamp(2.4rem,4.8vw,5.2rem)]" data-split="lines">
+      <section className="px-page pb-20 md:pb-24" aria-labelledby="sides-h">
+        <h2 id="sides-h" className="display max-w-[16ch] text-[clamp(2.4rem,3.74vw,4.06rem)]" data-split="lines">
           Table, plus <em className="text-accent">tech stack.</em>
         </h2>
-        <div className="mt-14 grid grid-cols-1 border border-rule md:mt-20 md:grid-cols-2" data-reveal="rise">
+        <div className="mt-14 grid grid-cols-1 border border-rule md:mt-16 md:grid-cols-2" data-reveal="rise">
           <div className="bg-surface p-6 md:p-12">
             <p className="eyebrow text-accent">Front of house</p>
-            <h3 className="display mt-3 text-[clamp(1.8rem,2.4vw,2.4rem)]">What your customers get</h3>
+            <h3 className="display mt-3 text-[clamp(1.8rem,1.87vw,1.87rem)]">What your customers get</h3>
             <ul className="mt-8">
               {sides.guests.map((g) => (
                 <li key={g} className="flex items-baseline gap-4 border-t border-rule py-4 text-[1.1rem]">
@@ -106,7 +106,7 @@ export default function AboutPage() {
           </div>
           <div className="cap-dark p-6 md:p-12">
             <p className="eyebrow text-accent">Back of house</p>
-            <h3 className="display mt-3 text-[clamp(1.8rem,2.4vw,2.4rem)]">What your team gets</h3>
+            <h3 className="display mt-3 text-[clamp(1.8rem,1.87vw,1.87rem)]">What your team gets</h3>
             <ul className="mt-8">
               {sides.team.map((g) => (
                 <li key={g} className="flex items-baseline gap-4 border-t border-[rgb(238_232_227/0.16)] py-4 text-[1.1rem]">
@@ -120,8 +120,8 @@ export default function AboutPage() {
       </section>
 
       {/* Principles */}
-      <section className="px-page pb-20 md:pb-28" aria-labelledby="principles-h">
-        <h2 id="principles-h" className="display text-[clamp(2.4rem,4.8vw,5.2rem)]" data-split="lines">
+      <section className="px-page pb-12 md:pb-16" aria-labelledby="principles-h">
+        <h2 id="principles-h" className="display text-[clamp(2.4rem,3.74vw,4.06rem)]" data-split="lines">
           What makes us different.
         </h2>
         <div className="mt-12 md:mt-16">
@@ -129,13 +129,13 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="pb-20 md:pb-28" aria-labelledby="tools-h">
+      <section className="pb-20 md:pb-24" aria-labelledby="tools-h">
         <div className="px-page">
-          <h2 id="tools-h" className="font-display text-[clamp(1.5rem,2vw,2rem)] font-semibold">
+          <h2 id="tools-h" className="text-center font-display text-[clamp(1.5rem,1.56vw,1.56rem)] font-semibold">
             What we build with
           </h2>
         </div>
-        <ToolMarquee className="mt-10 md:mt-14" />
+        <ToolMarquee className="mt-6" />
       </section>
 
       <ContactCTA />

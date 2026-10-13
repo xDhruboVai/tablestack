@@ -51,10 +51,13 @@ export type Project = {
   location: string;
   services: string[];
   stack: string[];
+  /** One or two plain sentences under the project name. */
   summary: string;
   liveUrl?: string;
+  /** Shown as "The brief": what the client needed, in plain words. */
   challenge: string;
   approach: string;
+  /** Shown as "What we built": a short list of things a visitor can see or do on the site. */
   execution: string[];
   outcome: string;
   /** Brand colors (used while images load, and for code-drawn fallbacks). */
@@ -316,21 +319,21 @@ const realProjects: Project[] = [
     services: ["Website design", "Full-stack build", "English + Bangla"],
     stack: ["Next.js", "Tailwind CSS", "Vercel"],
     summary:
-      "A loud, saucy site for a six-branch smash burger chain, in English and Bangla, with the full menu and every branch in one place.",
+      "The website for a burger chain with six branches in Dhaka. The full menu and every branch in one place, in English and Bangla.",
     liveUrl: "https://smashed-burgers-six.vercel.app",
     challenge:
-      "Six branches, one menu across 13 categories, and a brand that runs on attitude. The site had to sell the food on sight, and make a big menu easy to browse on a phone.",
+      "Six branches share one big menu. The site had to show the food well, make that menu easy to browse on a phone, and tell customers where each branch is.",
     approach:
       "We leaned all the way into the brand: near-black pages, tall condensed type in mustard yellow, and food cut out and lit like a poster. A scroll-driven sauce sequence (Drop, Pour, Flow, Drown) puts on a show, while the menu stays one tap away.",
     execution: [
-      "Every page in English and Bangla, switchable from the header",
-      "Menu organised into 13 categories with prices in BDT, the same at every branch",
-      "Locations page with addresses, hours and directions for each branch",
-      "Mobile tab bar for Home, Menu and Locations",
-      "Guest reviews sourced from Google Maps",
+      "Every page in English and Bangla",
+      "The full menu in 13 categories, with prices in taka",
+      "Each branch with its address, opening hours and directions",
+      "Home, Menu and Locations buttons at the bottom of the phone screen",
+      "Customer reviews from Google Maps",
     ],
     outcome:
-      "Launched in English and Bangla, with every branch and the full menu on one fast, mobile-first site.",
+      "Every branch and the full menu on one fast, mobile-first site, in English and Bangla.",
     art: {
       palette: { bg: "#0E0400", fg: "#F3EBDF", accent: "#EFB316", soft: "#13120B" },
       type: "condensed",
@@ -358,7 +361,7 @@ const realProjects: Project[] = [
         src: "/work/smashed-burgers/home-2.jpg",
         frame: "desktop",
         alt: "Fan Favourites section: burger and fries cards with category, name and price",
-        caption: "Fan favourites, desktop",
+        caption: "Fan favourites on a computer",
         spec: "",
         wide: true,
       },
@@ -366,21 +369,21 @@ const realProjects: Project[] = [
         src: "/work/smashed-burgers/mobile.jpg",
         frame: "mobile",
         alt: "Two phones showing the Smashed Burgers homepage and the reservation form",
-        caption: "Home, mobile",
+        caption: "On a phone",
         spec: "",
       },
       {
         src: "/work/smashed-burgers/menu.jpg",
         frame: "menu",
         alt: "Menu page with burger category cards showing item counts and starting prices",
-        caption: "Menu, 13 categories",
+        caption: "The menu, in 13 categories",
         spec: "",
       },
       {
         src: "/work/smashed-burgers/detail.jpg",
         frame: "detail",
         alt: "Scroll sequence: a crispy chicken tender with sauce dripping, headline Drop",
-        caption: "Scroll-driven sauce sequence",
+        caption: "The sauce animation as you scroll",
         spec: "",
       },
       {
@@ -404,21 +407,22 @@ const realProjects: Project[] = [
     services: ["Website design", "Full-stack build", "Reservations + pre-orders", "Menu system", "English + Bangla"],
     stack: ["Next.js", "Tailwind CSS", "Vercel"],
     summary:
-      "A warm, café-first site for a Dhaka favourite since 2016: a filterable menu, branch-by-branch pricing, and a booking flow that holds your table and lets you order ahead.",
+      "The website for a Dhaka café and restaurant with three branches. Customers can browse the menu, book a table and order before they arrive.",
     liveUrl: "https://pinewood-theta.vercel.app/",
     challenge:
-      "Three branches with the same hours but not always the same prices, a long menu of halal, vegetarian and chef’s specials, and bookings the team confirms by phone. All of it had to be clear, without turning a cosy café into a spreadsheet.",
+      "Three branches keep the same hours but not always the same prices. The menu is long, and the team confirms every booking by phone. Customers needed all of that to be clear.",
     approach:
       "The design takes its cues from the rooms: deep pine green, warm cream, handwritten script for the personal touches and a clean sans for the details. The menu is built as data rather than a PDF, so dishes can be filtered and priced per branch.",
     execution: [
-      "Menu filters for halal, vegetarian and chef’s specials, with prices per branch where they differ",
-      "Seven-step booking: branch, inside or outside (smoking zone), party size, date and time, then a summary before sending",
-      "Tables are held while the team calls to confirm; confirmed guests get an emailed link to pre-order, closing 60 minutes before the booking",
-      "Visit page with today’s hours highlighted, directions and phone numbers for every branch",
-      "English and Bangla throughout, plus a staff login for the team",
+      "A menu you can filter by halal, vegetarian and chef’s specials",
+      "Prices shown for each branch where they differ",
+      "Table booking: pick a branch, inside or outside, number of people, date and time",
+      "Guests with a confirmed booking get an emailed link to order ahead",
+      "Opening hours, directions and phone numbers for every branch",
+      "English and Bangla throughout, with a login for staff",
     ],
     outcome:
-      "Launched with all three branches, the full menu, online booking and pre-orders, in English and Bangla.",
+      "All three branches, the full menu, online booking and pre-orders, in English and Bangla.",
     art: {
       palette: { bg: "#1B464B", fg: "#EAE9DE", accent: "#E0B947", soft: "#13343B" },
       type: "serif",
@@ -447,7 +451,7 @@ const realProjects: Project[] = [
         src: "/work/pinewood/home.jpg",
         frame: "desktop",
         alt: "From the menu section: dish list with prices beside a large food photo carousel",
-        caption: "From the menu, desktop",
+        caption: "The menu on a computer",
         spec: "",
         wide: true,
       },
@@ -455,28 +459,28 @@ const realProjects: Project[] = [
         src: "/work/pinewood/mobile.jpg",
         frame: "mobile",
         alt: "Two phones showing the Pinewood homepage and the menu with dietary filters",
-        caption: "Home + menu, mobile",
+        caption: "Home and menu on a phone",
         spec: "",
       },
       {
         src: "/work/pinewood/menu.jpg",
         frame: "menu",
         alt: "Menu page with category tabs, halal and vegetarian filters, and per-branch prices",
-        caption: "Filterable menu, prices per branch",
+        caption: "Menu filters and branch prices",
         spec: "",
       },
       {
         src: "/work/pinewood/detail.jpg",
         frame: "detail",
         alt: "About page: the Pinewood dining room with a coffee counter and cake display",
-        caption: "About: the rooms",
+        caption: "The About page",
         spec: "",
       },
       {
         src: "/work/pinewood/booking.jpg",
         frame: "boh",
         alt: "Booking steps: inside or outside seating, number of people, date and time",
-        caption: "Seven-step booking flow",
+        caption: "Booking a table, step by step",
         spec: "",
       },
     ],

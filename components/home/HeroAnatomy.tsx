@@ -5,7 +5,7 @@ import { createScope, createTimeline, onScroll, stagger, utils, splitText } from
 import ExplodedTable, { LABEL_X, labelY, toPct } from "./ExplodedTable";
 import TLink from "@/components/layout/TLink";
 import GlowLink from "@/components/ui/GlowLink";
-import { anatomy, site } from "@/content/site";
+import { anatomy } from "@/content/site";
 import { EASE, onIntroDone } from "@/lib/motion";
 
 /* Assembled-state camera (translateX %, translateY %, scale) - the exploded state is identity. */
@@ -144,12 +144,7 @@ export default function HeroAnatomy({ showWork = true }: { showWork?: boolean })
     <section ref={root} className="hero-track" aria-labelledby="hero-title" data-annot="section · hero · sticky scroll-scrub">
       <div className="hero-stage">
         <div className="hero-copy px-page" data-copy>
-          <p className="eyebrow flex items-center gap-3 text-fg-2" data-intro data-intro-fade>
-            <span className="live-dot" aria-hidden="true" />
-            {site.availability}
-          </p>
-
-          <h1 id="hero-title" className="display mt-6 text-[clamp(2.3rem,9.8vw,3.8rem)] lg:mt-8 lg:text-[clamp(3.4rem,5.6vw,6.8rem)]" data-intro>
+          <h1 id="hero-title" className="display text-[clamp(2.3rem,9.8vw,3.8rem)] lg:text-[clamp(3.4rem,4.37vw,5.3rem)]" data-intro>
             <span className="split-line">
               <span className="hl">Websites built</span>
             </span>
@@ -193,7 +188,6 @@ export default function HeroAnatomy({ showWork = true }: { showWork?: boolean })
                     data-label
                     style={{ left: `${toPct.x(LABEL_X)}%`, top: `${toPct.y(labelY(id))}%` }}
                   >
-                    <span className="eyebrow text-accent">{a.code}</span>
                     <span className="hero-label-title">{a.title}</span>
                     <span className="hero-label-body">{a.body}</span>
                   </li>
@@ -204,9 +198,7 @@ export default function HeroAnatomy({ showWork = true }: { showWork?: boolean })
         </div>
 
         <div className="hero-hint px-page" data-hint aria-hidden="true">
-          <span className="eyebrow flex items-center gap-3 text-muted">
-            <span className="hero-hint-line" /> Scroll to see how it’s built
-          </span>
+          <span className="eyebrow text-muted">Scroll to see how it’s built</span>
         </div>
       </div>
     </section>

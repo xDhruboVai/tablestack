@@ -11,21 +11,23 @@ export const metadata = pageMeta({
 export default function ContactPage() {
   return (
     <section className="px-page contact-page" aria-labelledby="contact-h" data-annot="page · /contact">
-      <div className="contact-page-heading">
-        <h1 id="contact-h" className="display" data-split="lines">
-          Tell us what you’re <em className="text-accent">building.</em>
-        </h1>
-        <p className="body-lg mt-8 max-w-[39ch]">
-          A few sentences are enough to start. We’ll reply to discuss the scope and next steps.
-        </p>
-      </div>
-
+      {/* Wide screens: heading and contact details on the left, the form on the right. Phones: heading, form, details. */}
       <div className="contact-page-grid">
+        <div className="contact-page-heading">
+          <h1 id="contact-h" className="display" data-split="lines">
+            Tell us what you’re <em className="text-accent">building.</em>
+          </h1>
+          <p className="body-lg mt-8 max-w-[39ch]">
+            A few sentences are enough to start. We’ll reply to discuss the scope and next steps.
+          </p>
+        </div>
+
         <div className="contact-brief-card">
           <p className="eyebrow text-accent">Short brief</p>
           <h2 className="display mt-3">What do you need?</h2>
           <ContactForm />
         </div>
+
         <aside className="contact-page-aside">
           <div>
             <p className="eyebrow">Prefer email?</p>

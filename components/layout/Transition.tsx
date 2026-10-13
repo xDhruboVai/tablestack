@@ -121,7 +121,7 @@ export function TransitionProvider({ children }: { children: React.ReactNode }) 
         <div className="page-door-inner px-page">
           <span className="eyebrow text-accent" ref={path} />
           <span className="split-line">
-            <span ref={title} className="display block text-[clamp(3rem,11vw,10rem)]" />
+            <span ref={title} className="display block text-[clamp(3rem,8.58vw,7.8rem)]" />
           </span>
         </div>
       </div>

@@ -543,7 +543,7 @@ html.motion:not(.anim-ready) :is([data-reveal], [data-split], [data-intro]) {
   overflow: hidden;
 }
 .work-row-title {
-  font-size: clamp(1.6rem, 5.4vw, 5rem);
+  font-size: clamp(1.6rem, 4.21vw, 3.9rem);
   line-height: 0.95;
   transition: transform 0.6s var(--ease-out-quart), font-style 0s;
 }
@@ -908,12 +908,14 @@ html:not([data-mode="boh"]) .boh-only {
 .gradient-nav-link:focus-visible {
   border-radius: 999px;
 }
+/* An ellipse that fades to nothing at its own edge, and stays small enough to end inside the header, so
+   the header's bottom line never cuts through it. */
 .gradient-nav-glow {
   position: absolute;
-  inset: -11px;
+  inset: -6px -16px;
   z-index: -1;
   border-radius: 999px;
-  background: radial-gradient(circle, rgb(228 63 37 / 0.25) 0%, rgb(228 63 37 / 0.1) 43%, transparent 72%);
+  background: radial-gradient(ellipse closest-side, rgb(228 63 37 / 0.26) 0%, rgb(228 63 37 / 0.1) 52%, transparent 100%);
   opacity: 0;
   transform: scale(0.72);
   pointer-events: none;
@@ -937,7 +939,7 @@ html:not([data-mode="boh"]) .boh-only {
 }
 .gradient-nav-link:is(:hover, :focus-visible) .gradient-nav-glow {
   opacity: 1;
-  transform: scale(1.6);
+  transform: scale(1.2);
 }
 .gradient-nav-link:is(:hover, :focus-visible) .gradient-nav-face {
   opacity: 0;
@@ -1112,12 +1114,6 @@ html.first-visit:not(.anim-ready) .loader {
   }
 }
 
-/* Large media (case-study cover, gallery): never taller than ~78% of the screen, so a
-   full-page screenshot reads as a preview instead of filling the window at 1:1. */
-.media-fit {
-  width: min(100%, 124svh);
-  margin-inline: auto;
-}
 
 /* ─── Contact: next-step icons ─────────────────────────────── */
 .step-icon {
@@ -1213,7 +1209,7 @@ html[data-mode="boh"] .dot-field {
   padding-block: 3px;
   text-align: left;
   font-family: var(--font-display);
-  font-size: clamp(1.2rem, 3.1vw, 3.2rem);
+  font-size: clamp(1.2rem, 2.42vw, 2.5rem);
   font-weight: 800;
   line-height: 1.12;
   letter-spacing: -0.035em;
@@ -1274,8 +1270,7 @@ line.wf-window {
   }
 }
 .about-facts > div {
-  padding-block: 1rem;
-  border-top: 1px solid var(--rule);
+  padding-block: 0.5rem;
 }
 .about-facts dd {
   margin-top: 0.3rem;
@@ -1283,152 +1278,207 @@ line.wf-window {
   line-height: 1.4;
 }
 
-/* ─── Standards showcase ───────────────────────────────────── */
-.standards-grid {
+/* ─── What you can expect: a list with a picture that changes ──
+   Sizes follow the window's height as well as its width, so on a desktop the heading, the list and
+   the panel are all on screen together. */
+.expect {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: 14px;
-  list-style: none;
-  padding: 0;
+  gap: clamp(24px, 4vw, 64px);
 }
-.standard-card {
-  position: relative;
-  isolation: isolate;
-  container-type: inline-size;
+@media (min-width: 900px) {
+  .expect {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  }
+}
+.expect-main {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  min-height: 192px;
-  overflow: hidden;
-  border: 1px solid var(--rule);
-  border-radius: 20px;
-  background: var(--surface);
-  padding: clamp(22px, 2.3vw, 34px);
-  transition: border-color 0.25s ease, background-color 0.5s var(--ease-out-quart);
-}
-.standard-card::before {
-  position: absolute;
-  z-index: -1;
-  inset: 0;
-  border-radius: inherit;
-  background: radial-gradient(320px circle at var(--spot-x, 50%) var(--spot-y, 50%), rgb(228 63 37 / 0.13), transparent 75%);
-  content: "";
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-}
-.standard-card:hover::before {
-  opacity: 1;
-}
-.standard-card:hover {
-  border-color: var(--rule-strong);
-}
-.standard-card-content,
-.standard-scope-parts {
-  position: relative;
-  z-index: 1;
-}
-.standard-card-title {
-  font-family: var(--font-display);
-  font-size: clamp(1.875rem, 9cqi, 2.75rem);
-  font-weight: 700;
-  line-height: 1.08;
-  letter-spacing: -0.055em;
-  text-wrap: balance;
-}
-.standard-card-description {
-  max-width: 32ch;
-  margin-top: 14px;
-  color: var(--fg-2);
-  font-size: clamp(1rem, 4.6cqi, 1.25rem);
-  line-height: 1.4;
-  letter-spacing: -0.025em;
-}
-.standard-card-featured {
-  flex-direction: row;
-  align-items: center;
-  gap: clamp(24px, 4vw, 60px);
-  min-height: 320px;
-  border-color: transparent;
-  background: var(--fg);
-  color: var(--bg);
-}
-.standard-card-featured .standard-card-content {
-  flex: 1 1 55%;
+  justify-content: center;
+  gap: clamp(20px, 4svh, 44px);
   min-width: 0;
 }
-.standard-card-featured::before {
-  background: radial-gradient(420px circle at var(--spot-x, 50%) var(--spot-y, 50%), rgb(228 63 37 / 0.27), transparent 75%);
+.expect-title {
+  font-size: clamp(2.6rem, min(4.37vw, 8.19svh), 7.02rem);
 }
-.standard-card-featured .standard-card-title {
-  font-size: clamp(3rem, 6cqi, 4.5rem);
-}
-.standard-card-featured .standard-card-description {
-  max-width: 36ch;
-  color: var(--bg);
-  font-size: clamp(1.1rem, 2cqi, 1.35rem);
-}
-html[data-mode="boh"] .standard-card-featured {
-  border-color: var(--rule-strong);
-  background: #151515;
-  color: var(--fg);
-}
-html[data-mode="boh"] .standard-card-featured .standard-card-description {
-  color: var(--fg-2);
-}
-.standard-scope-parts {
-  display: grid;
-  flex: 0 1 39%;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
-  min-width: 0;
-}
-.standard-scope-parts span {
+.expect-list {
   display: flex;
-  align-items: flex-end;
-  min-height: clamp(84px, 7.5vw, 112px);
-  border: 1px solid color-mix(in srgb, currentColor 35%, transparent);
-  border-radius: 14px;
-  background: color-mix(in srgb, currentColor 7%, transparent);
-  padding: 16px;
-  font-size: clamp(14px, 1.2vw, 18px);
-  font-weight: 600;
-  line-height: 1.2;
+  flex-direction: column;
+  align-items: flex-start;
 }
-.standard-scope-parts span:first-child {
-  border-color: var(--accent);
-  background: var(--accent);
-  color: var(--on-accent);
+.expect-word {
+  display: block;
+  padding-block: 0.1em;
+  font-size: clamp(2rem, min(3.43vw, 5.77svh), 5.15rem);
+  line-height: 1.02;
+  text-align: left;
+  /* Unlit, but still readable as a control (3:1 or better against the page in both modes). */
+  color: color-mix(in srgb, var(--fg) 50%, transparent);
+  transition: color 0.4s var(--ease-out-quart), transform 0.5s var(--ease-out-quart);
 }
-@media (max-width: 679px) {
-  .standard-card-featured { flex-direction: column; align-items: stretch; }
-  .standard-scope-parts { width: 100%; margin-top: 12px; }
-  .standard-scope-parts span { min-height: 72px; }
+.expect-word.is-on {
+  color: var(--fg);
+  transform: translateX(0.18em);
 }
-@media (min-width: 680px) {
-  .standards-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-  .standard-card-featured,
-  .standard-card:last-child {
-    grid-column: span 2;
+/* The panel is dark in both modes, so the orbs can glow. */
+.expect-panel {
+  --s: clamp(230px, min(22vw, 33svh), 490px);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(16px, min(2.4vw, 3.6svh), 34px);
+  padding: clamp(34px, min(4.6vw, 6.5svh), 64px) clamp(20px, 3vw, 44px) clamp(26px, min(3.4vw, 5svh), 48px);
+  border: 1px solid rgb(245 240 236 / 0.1);
+  border-radius: 26px;
+  /* A warm glow behind the centre, a second one rising from the floor, a faint dot grid, then the dark base. */
+  background:
+    radial-gradient(58% 46% at 50% 36%, rgb(228 63 37 / 0.26), transparent 72%),
+    radial-gradient(110% 70% at 50% 118%, rgb(228 63 37 / 0.2), transparent 62%),
+    radial-gradient(circle at 1px 1px, rgb(245 240 236 / 0.09) 1px, transparent 0) 0 0 / 22px 22px,
+    linear-gradient(180deg, #1b1614 0%, #0c0b0b 68%);
+  color: var(--linen);
+  text-align: center;
+  box-shadow: 10px 10px 0 color-mix(in srgb, var(--fg) 8%, transparent);
+}
+.expect-orbit {
+  position: relative;
+  flex: none;
+  width: var(--s);
+  height: var(--s);
+}
+.expect-ring {
+  position: absolute;
+  inset: 8%;
+  border: 1px solid rgb(245 240 236 / 0.26);
+  border-radius: 50%;
+}
+.expect-ring-far {
+  inset: -30%;
+  border-style: dashed;
+  border-color: rgb(245 240 236 / 0.13);
+}
+.expect-spin {
+  position: absolute;
+  inset: 0;
+  animation: expect-orbit 70s linear infinite;
+}
+.expect-arm {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0;
+  height: 0;
+  transform: rotate(var(--a)) translateX(calc(var(--s) * 0.42)) rotate(calc(var(--a) * -1));
+}
+/* Turns against the orbit, so each drawing stays upright. */
+.expect-orb {
+  position: absolute;
+  left: calc(var(--s) * -0.085);
+  top: calc(var(--s) * -0.085);
+  width: calc(var(--s) * 0.17);
+  height: calc(var(--s) * 0.17);
+  animation: expect-orbit 70s linear infinite reverse;
+}
+.expect-orb-face {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  border: 1px solid rgb(245 240 236 / 0.24);
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 26%, #4a423e, #1a1716 72%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.14), 0 6px 18px rgb(0 0 0 / 0.45);
+  color: rgb(245 240 236 / 0.8);
+  transition: transform 0.5s var(--ease-out-quart), box-shadow 0.5s, color 0.3s, border-color 0.3s;
+}
+.expect-orb-face svg {
+  width: 46%;
+  height: 46%;
+}
+.expect-orb-face path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.expect-orb-face.is-on {
+  border-color: transparent;
+  background: radial-gradient(circle at 32% 28%, #ff9478, var(--tomato) 58%, #a32a14);
+  color: var(--paper);
+  transform: scale(1.28);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.35), 0 0 0 7px rgb(228 63 37 / 0.18), 0 0 40px rgb(228 63 37 / 0.65);
+}
+.expect-core {
+  position: absolute;
+  inset: 27%;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgb(245 240 236 / 0.2);
+  border-radius: 50%;
+  background: radial-gradient(circle at 34% 26%, #3d3531, #131110 70%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.16), inset 0 -18px 30px rgb(0 0 0 / 0.35), 0 0 80px rgb(228 63 37 / 0.34);
+}
+.expect-art {
+  width: 56%;
+  height: 56%;
+}
+.expect-art path {
+  fill: none;
+  stroke: var(--linen);
+  stroke-width: 1.1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.expect-art path.is-accent {
+  stroke: var(--tomato);
+}
+@keyframes expect-orbit {
+  to {
+    transform: rotate(360deg);
   }
 }
-@media (min-width: 1100px) {
-  .standards-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    grid-auto-rows: minmax(205px, auto);
-  }
-  .standard-card-featured {
-    grid-column: span 2;
-    grid-row: span 2;
-  }
-  .standard-card:last-child {
-    grid-column: auto;
+.expect-copy {
+  animation: expect-in 0.45s var(--ease-out-quart) both;
+}
+.expect-copy-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 1.72vw, 2.5rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+}
+.expect-copy-line {
+  /* Room for two lines, so the panel doesn't change height between promises. */
+  min-height: 3em;
+  margin-top: 10px;
+  max-width: 34ch;
+  font-size: clamp(1.05rem, 1.3vw, 1.75rem);
+  line-height: 1.5;
+  color: rgb(245 240 236 / 0.74);
+}
+@keyframes expect-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
   }
 }
 
 /* ─── Footer ───────────────────────────────────────────────── */
+/* Always dark, in both modes: the footer uses the dark set of colours for its text, links and rules. */
+.site-footer {
+  --bg: var(--ink);
+  --fg: #f5f0ec;
+  --fg-2: #d5cfcb;
+  --muted: #b4aaa4;
+  --rule: rgb(245 240 236 / 0.17);
+  --accent-text: #e25439;
+  background: var(--ink);
+  color: var(--fg);
+}
 .footer-email {
   background-image: linear-gradient(var(--accent), var(--accent));
   background-size: 0% 2px;
@@ -1570,6 +1620,15 @@ html[data-mode="boh"] .standard-card-featured .standard-card-description {
   position: relative;
   height: 230svh;
 }
+/* Whichever section follows the hero opens with the same gap the sections leave between each other. */
+.hero-track + section {
+  padding-top: 5rem;
+}
+@media (min-width: 768px) {
+  .hero-track + section {
+    padding-top: 6rem;
+  }
+}
 .hero-stage {
   position: sticky;
   top: 0;
@@ -1611,7 +1670,8 @@ html[data-mode="boh"] .standard-card-featured .standard-card-description {
   display: flex;
   flex-direction: column;
   gap: 2px;
-  transform: translateY(-0.7em);
+  /* Centres the label's first line on its leader line. A margin, not a transform: the scroll animation sets its own transform on these. */
+  margin-top: -0.65em;
 }
 .hero-label-title {
   font-family: var(--font-sans);
@@ -1633,29 +1693,6 @@ html[data-mode="boh"] .standard-card-featured .standard-card-description {
   bottom: 22px;
   left: 0;
   z-index: 3;
-}
-.hero-hint-line {
-  width: 36px;
-  height: 1px;
-  background: currentColor;
-  transform-origin: left;
-  animation: ts-hint 2.4s var(--ease-in-out-quart) infinite;
-}
-@keyframes ts-hint {
-  0% {
-    transform: scaleX(0);
-  }
-  50% {
-    transform: scaleX(1);
-    transform-origin: left;
-  }
-  51% {
-    transform-origin: right;
-  }
-  100% {
-    transform: scaleX(0);
-    transform-origin: right;
-  }
 }
 @media (min-width: 640px) {
   .hero-label-body {
@@ -1696,8 +1733,10 @@ html[data-mode="boh"] .standard-card-featured .standard-card-description {
   }
   .marquee-track,
   .live-dot::after,
-  .hero-hint-line,
   .cta-block::before,
+  .expect-copy,
+  .expect-spin,
+  .expect-orb,
   .team-preview-content {
     animation: none !important;
   }
@@ -1794,7 +1833,7 @@ html[data-mode="boh"] .standard-card-featured .standard-card-description {
   }
   .team-card-name {
     margin-top: 16px;
-    font-size: clamp(2rem, 3.2vw, 3.6rem);
+    font-size: clamp(2rem, 2.5vw, 2.81rem);
     font-weight: 750;
     line-height: 1.05;
     letter-spacing: -0.045em;
@@ -2022,7 +2061,7 @@ html[data-mode="boh"] .standard-card-featured .standard-card-description {
   .stack-num {
     font-family: var(--font-display);
     font-weight: 800;
-    font-size: clamp(4.5rem, 11vw, 11rem);
+    font-size: clamp(4.5rem, 8.58vw, 8.58rem);
     line-height: 0.8;
     letter-spacing: -0.06em;
     color: var(--accent);
@@ -2192,6 +2231,10 @@ html[data-mode="boh"] .standard-card-featured .standard-card-description {
   line-height: 1.7;
   color: var(--fg-2);
 }
+.article-meta { display: flex; flex-wrap: wrap; gap: 4px 18px; border-top: 1px solid var(--rule); padding-top: 14px; }
+@media (min-width: 1024px) {
+  .article-meta { position: sticky; top: calc(var(--nav-h) + 32px); flex-direction: column; }
+}
 .article-lead {
   font-size: clamp(1.25rem, 1.7vw, 1.5rem);
   line-height: 1.45;
@@ -2201,7 +2244,7 @@ html[data-mode="boh"] .standard-card-featured .standard-card-description {
 .article h2 {
   margin-top: 3.25rem;
   font-family: var(--font-display);
-  font-size: clamp(1.7rem, 2.8vw, 2.5rem);
+  font-size: clamp(1.7rem, 2.18vw, 1.95rem);
   font-weight: 800;
   line-height: 1.08;
   letter-spacing: -0.04em;
@@ -2332,7 +2375,7 @@ html[data-mode="boh"] .standard-card-featured .standard-card-description {
   gap: 20px;
   padding-top: 22px;
 }
-.project-tile-title { margin-top: 10px; font-size: clamp(2rem, 3.1vw, 3.5rem); }
+.project-tile-title { margin-top: 10px; font-size: clamp(2rem, 2.42vw, 2.73rem); }
 .project-tile-description { max-width: 42ch; margin-top: 12px; color: var(--fg-2); font-size: clamp(1rem, 1.2vw, 1.18rem); }
 .project-tile-arrow {
   display: grid;
@@ -2386,7 +2429,7 @@ html[data-mode="boh"] .standard-card-featured .standard-card-description {
 .service-panel:hover { transform: translateY(-6px); box-shadow: 0 16px 36px rgb(13 15 7 / .09); }
 .service-panel-flow { background: var(--fg); color: var(--bg); border-color: var(--fg); }
 .service-panel-copy { position: relative; z-index: 1; }
-.service-panel-copy h3 { max-width: 14ch; font-family: var(--font-display); font-size: clamp(1.9rem, 2.5vw, 3rem); font-weight: 800; line-height: 1.02; letter-spacing: -.05em; }
+.service-panel-copy h3 { max-width: 14ch; font-family: var(--font-display); font-size: clamp(1.9rem, 1.95vw, 2.34rem); font-weight: 800; line-height: 1.02; letter-spacing: -.05em; }
 .service-panel-copy > p:last-child { max-width: 32ch; margin-top: 17px; color: var(--fg-2); font-size: clamp(1rem, 1.13vw, 1.13rem); line-height: 1.48; }
 .service-panel-flow .service-panel-copy > p:last-child { color: var(--bg); }
 html[data-mode="boh"] .service-panel-flow {
@@ -2418,7 +2461,8 @@ html[data-mode="boh"] .service-panel-flow .visual-flow-step:nth-of-type(3) {
 .visual-web-copy { top: 69px; width: 70%; height: 5px; opacity: .35; box-shadow: 0 12px 0 var(--fg), 0 24px 0 var(--fg); }
 .visual-web-button { top: 125px; width: 28%; height: 17px; background: var(--accent); border-radius: 20px; }
 .service-visual-flow { display: flex; align-items: center; justify-content: center; gap: 0; }
-.visual-flow-step { display: grid; flex: 0 0 58px; place-items: center; width: 58px; height: 58px; border: 1px solid var(--bg); border-radius: 17px; color: var(--bg); font-family: var(--font-mono); font-size: 17px; transform: rotate(-7deg); }
+.visual-flow-step { display: grid; flex: 0 0 58px; place-items: center; align-content: center; gap: 6px; width: 58px; height: 58px; border: 1px solid var(--bg); border-radius: 17px; color: var(--bg); font-family: var(--font-mono); font-size: 17px; transform: rotate(-7deg); }
+.visual-flow-step i { display: block; width: 22px; height: 3px; border-radius: 2px; background: currentColor; }
 .visual-flow-step:nth-of-type(3) { transform: rotate(6deg); background: var(--accent); border-color: var(--accent); color: var(--ink); }
 .visual-flow-step:last-child { transform: rotate(-4deg); }
 .visual-flow-connector { flex: 1 1 28px; max-width: 48px; height: 1px; background: var(--accent); }
@@ -2432,11 +2476,19 @@ html[data-mode="boh"] .service-panel-flow .visual-flow-step:nth-of-type(3) {
 .visual-tool-dot { position: absolute; right: 9%; bottom: 9px; width: 13px; height: 13px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 8px color-mix(in srgb, var(--accent) 15%, transparent); }
 
 /* ─── Contact page ──────────────────────────────────────────── */
-.contact-page { padding-top: calc(var(--nav-h) + 9svh); padding-bottom: clamp(95px, 11vw, 170px); }
-.contact-page-heading h1 { max-width: 13ch; font-size: clamp(3.3rem, 8vw, 9rem); }
-.contact-page-grid { display: grid; gap: clamp(30px, 4vw, 52px); width: min(100%, 940px); margin: clamp(55px, 7vw, 100px) auto 0; }
+.contact-page { padding-top: calc(var(--nav-h) + 9svh); padding-bottom: clamp(80px, 8vw, 112px); }
+.contact-page-heading h1 { max-width: 13ch; font-size: clamp(3.3rem, 6.24vw, 7.02rem); }
+.contact-page-grid { display: grid; gap: clamp(30px, 4vw, 52px); }
+/* Wide screens: heading and details share the left column, the form fills the right one. */
+@media (min-width: 1000px) {
+  .contact-page-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); grid-template-rows: auto 1fr; column-gap: clamp(40px, 5vw, 90px); row-gap: clamp(40px, 4vw, 64px); align-items: start; }
+  .contact-page-heading { grid-column: 1; grid-row: 1; }
+  .contact-page-heading h1 { font-size: clamp(3.3rem, 4.37vw, 5.15rem); }
+  .contact-brief-card { grid-column: 2; grid-row: 1 / span 2; }
+  .contact-page-grid .contact-page-aside { grid-column: 1; grid-row: 2; grid-template-columns: 1fr; gap: 30px; }
+}
 .contact-brief-card { min-width: 0; border: 1px solid var(--rule); border-radius: 22px; background: var(--surface); padding: clamp(25px, 3.8vw, 55px); }
-.contact-brief-card h2 { font-size: clamp(2rem, 3.1vw, 3.4rem); }
+.contact-brief-card h2 { font-size: clamp(2rem, 2.42vw, 2.65rem); }
 .contact-brief-form { margin-top: clamp(32px, 3vw, 50px); }
 .contact-brief-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 23px 20px; }
 .contact-brief-wide { grid-column: 1 / -1; }
@@ -2450,16 +2502,16 @@ html[data-mode="boh"] .service-panel-flow .visual-flow-step:nth-of-type(3) {
 .contact-brief-actions p { color: var(--muted); font-size: 13px; }
 .contact-page-aside { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(28px, 4vw, 56px); }
 .contact-page-aside > div { border-top: 1px solid var(--rule); padding-top: 26px; }
-.contact-page-email { display: block; margin-top: 14px; font-size: clamp(1.25rem, 2vw, 2rem); font-weight: 750; letter-spacing: -.035em; overflow-wrap: anywhere; }
+.contact-page-email { display: block; margin-top: 14px; font-size: clamp(1.25rem, 1.56vw, 1.56rem); font-weight: 750; letter-spacing: -.035em; overflow-wrap: anywhere; }
 .contact-page-email:hover { color: var(--accent-text); }
 .contact-aside-next { min-width: 0; }
 .contact-aside-next > p:last-child { max-width: 28ch; }
 .contact-confirmation-mark { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; background: var(--accent); color: var(--ink); font-size: 25px; }
-.contact-confirmation h3 { margin-top: 24px; font-family: var(--font-display); font-size: clamp(2.3rem, 3.6vw, 4rem); font-weight: 800; letter-spacing: -.05em; }
+.contact-confirmation h3 { margin-top: 24px; font-family: var(--font-display); font-size: clamp(2.3rem, 2.81vw, 3.12rem); font-weight: 800; letter-spacing: -.05em; }
 .contact-confirmation p { max-width: 42ch; margin-top: 13px; color: var(--fg-2); font-size: 1.15rem; }
-.faq-details { max-width: 1100px; border-bottom: 1px solid var(--rule); }
+.faq-details { border-bottom: 1px solid var(--rule); }
 .faq-details details { border-top: 1px solid var(--rule); padding: 24px 0; }
-.faq-details summary { display: flex; align-items: baseline; justify-content: space-between; gap: 22px; cursor: pointer; list-style: none; font-size: clamp(1.3rem, 2vw, 2rem); font-weight: 700; line-height: 1.2; letter-spacing: -.03em; }
+.faq-details summary { display: flex; align-items: baseline; justify-content: space-between; gap: 22px; cursor: pointer; list-style: none; font-size: clamp(1.3rem, 1.56vw, 1.56rem); font-weight: 700; line-height: 1.2; letter-spacing: -.03em; }
 .faq-details summary::-webkit-details-marker { display: none; }
 .faq-details summary::after { content: "+"; flex: none; color: var(--accent); font-size: 1.35em; font-weight: 400; line-height: .7; }
 .faq-details details[open] summary::after { content: "−"; }

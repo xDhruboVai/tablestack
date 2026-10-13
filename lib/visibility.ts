@@ -79,9 +79,11 @@ const same = (a: string, b: string) => {
 
 export const adminCredentialsMatch = (inputUsername: string, inputPassword: string) => {
   if (!adminLoginReady) return false;
-  const expectedUsername = USERNAME ?? "";
-  const expectedPassword = PASSWORD ?? "";
-  return inputUsername.trim() === expectedUsername && inputPassword === expectedPassword;
+  // Hashes are compared, so the check takes the same time whatever was typed.
+  const digest = (v: string) => createHash("sha256").update(v).digest("hex");
+  const usernameOk = same(digest(inputUsername.trim()), digest(USERNAME ?? ""));
+  const passwordOk = same(digest(inputPassword), digest(PASSWORD ?? ""));
+  return usernameOk && passwordOk;
 };
 
 export const cookieIsValid = (value: string | undefined) => adminLoginReady && typeof value === "string" && same(value, adminToken());

@@ -25,15 +25,15 @@ export default async function FaqPage() {
 
   return (
     <>
-      <section className="px-page pb-20 pt-[calc(var(--nav-h)+8svh)] md:pb-28" aria-labelledby="faq-h">
-        <h1 id="faq-h" className="display max-w-[13ch] text-[clamp(2.6rem,7vw,8rem)]" data-split="lines">
+      <section className="px-page pb-20 pt-[calc(var(--nav-h)+8svh)] md:pb-24" aria-labelledby="faq-h">
+        <h1 id="faq-h" className="display max-w-[13ch] text-[clamp(2.6rem,5.46vw,6.24rem)]" data-split="lines">
           Questions before <em className="text-accent">we start.</em>
         </h1>
         <p className="body-lg mt-8 max-w-[52ch]" data-reveal="fade">
           Short answers to decisions that matter when you’re buying a website.
         </p>
 
-        <div className="faq-details mt-14 md:mt-20">
+        <div className="faq-details mt-14 md:mt-16">
           {faqs.map((f) => (
             <details key={f.q}>
               <summary>{f.q}</summary>
