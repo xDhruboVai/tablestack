@@ -2483,7 +2483,8 @@ html[data-mode="boh"] .about-stack-item:nth-child(2) .about-stack-card {
   padding-inline: 14px;
   border: 1px solid var(--rule-strong);
   border-radius: 999px;
-  justify-content: flex-start;
+  /* Off: the knob rests on the left, with the word on the right. */
+  justify-content: flex-end;
   font-size: 15px;
   font-weight: 600;
   color: var(--fg-2);
@@ -2493,21 +2494,22 @@ html[data-mode="boh"] .about-stack-item:nth-child(2) .about-stack-card {
 .work-switch-thumb {
   position: absolute;
   top: 5px;
-  right: 5px;
+  left: 5px;
   width: 32px;
   height: 32px;
   border-radius: 50%;
   background: var(--fg-2);
   transition: transform 0.3s var(--ease-out-quart), background-color 0.25s;
 }
+/* On: the knob slides to the right and turns red. */
 .work-switch[aria-checked="true"] {
-  justify-content: flex-end;
+  justify-content: flex-start;
   background: var(--fg);
   border-color: var(--fg);
   color: var(--bg);
 }
 .work-switch[aria-checked="true"] .work-switch-thumb {
-  transform: translateX(-48px);
+  transform: translateX(48px);
   background: var(--accent);
 }
 .work-switch:disabled {

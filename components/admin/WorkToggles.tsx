@@ -153,6 +153,20 @@ export default function WorkToggles({
         </p>
       )}
       <p className="mt-6 text-[15px] text-muted">Changes save straight away and show on the site within a few seconds.</p>
+      <button
+        type="button"
+        className="btn btn-ghost mt-8"
+        disabled={busy !== null}
+        onClick={async () => {
+          setBusy("signout");
+          const err = await post({ signOut: true });
+          setBusy(null);
+          setError(err);
+          if (!err) router.refresh();
+        }}
+      >
+        Sign out
+      </button>
     </div>
   );
 }

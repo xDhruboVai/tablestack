@@ -2,6 +2,12 @@ import type { Metadata } from "next";
 import { site } from "@/content/site";
 
 /**
+ * Structured data as text for a `<script type="application/ld+json">` tag. "<" is escaped so nothing in
+ * the data can end the tag early.
+ */
+export const jsonLdText = (data: object) => JSON.stringify(data).replace(/</g, "\\u003c");
+
+/**
  * Metadata for one public page: its own title and description, a canonical address, and matching
  * share tags (Open Graph + Twitter) with the default share image.
  * `title` gets the "| TableStack" suffix from the root layout; pass `absoluteTitle` when the title

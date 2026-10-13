@@ -1,4 +1,5 @@
-import { createHash, timingSafeEqual } from "node:crypto";
+import "server-only";
+import { createHash, createHmac, timingSafeEqual } from "node:crypto";
 import { projects, type Project } from "@/content/projects";
 
 /**
@@ -49,7 +50,11 @@ export async function hasVisibleProjects(): Promise<boolean> {
   return (await getVisibleProjects()).length > 0;
 }
 
-/** Saves one project's state. Returns an error message for the admin page, or null on success. */
+/**
+ * Saves one project's state. Returns an error message for the admin page, or null on success.
+ * Writing should use SUPABASE_SERVICE_ROLE_KEY, with the table closed to public writes
+ * (see supabase/migrations). The public key is only a fallback for reading.
+ */
 export async function setVisibility(slug: string, visible: boolean): Promise<string | null> {
   if (!storageReady) return "Storage isn't connected yet.";
   if (!projects.some((p) => p.slug === slug)) return "Unknown project.";
@@ -66,15 +71,27 @@ export async function setVisibility(slug: string, visible: boolean): Promise<str
   }
 }
 
-/**
- * The value kept in the admin cookie: a hash, so the credentials themselves are never stored in the browser.
- */
-export const adminToken = () => createHash("sha256").update((USERNAME ?? "") + ":" + (PASSWORD ?? "") + ":" + (KEY ?? "") + ":work-admin").digest("hex");
+/** How long a sign-in lasts. */
+export const ADMIN_SESSION_SECONDS = 60 * 60 * 24 * 30;
 
 const same = (a: string, b: string) => {
   const x = Buffer.from(a);
   const y = Buffer.from(b);
   return x.length === y.length && timingSafeEqual(x, y);
+};
+
+// The signing key comes from the credentials, so changing the password signs everyone out.
+const sessionKey = () => createHash("sha256").update((USERNAME ?? "") + ":" + (PASSWORD ?? "") + ":" + (KEY ?? "") + ":work-admin").digest();
+const sign = (expires: string) => createHmac("sha256", sessionKey()).update(expires).digest("hex");
+
+/**
+ * The value kept in the admin cookie: the time the sign-in ends, plus a signature only this server can
+ * make. The credentials themselves are never stored in the browser, and an old cookie stops working
+ * on its own even if someone copies it.
+ */
+export const adminToken = () => {
+  const expires = String(Date.now() + ADMIN_SESSION_SECONDS * 1000);
+  return expires + "." + sign(expires);
 };
 
 export const adminCredentialsMatch = (inputUsername: string, inputPassword: string) => {
@@ -86,4 +103,9 @@ export const adminCredentialsMatch = (inputUsername: string, inputPassword: stri
   return usernameOk && passwordOk;
 };
 
-export const cookieIsValid = (value: string | undefined) => adminLoginReady && typeof value === "string" && same(value, adminToken());
+export const cookieIsValid = (value: string | undefined) => {
+  if (!adminLoginReady || typeof value !== "string" || value.length > 200) return false;
+  const [expires, signature, ...rest] = value.split(".");
+  if (!expires || !signature || rest.length || !/^\d{13,16}$/.test(expires) || Number(expires) < Date.now()) return false;
+  return same(signature, sign(expires));
+};

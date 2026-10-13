@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import HeroAnatomy from "@/components/home/HeroAnatomy";
 import { Approach, Capabilities, ContactCTA, SelectedWork, Standards } from "@/components/home/Sections";
 import { site } from "@/content/site";
+import { jsonLdText } from "@/lib/seo";
 import { getVisibleProjects } from "@/lib/visibility";
 
 // The home page is the canonical address for "/". Other pages set their own; the admin and not-found pages set none.
@@ -45,7 +46,7 @@ export default async function Home() {
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdText(jsonLd) }} />
       <HeroAnatomy showWork={visible.length > 0} />
       {visible.length > 0 && <SelectedWork projects={visible} />}
       <Capabilities />

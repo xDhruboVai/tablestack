@@ -1,4 +1,4 @@
-import { pageMeta } from "@/lib/seo";
+import { jsonLdText, pageMeta } from "@/lib/seo";
 import TLink from "@/components/layout/TLink";
 import { ContactCTA } from "@/components/home/Sections";
 import { formatDate, posts } from "@/content/posts";
@@ -83,7 +83,7 @@ export default async function PostPage() {
         </div>
       </article>
       <ContactCTA />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdText(jsonLd) }} />
     </>
   );
 }
