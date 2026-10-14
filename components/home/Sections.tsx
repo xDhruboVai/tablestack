@@ -4,7 +4,6 @@ import GlowLink from "@/components/ui/GlowLink";
 import ProjectCover from "@/components/work/ProjectCover";
 import { BrowserBar, siteHost } from "@/components/work/Shot";
 import { CapAdmin, CapForm, CapPhone } from "./CapScreens";
-import ExpectList from "./ExpectList";
 import SiteShowcase from "./SiteShowcase";
 import ApproachAssemble from "./ApproachAssemble";
 import type { Project } from "@/content/projects";
@@ -110,16 +109,8 @@ export function Approach() {
 /* ── (05) Standards + integrations (credibility without invented claims) ── */
 export function Standards() {
   return (
-    <section className="relative pb-20 md:pb-24" aria-labelledby="std-title" data-annot="section · standards">
-      <div className="px-page">
-        <ExpectList>
-          <h2 id="std-title" className="expect-title display" data-split="lines">
-            What you can <em className="text-accent">expect.</em>
-          </h2>
-        </ExpectList>
-      </div>
-
-      <div className="mt-20 md:mt-24" aria-labelledby="int-title">
+    <section className="relative pb-20 md:pb-24" aria-labelledby="int-title" data-annot="section · standards">
+      <div>
         <h2 id="int-title" className="px-page text-center font-display text-[clamp(1.5rem,1.56vw,1.56rem)] font-semibold" data-reveal="fade">
           What we build with
         </h2>
