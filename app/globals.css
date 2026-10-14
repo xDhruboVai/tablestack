@@ -1563,7 +1563,7 @@ html[data-mode="boh"] .about-stack-item:nth-child(2) .about-stack-card {
   gap: clamp(22px, min(3vw, 4.4svh), 44px);
 }
 .expect-title {
-  font-size: clamp(2.6rem, min(4.37vw, 8.19svh), 7.02rem);
+  font-size: clamp(2.2rem, min(3.1vw, 6svh), 3.6rem);
 }
 .expect-rows {
   --gap: 4px;
@@ -1599,7 +1599,7 @@ html[data-mode="boh"] .about-stack-item:nth-child(2) .about-stack-card {
 }
 .expect-row-name {
   grid-area: name;
-  font-size: clamp(1.9rem, min(3.7vw, 6.4svh), 5rem);
+  font-size: clamp(1.6rem, min(2.1vw, 4.2svh), 2.5rem);
   line-height: 1;
   letter-spacing: -0.05em;
   /* Unlit, but still readable (3:1 or better against the page in both modes). */
@@ -1609,7 +1609,7 @@ html[data-mode="boh"] .about-stack-item:nth-child(2) .about-stack-card {
 .expect-row-line {
   grid-area: line;
   margin-top: 6px;
-  font-size: clamp(1rem, 1.25vw, 1.4rem);
+  font-size: clamp(1rem, 1.05vw, 1.2rem);
   line-height: 1.4;
   color: var(--muted);
   transition: color 0.4s var(--ease-out-quart);
@@ -1618,8 +1618,8 @@ html[data-mode="boh"] .about-stack-item:nth-child(2) .about-stack-card {
   grid-area: icon;
   display: grid;
   place-items: center;
-  width: clamp(44px, 3.7vw, 64px);
-  height: clamp(44px, 3.7vw, 64px);
+  width: clamp(38px, 2.4vw, 46px);
+  height: clamp(38px, 2.4vw, 46px);
   border: 1px solid var(--rule);
   border-radius: 50%;
   color: var(--muted);
@@ -1653,7 +1653,7 @@ html[data-mode="boh"] .about-stack-item:nth-child(2) .about-stack-card {
     grid-template-columns: auto minmax(0, 1fr) auto;
     grid-template-areas: "name line icon";
     column-gap: clamp(16px, 1.8vw, 28px);
-    padding: clamp(9px, 1.9svh, 18px) clamp(14px, 1.5vw, 24px) clamp(9px, 1.9svh, 18px) clamp(18px, 2vw, 32px);
+    padding: clamp(7px, 1.2svh, 12px) clamp(12px, 1.2vw, 18px) clamp(7px, 1.2svh, 12px) clamp(18px, 2vw, 32px);
   }
   .expect-row-line {
     justify-self: end;
@@ -2108,6 +2108,64 @@ html[data-mode="boh"] .about-stack-item:nth-child(2) .about-stack-card {
     .team-card { grid-template-columns: minmax(0, 1fr); }
     .team-art { order: -1; justify-self: start; width: 170px; }
   }
+  /* Project page, "The idea" + "What we built": one dark panel, a statement, then ticked tiles. */
+  .idea-panel {
+    --fg: #f5f0ec;
+    --fg-2: #d5cfcb;
+    --muted: #b4aaa4;
+    --rule: rgb(245 240 236 / 0.17);
+    padding: clamp(28px, 4vw, 64px);
+    border-radius: 28px;
+    background: var(--ink);
+    color: var(--fg);
+  }
+  html[data-mode="boh"] .idea-panel { box-shadow: inset 0 0 0 1px var(--rule); }
+  .idea-label {
+    color: var(--muted);
+    font-size: 15px;
+    font-weight: 700;
+  }
+  .idea-label-built { margin-top: clamp(32px, 4vw, 56px); }
+  .idea-statement {
+    margin-top: 14px;
+    max-width: 30ch;
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 2.9vw, 3rem);
+    font-weight: 750;
+    line-height: 1.12;
+    letter-spacing: -0.035em;
+  }
+  .idea-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+    margin-top: 16px;
+  }
+  @media (min-width: 768px) { .idea-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (min-width: 1100px) { .idea-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .idea-tile {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 20px 22px;
+    border-radius: 18px;
+    background: rgb(245 240 236 / 0.07);
+    font-size: clamp(1rem, 1.15vw, 1.1rem);
+    line-height: 1.4;
+  }
+  .idea-tick {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    margin-top: -2px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: var(--ink);
+  }
+  .idea-tick svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+
   .team-card .team-social-dock {
     margin-top: 1.25rem;
     padding-top: 0;
@@ -2380,18 +2438,6 @@ html[data-mode="boh"] .about-stack-item:nth-child(2) .about-stack-card {
 /* Form fields scrolled into view (e.g. the first error) stop below the fixed nav, label included. */
 :is(input, textarea, select) {
   scroll-margin-top: calc(var(--nav-h) + 3.5rem);
-}
-/* The case-study hint only makes sense where there is a cursor. */
-@media not ((hover: hover) and (pointer: fine)) {
-  .hint-pointer {
-    display: none;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .hint-pointer,
-  .hint-touch {
-    display: none;
-  }
 }
 
 /* Marks items in a list or a sequence (in place of 01, 02, 03). */

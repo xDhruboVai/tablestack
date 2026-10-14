@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { site } from "@/content/site";
 import { notFound } from "next/navigation";
 import TLink from "@/components/layout/TLink";
-import LensMedia from "@/components/work/LensMedia";
+import ProjectCover from "@/components/work/ProjectCover";
 import ProjectMock from "@/components/work/ProjectMock";
 import Shot, { BrowserBar, darkSite, lookFor, siteHost } from "@/components/work/Shot";
 import NextProject from "@/components/work/NextProject";
@@ -95,21 +95,24 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
             <div className="group col-span-12 lg:col-span-7">
               <div className="shot-hero" data-reveal="fade">
                 <BrowserBar host={siteHost(p)} light={!darkSite(p)} />
-                <LensMedia project={p} aspect="aspect-[16/10]" priority hoverScale={false} sizes="(min-width: 1024px) 58vw, 100vw" />
+                <div className="cover-host relative aspect-[16/10] overflow-hidden bg-surface" data-reveal="mask">
+                  <div data-mask-inner className="cover-host absolute inset-0">
+                    <ProjectCover project={p} priority sizes="(min-width: 1024px) 58vw, 100vw" />
+                  </div>
+                </div>
               </div>
-              <p className="hint-pointer eyebrow mt-3 text-muted">Move your cursor over the image.</p>
             </div>
           </div>
         </header>
 
-        {/* The heading sits in a left rail on wide screens, so the screenshots stay a comfortable size. */}
+        {/* The heading sits above, and the screenshots use the full width. */}
         <section className="px-page grid grid-cols-12 gap-x-6 gap-y-8 pt-16 md:pt-20" aria-labelledby="gallery-h">
-          <div className="col-span-12 lg:col-span-3">
-            <h2 id="gallery-h" className="display text-[clamp(2rem,2.65vw,2.65rem)] lg:sticky lg:top-[calc(var(--nav-h)+32px)]" data-split="lines">
+          <div className="col-span-12">
+            <h2 id="gallery-h" className="display text-[clamp(2rem,2.65vw,2.65rem)]" data-split="lines">
               A closer look
             </h2>
           </div>
-          <div className="col-span-12 grid grid-cols-1 gap-x-6 gap-y-8 md:grid-cols-2 lg:col-span-9">
+          <div className="col-span-12 grid grid-cols-1 gap-x-6 gap-y-8 md:grid-cols-2">
             {p.gallery.map((g, i) => (
               <figure key={i} className={g.wide ? "md:col-span-2" : ""}>
                 {g.src ? (
@@ -143,23 +146,22 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
         </section>
 
         {/* What the client needed, and what a visitor can now do on the site. */}
-        <section className="px-page grid grid-cols-12 gap-x-6 gap-y-12 py-16 md:py-24" data-annot="section · brief + built">
-          <div className="col-span-12 md:col-span-5">
-            <h2 className="display text-[clamp(2rem,2.65vw,2.65rem)]" data-split="lines">
-              {p.concept ? "The idea" : "The brief"}
-            </h2>
-            <p className="mt-6 max-w-[44ch] text-[clamp(1.1rem,1.4vw,1.35rem)] leading-[1.5] text-fg-2" data-split="lines">
+        <section className="px-page py-16 md:py-24" data-annot="section · brief + built">
+          {/* One dark panel: the idea as a statement, then each thing we built as a ticked tile. */}
+          <div className="idea-panel">
+            <h2 className="idea-label">{p.concept ? "The idea" : "The brief"}</h2>
+            <p className="idea-statement" data-split="lines">
               {p.challenge}
             </p>
-          </div>
-          <div className="col-span-12 md:col-span-6 md:col-start-7">
-            <h2 className="display text-[clamp(2rem,2.65vw,2.65rem)]" data-split="lines">
-              What we built
-            </h2>
-            <ul className="mt-6 border-t border-rule" data-reveal="stagger">
+            <h2 className="idea-label idea-label-built">What we built</h2>
+            <ul className="idea-grid" data-reveal="stagger">
               {p.execution.map((e) => (
-                <li key={e} className="flex items-baseline gap-4 border-b border-rule py-4 text-[clamp(1.05rem,1.3vw,1.25rem)]">
-                  <span className="list-bar" aria-hidden="true" />
+                <li key={e} className="idea-tile">
+                  <span className="idea-tick" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M5 12.5l4.5 4.5L19 7.5" />
+                    </svg>
+                  </span>
                   {e}
                 </li>
               ))}

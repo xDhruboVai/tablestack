@@ -71,7 +71,7 @@ export default function Shot({
 }) {
   const host = siteHost(project);
   const shape = wide ? "shot-wide" : "shot-square";
-  const sizes = wide ? "(min-width: 1024px) 75vw, 100vw" : "(min-width: 1024px) 37vw, (min-width: 768px) 50vw, 100vw";
+  const sizes = wide ? "100vw" : "(min-width: 768px) 50vw, 100vw";
 
   if (look === "plain") {
     return (
@@ -91,14 +91,14 @@ export default function Shot({
                 <div className="shot-win shot-win-back">
                   <BrowserBar host={host} />
                   <div className="shot-view aspect-square">
-                    <Image src={behind} alt="" fill sizes="(min-width: 1024px) 46vw, 62vw" className="object-cover object-top" />
+                    <Image src={behind} alt="" fill sizes="62vw" className="object-cover object-top" />
                   </div>
                 </div>
               )}
               <div className="shot-win shot-win-front">
                 <BrowserBar host={host} />
                 <div className="shot-view aspect-[16/10]">
-                  <Image src={src} alt={alt} fill sizes="(min-width: 1024px) 50vw, 66vw" className="object-cover object-top" />
+                  <Image src={src} alt={alt} fill sizes="66vw" className="object-cover object-top" />
                 </div>
               </div>
             </>

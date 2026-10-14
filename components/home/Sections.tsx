@@ -29,7 +29,7 @@ export function SelectedWork({ projects }: { projects: Project[] }) {
   return (
     <section className="px-page relative pb-20 md:pb-24" aria-labelledby="work-title" data-annot="section · selected work">
       <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-        <h2 id="work-title" className="display text-[clamp(2.8rem,5.46vw,5.85rem)]" data-split="chars">
+        <h2 id="work-title" className="display text-[clamp(2.2rem,3.1vw,3.6rem)]" data-split="chars">
           {projects.length === 2 ? "Two sites you can" : "Sites you can"} <em className="text-accent">open and use.</em>
         </h2>
         <TLink href="/work" className="btn btn-ghost md:mb-4" data-reveal="rise">
@@ -75,7 +75,7 @@ export function Capabilities() {
   return (
     <section id="services" className="px-page relative scroll-mt-[var(--nav-h)] pb-20 md:pb-24" aria-labelledby="cap-title" data-annot="section · capabilities">
       <div className="grid grid-cols-12 gap-x-6">
-        <h2 id="cap-title" className="display col-span-12 text-[clamp(2.6rem,4.68vw,4.99rem)] md:col-span-8" data-split="lines">
+        <h2 id="cap-title" className="display col-span-12 text-[clamp(2.2rem,3.1vw,3.6rem)] md:col-span-8" data-split="lines">
           Start with the <em className="text-accent">actual need.</em>
         </h2>
         <p className="body-lg col-span-12 mt-6 max-w-[40ch] md:col-span-4 md:mt-0 md:self-end" data-split="lines">
@@ -149,7 +149,7 @@ export function ContactCTA() {
         <p className="eyebrow flex items-center gap-3 opacity-80" data-reveal="scramble">
           <span className="live-dot" aria-hidden="true" /> {site.availability}
         </p>
-        <h2 id="cta-title" className="display mt-8 text-[clamp(2.6rem,6.24vw,6.86rem)]" data-split="chars">
+        <h2 id="cta-title" className="display mt-8 text-[clamp(2.4rem,4.4vw,4.75rem)]" data-split="chars">
           Tell us about <em className="text-accent">your business.</em>
         </h2>
         <div className="mt-10 grid grid-cols-12 gap-x-6 gap-y-10 md:mt-16">
@@ -157,7 +157,7 @@ export function ContactCTA() {
             Tell us what you need. {site.responseTime}
           </p>
           <div className="col-span-12 flex flex-col items-start gap-6 md:col-span-6 md:col-start-7" data-reveal="rise" data-delay="120">
-            <a href={`mailto:${site.email}`} className="cta-email font-display text-[clamp(1.5rem,2.34vw,2.34rem)] font-bold leading-tight tracking-[-0.035em]">
+            <a href={`mailto:${site.email}`} className="cta-email font-display text-[clamp(1.35rem,1.8vw,1.9rem)] font-bold leading-tight tracking-[-0.035em]">
               {site.email}
             </a>
             <div className="flex flex-wrap gap-3">
