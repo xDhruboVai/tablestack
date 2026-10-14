@@ -3,27 +3,34 @@ import TLink from "@/components/layout/TLink";
 import GlowLink from "@/components/ui/GlowLink";
 import ProjectCover from "@/components/work/ProjectCover";
 import { BrowserBar, siteHost } from "@/components/work/Shot";
+import { CapAdmin, CapForm, CapPhone } from "./CapScreens";
 import ExpectList from "./ExpectList";
-import SiteFan from "./SiteFan";
+import SiteShowcase from "./SiteShowcase";
 import ApproachAssemble from "./ApproachAssemble";
 import type { Project } from "@/content/projects";
 import { bookCall, site, testimonials } from "@/content/site";
 
 /* ── (02) Selected work ────────────────────────────────────── */
 export function SelectedWork({ projects }: { projects: Project[] }) {
-  // Each site as a browser window, drawn here so the turning row itself stays small.
-  const fan = projects.map((p) => ({
+  // Each site as a big browser window and as a small thumbnail, drawn here so the switching part stays small.
+  const items = projects.map((p) => ({
     slug: p.slug,
     title: p.title,
-    kind: p.kind,
+    summary: p.summary,
     concept: !!p.concept,
+    liveUrl: p.liveUrl,
     window: (
       <div className="shot-win">
         <BrowserBar host={siteHost(p)} />
         <div className="shot-view cover-host aspect-[16/10]">
-          <ProjectCover project={p} decorative eager sizes="(min-width: 768px) 32vw, 66vw" />
+          <ProjectCover project={p} decorative sizes="(min-width: 1024px) 62vw, 100vw" />
         </div>
       </div>
+    ),
+    thumb: (
+      <span className="cover-host relative block aspect-[16/10] overflow-hidden">
+        <ProjectCover project={p} decorative sizes="(min-width: 1024px) 10vw, 30vw" />
+      </span>
     ),
   }));
   return (
@@ -36,8 +43,8 @@ export function SelectedWork({ projects }: { projects: Project[] }) {
           All projects ({projects.length}) <span className="btn-arrow">→</span>
         </TLink>
       </div>
-      {/* Every site in a turning row. The big "Work." word that sat above it is set aside for now: WorkStage.tsx draws both together. */}
-      <SiteFan items={fan} />
+      {/* One site big, the rest as thumbnails to switch between. */}
+      <SiteShowcase items={items} />
     </section>
   );
 }
@@ -61,15 +68,7 @@ const services = [
   },
 ] as const;
 
-function ServiceVisual({ type }: { type: (typeof services)[number]["type"] }) {
-  return (
-    <div className={`service-visual service-visual-${type}`} aria-hidden="true">
-      {type === "web" && <><span className="visual-browser-bar" /><span className="visual-web-title" /><span className="visual-web-copy" /><span className="visual-web-button" /></>}
-      {type === "flow" && <><span className="visual-flow-step"><i /></span><span className="visual-flow-connector" /><span className="visual-flow-step"><i /><i /></span><span className="visual-flow-connector" /><span className="visual-flow-step">✓</span></>}
-      {type === "tools" && <><span className="visual-tool-card visual-tool-card-back" /><span className="visual-tool-card visual-tool-card-front"><i /><i /><i /></span><span className="visual-tool-dot" /></>}
-    </div>
-  );
-}
+const screens = { web: CapPhone, flow: CapForm, tools: CapAdmin } as const;
 
 export function Capabilities() {
   return (
@@ -82,16 +81,18 @@ export function Capabilities() {
           Websites first, with the right tools behind them.
         </p>
       </div>
-      <div className="service-panel-grid mt-14 md:mt-16" data-reveal="rise">
-        {services.map((service) => (
-          <article className={`service-panel service-panel-${service.type}`} key={service.title}>
-            <ServiceVisual type={service.type} />
-            <div className="service-panel-copy">
+      {/* Black, red and yellow cards, each with its screen breaking out of the top edge. */}
+      <div className="cap-grid" data-reveal="rise">
+        {services.map((service) => {
+          const Screen = screens[service.type];
+          return (
+            <article className={`cap-card cap-card-${service.type}`} key={service.title}>
+              <Screen />
               <h3>{service.title}</h3>
               <p>{service.body}</p>
-            </div>
-          </article>
-        ))}
+            </article>
+          );
+        })}
       </div>
     </section>
   );

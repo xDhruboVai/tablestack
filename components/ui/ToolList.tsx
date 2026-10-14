@@ -35,18 +35,18 @@ const TOOLS: Record<(typeof integrations)[number], { role: string; d: string }> 
   },
 };
 
-// Enough copies that the row still fills very wide screens while it loops.
-const COPIES = 6;
+// Enough copies that the row still fills very wide screens while it loops (the track slides by half of them).
+const COPIES = 4;
 const symbolId = (name: string) => `tool-${name.toLowerCase().replace(/[^a-z]/g, "")}`;
 
 /**
- * The tools we build with: one small card each, with its logo and what it is for, drifting left to right
- * in an endless row (CSS loop, pauses on hover). With reduced motion it becomes a still, wrapped row.
+ * The tools we build with: each name in large type with its logo in front, rolling right to left in an
+ * endless row (CSS loop, pauses on hover). With reduced motion it becomes a still, wrapped row.
  */
 export default function ToolList({ className = "" }: { className?: string }) {
   return (
     <div className={`tool-marquee ${className}`} data-reveal="fade">
-      {/* Each logo is defined once here and reused by every copy of its card. */}
+      {/* Each logo is defined once here and reused by every copy of its name. */}
       <svg className="absolute h-0 w-0" aria-hidden="true">
         {integrations.map((name) => (
           <symbol key={name} id={symbolId(name)} viewBox="0 0 24 24">
@@ -58,12 +58,13 @@ export default function ToolList({ className = "" }: { className?: string }) {
         {Array.from({ length: COPIES }, (_, copy) =>
           integrations.map((name) => (
             // Only the first set is read out; the rest are there to keep the loop seamless.
-            <li key={`${copy}-${name}`} className="tool-card" aria-hidden={copy > 0 || undefined}>
-              <svg className="tool-card-logo" aria-hidden="true">
+            <li key={`${copy}-${name}`} className="tool-item" aria-hidden={copy > 0 || undefined}>
+              <svg className="tool-item-logo" aria-hidden="true">
                 <use href={`#${symbolId(name)}`} />
               </svg>
-              <p className="tool-card-name">{name}</p>
-              <p className="tool-card-role">{TOOLS[name].role}</p>
+              {name}
+              {/* What the tool is for, read out by screen readers only. */}
+              <span className="sr-only">: {TOOLS[name].role}</span>
             </li>
           )),
         )}
