@@ -2147,6 +2147,8 @@ html[data-mode="boh"] .about-stack-item:nth-child(2) .about-stack-card {
     color: var(--fg);
     transition: height 0.42s var(--ease-out-quart);
   }
+  /* On the dark card the text is light, so the popup needs a dark ground too. */
+  .team-card-back .team-preview { --surface: #1f1f22; }
   .team-preview-content {
     display: flex;
     flex-direction: column;
