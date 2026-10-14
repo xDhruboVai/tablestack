@@ -184,6 +184,8 @@ export const team = [
   {
     name: "Dihan Islam Dhrubo",
     role: "Backend Developer",
+    /** Which half of a site this person builds: what customers see (front) or what the team uses (back). */
+    side: "back",
     facebook: "https://www.facebook.com/dihanislam.dhrubo.5/",
     whatsapp: "01323866906",
     study: "BRAC University, CSE",
@@ -193,6 +195,7 @@ export const team = [
   {
     name: "Saalim Saadman",
     role: "Frontend Developer",
+    side: "front",
     facebook: "https://www.facebook.com/saalim.saadman.2025/",
     whatsapp: "01742777666",
     study: "UCSI University Bangladesh Branch Campus, CS",

@@ -1,6 +1,4 @@
 import { pageMeta } from "@/lib/seo";
-import DotField from "@/components/about/DotField";
-import StackCards from "@/components/ui/StackCards";
 import ToolList from "@/components/ui/ToolList";
 import TeamLinks from "@/components/about/TeamLinks";
 import GlowLink from "@/components/ui/GlowLink";
@@ -55,6 +53,40 @@ function SideMark({ side }: { side: "front" | "back" }) {
   );
 }
 
+/**
+ * A small drawing of each half of a site: the page customers see, and the admin screen behind it
+ * (switches like the ones we use to turn projects on and off). Pointing at the card flips a switch
+ * or presses the button.
+ */
+function TeamArt({ side }: { side: "front" | "back" }) {
+  return (
+    <div className="team-art" aria-hidden="true">
+      <div className="team-art-bar">
+        <i />
+        <i />
+        <i />
+      </div>
+      {side === "front" ? (
+        <div className="team-art-page">
+          <span className="team-art-hero" />
+          <span className="team-art-line" />
+          <span className="team-art-line team-art-line-short" />
+          <span className="team-art-button" />
+        </div>
+      ) : (
+        <div className="team-art-admin">
+          {[true, true, false, true].map((on, i) => (
+            <span key={i} className={`team-art-row ${on ? "is-on" : ""}`}>
+              <b />
+              <u />
+            </span>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function AboutPage() {
   return (
     <>
@@ -93,11 +125,13 @@ export default function AboutPage() {
         </h2>
         <ul className="mt-10 grid auto-rows-fr grid-cols-1 gap-5 md:mt-12 lg:grid-cols-2">
           {team.map((m, i) => (
-            <li key={m.name} className="team-card" data-reveal="rise" data-delay={i * 120}>
+            <li key={m.name} className={`team-card team-card-${m.side}`} data-reveal="rise" data-delay={i * 120}>
               <div>
-                {"role" in m && <p className="team-card-role">{m.role}</p>}
+                <p className="team-card-side">{m.side === "back" ? "Back of house" : "Front of house"}</p>
                 <h3 className="team-card-name">{m.name}</h3>
+                <p className="team-card-role">{m.role}</p>
               </div>
+              <TeamArt side={m.side} />
               <div className="team-card-details">
                 <div>
                   <p className="text-fg-2">{m.study}</p>
@@ -140,16 +174,6 @@ export default function AboutPage() {
               </ul>
             </div>
           ))}
-        </div>
-      </section>
-
-      {/* Principles */}
-      <section className="px-page pb-12 md:pb-16" aria-labelledby="principles-h">
-        <h2 id="principles-h" className="display text-[clamp(2.4rem,3.74vw,4.06rem)]" data-split="lines">
-          What makes us different.
-        </h2>
-        <div className="mt-12 md:mt-16">
-          <StackCards items={about.principles} extra={<DotField />} />
         </div>
       </section>
 

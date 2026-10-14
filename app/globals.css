@@ -1068,6 +1068,39 @@ html[data-mode="boh"] .gradient-nav {
   z-index: 55;
   background: var(--bg);
 }
+.mobile-menu-inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 28px;
+  height: 100%;
+  overflow-y: auto;
+  padding-top: calc(var(--nav-h) + 18px);
+  padding-bottom: calc(24px + env(safe-area-inset-bottom));
+}
+.mm-list { display: grid; gap: 10px; }
+.mm-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 18px 20px;
+  border-radius: 20px;
+  background: var(--surface);
+  transition: background-color 0.25s, color 0.25s;
+}
+.mm-item.is-current { background: var(--fg); color: var(--bg); }
+.mm-name { display: block; font-family: var(--font-display); font-size: clamp(1.75rem, 8vw, 2.1rem); font-weight: 800; line-height: 1; letter-spacing: -0.045em; }
+.mm-note { display: block; margin-top: 6px; color: var(--muted); font-size: 14px; }
+.mm-item.is-current .mm-note { color: color-mix(in srgb, var(--bg) 68%, transparent); }
+.mm-arrow { display: grid; flex: none; place-items: center; width: 42px; height: 42px; border-radius: 50%; background: color-mix(in srgb, var(--fg) 7%, transparent); }
+.mm-item.is-current .mm-arrow { background: var(--accent); color: var(--ink); }
+.mm-arrow svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.mm-foot { display: grid; gap: 12px; }
+.mm-cta { display: flex; align-items: center; justify-content: center; height: 56px; border-radius: 999px; background: var(--accent); color: var(--ink); font-size: 17px; font-weight: 700; }
+.mm-quick { display: grid; grid-auto-columns: minmax(0, 1fr); grid-auto-flow: column; gap: 8px; }
+.mm-quick a { display: flex; align-items: center; justify-content: center; height: 46px; border: 1px solid var(--rule-strong); border-radius: 999px; font-size: 15px; font-weight: 600; }
+.mm-item:focus-visible, .mm-cta:focus-visible, .mm-quick a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
 /* ─── FOH/BOH switch ───────────────────────────────────────── */
 .mode-toggle {
@@ -1977,43 +2010,103 @@ html[data-mode="boh"] .about-stack-item:nth-child(2) .about-stack-card {
 
 /* ─── About: team links ───────────────────────────────────────── */
 @layer components {
+  /* Front of house (light) and back of house (dark): the name on the left, a drawing of that half on the right. */
   .team-card {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) clamp(170px, 15vw, 210px);
+    align-content: space-between;
+    gap: 24px clamp(18px, 2vw, 28px);
     min-width: 0;
-    padding: clamp(24px, 3vw, 44px);
-    border: 1px solid var(--rule);
-    border-radius: 24px;
-    background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 7%, var(--surface)), var(--surface) 48%);
-    box-shadow: 0 12px 28px rgb(13 15 7 / 0.06);
-    transition: transform 0.45s var(--ease-out-quart), box-shadow 0.45s var(--ease-out-quart), border-color 0.3s;
+    padding: clamp(24px, 3vw, 40px);
+    border-radius: 26px;
+    background: var(--surface);
+    transition: transform 0.45s var(--ease-out-quart), box-shadow 0.45s var(--ease-out-quart);
   }
-  .team-card:nth-child(2) {
-    background: linear-gradient(135deg, color-mix(in srgb, var(--fg) 5%, var(--surface)), var(--surface) 48%);
+  .team-card-back {
+    --fg: #f5f0ec;
+    --fg-2: #d5cfcb;
+    --muted: #b4aaa4;
+    --rule: rgb(245 240 236 / 0.17);
+    --rule-strong: rgb(245 240 236 / 0.42);
+    --accent-text: #e25439;
+    background: var(--ink);
+    color: var(--fg);
   }
-  .team-card-role {
-    color: var(--accent-text);
-    font-size: 15px;
-    font-weight: 600;
+  html[data-mode="boh"] .team-card-back { box-shadow: inset 0 0 0 1px var(--rule); }
+  .team-card-side {
+    color: var(--muted);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
   }
   .team-card-name {
-    margin-top: 16px;
-    font-size: clamp(2rem, 2.5vw, 2.81rem);
-    font-weight: 750;
-    line-height: 1.05;
-    letter-spacing: -0.045em;
+    margin-top: 14px;
+    font-size: clamp(2rem, 2.9vw, 2.9rem);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.05em;
   }
-  .team-card-details {
-    margin-top: clamp(24px, 2.4vw, 36px);
-    padding-top: 20px;
-    border-top: 1px solid var(--rule);
+  .team-card-role {
+    margin-top: 12px;
+    color: var(--accent-text);
+    font-size: 17px;
+    font-weight: 700;
   }
+  .team-card-details { grid-column: 1 / -1; }
   .team-card:hover,
   .team-card:focus-within {
     transform: translateY(-6px);
-    border-color: color-mix(in srgb, var(--accent) 60%, var(--rule));
     box-shadow: 0 22px 44px rgb(13 15 7 / 0.12);
+  }
+
+  /* The drawing: a small browser window holding a page (front) or an admin screen (back). */
+  .team-art {
+    justify-self: end;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 18px 34px -18px rgb(0 0 0 / 0.45);
+  }
+  .team-art-bar { display: flex; gap: 5px; padding: 8px 10px; background: #1c1c1f; }
+  .team-art-bar i { width: 7px; height: 7px; border-radius: 50%; background: #3b3b40; }
+  .team-art-page { display: grid; gap: 7px; padding: 12px; background: var(--paper); }
+  .team-art-page > span { display: block; }
+  .team-art-hero { height: 46px; border-radius: 6px; background: var(--tomato); }
+  .team-art-line { height: 6px; border-radius: 3px; background: rgb(10 10 10 / 0.16); }
+  .team-art-line-short { width: 60%; }
+  .team-art-button {
+    width: 64px;
+    height: 16px;
+    margin-top: 3px;
+    border-radius: 8px;
+    background: var(--ink);
+    transition: transform 0.25s var(--ease-out-quart), background-color 0.25s;
+  }
+  .team-card:hover .team-art-button { transform: scale(0.92); background: var(--tomato); }
+  .team-art-admin { display: grid; gap: 7px; padding: 12px; background: #161616; }
+  .team-art-row { display: flex; align-items: center; gap: 8px; padding: 7px 8px; border-radius: 6px; background: rgb(245 240 236 / 0.06); }
+  .team-art-row b { flex: 1; height: 6px; border-radius: 3px; background: rgb(245 240 236 / 0.28); }
+  .team-art-row u { position: relative; width: 22px; height: 12px; border-radius: 6px; background: rgb(245 240 236 / 0.18); transition: background-color 0.3s; }
+  .team-art-row u::after {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #f5f0ec;
+    transition: transform 0.3s var(--ease-out-quart);
+  }
+  .team-art-row.is-on u,
+  .team-card:hover .team-art-row:not(.is-on) u { background: var(--tomato); }
+  .team-art-row.is-on u::after,
+  .team-card:hover .team-art-row:not(.is-on) u::after { transform: translateX(10px); }
+  /* Phones: the drawing sits above the name. */
+  @media (max-width: 560px) {
+    .team-card { grid-template-columns: minmax(0, 1fr); }
+    .team-art { order: -1; justify-self: start; width: 170px; }
   }
   .team-card .team-social-dock {
     margin-top: 1.25rem;

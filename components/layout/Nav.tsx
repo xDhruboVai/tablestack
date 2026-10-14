@@ -9,6 +9,14 @@ import Wordmark from "./Wordmark";
 import { nav, site } from "@/content/site";
 import { EASE, prefersReducedMotion } from "@/lib/motion";
 
+/** The short line under each page in the phone menu. */
+const MENU_NOTES: Record<string, string> = {
+  "/": "Start here",
+  "/work": "Our concept sites",
+  "/about": "Who we are",
+  "/contact": "Tell us about your business",
+};
+
 export default function Nav({ showWork = true }: { showWork?: boolean }) {
   const pathname = usePathname();
   const links = showWork ? nav : nav.filter((n) => n.href !== "/work");
@@ -38,9 +46,10 @@ export default function Nav({ showWork = true }: { showWork?: boolean }) {
       if (!reduced) {
         animate(el, { clipPath: ["inset(0 0 100% 0)", "inset(0 0 0% 0)"], duration: 700, ease: EASE.inOut });
         animate(el.querySelectorAll("[data-menu-item]"), {
-          y: ["110%", "0%"],
-          duration: 900,
-          delay: stagger(70, { start: 250 }),
+          y: [28, 0],
+          opacity: [0, 1],
+          duration: 700,
+          delay: stagger(60, { start: 220 }),
           ease: EASE.out,
         });
         animate(el.querySelectorAll("[data-menu-fade]"), { opacity: [0, 1], duration: 600, delay: 550 });
@@ -82,6 +91,7 @@ export default function Nav({ showWork = true }: { showWork?: boolean }) {
   }, [open]);
 
   const isActive = (href: string) => pathname === href || pathname.startsWith(href + "/");
+  const whatsapp = site.social.find((l) => l.label === "WhatsApp")?.href;
 
   return (
     <>
@@ -139,32 +149,46 @@ export default function Nav({ showWork = true }: { showWork?: boolean }) {
         hidden={false}
         style={{ visibility: "hidden" }}
       >
-        <div className="px-page flex h-full flex-col justify-between pb-8 pt-[calc(var(--nav-h)+5svh)]">
+        {/* Each page as a card with a short line about it; the page you are on is the dark one. */}
+        <div className="mobile-menu-inner px-page">
           <nav aria-label="Mobile">
-            <ul className="flex flex-col gap-1">
+            <ul className="mm-list">
               {[{ label: "Home", href: "/" }, ...links].map((item) => (
-                <li key={item.href} className="split-line">
+                <li key={item.href}>
                   <TLink
                     href={item.href}
                     data-menu-item
-                    className="flex items-baseline gap-4 py-1"
-                    aria-current={pathname === item.href ? "page" : undefined}
+                    className={`mm-item ${isActive(item.href) ? "is-current" : ""}`}
+                    aria-current={isActive(item.href) ? "page" : undefined}
                     onClick={() => setOpen(false)}
                   >
-                    <span className="display text-[clamp(2.6rem,12vw,4.2rem)]">{item.label}</span>
+                    <span>
+                      <span className="mm-name">{item.label}</span>
+                      {MENU_NOTES[item.href] && <span className="mm-note">{MENU_NOTES[item.href]}</span>}
+                    </span>
+                    <span className="mm-arrow" aria-hidden="true">
+                      <svg viewBox="0 0 24 24">
+                        <path d="M7 17 17 7M9 7h8v8" />
+                      </svg>
+                    </span>
                   </TLink>
                 </li>
               ))}
             </ul>
           </nav>
-          <div className="flex flex-col gap-5" data-menu-fade>
-            <TLink href="/contact" className="btn btn-primary self-start" onClick={() => setOpen(false)}>
-              Start a project <span className="btn-arrow">→</span>
+          <div className="mm-foot" data-menu-fade>
+            <TLink href="/contact" className="mm-cta" onClick={() => setOpen(false)}>
+              Start a project
             </TLink>
-            <a href={`mailto:${site.email}`} className="text-lg">
-              {site.email}
-            </a>
-            <p className="eyebrow text-muted">{site.availability}</p>
+            <div className="mm-quick">
+              <a href={`mailto:${site.email}`}>Email</a>
+              {whatsapp && (
+                <a href={whatsapp} target="_blank" rel="noreferrer">
+                  WhatsApp<span className="sr-only"> (opens in a new tab)</span>
+                </a>
+              )}
+              <a href={`tel:${site.phoneIntl}`}>Call</a>
+            </div>
           </div>
         </div>
       </div>

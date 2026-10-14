@@ -5,8 +5,6 @@ import { animate, createDrawable, stagger, utils } from "animejs";
 import { standards } from "@/content/site";
 import { prefersReducedMotion } from "@/lib/motion";
 
-const INTERVAL = 2800;
-
 /**
  * One icon per promise, in the same order as `standards`, on a 24 x 24 grid.
  * Shapes follow the Feather icon set (MIT licence), split into strokes so they can draw in one by one.
@@ -29,28 +27,11 @@ const ICONS: string[][] = [
 /**
  * "What you can expect": the heading (passed in as children) above six rows, one per promise, each with
  * its line and an icon. One row is lit at a time: a dark bar slides to it and its icon draws itself in.
- * It moves on by itself while on screen, follows the mouse, and stays still with reduced motion.
+ * It only moves when someone points at or taps a row; it never moves on by itself.
  */
 export default function ExpectList({ children }: { children?: React.ReactNode }) {
   const [active, setActive] = useState(0);
   const root = useRef<HTMLDivElement>(null);
-  const paused = useRef(false);
-
-  // Auto-advance only while visible and not paused
-  useEffect(() => {
-    const el = root.current;
-    if (!el || prefersReducedMotion()) return;
-    let visible = false;
-    const io = new IntersectionObserver((e) => (visible = e[0]?.isIntersecting ?? false), { threshold: 0.4 });
-    io.observe(el);
-    const id = window.setInterval(() => {
-      if (visible && !paused.current && document.visibilityState === "visible") setActive((a) => (a + 1) % standards.length);
-    }, INTERVAL);
-    return () => {
-      io.disconnect();
-      window.clearInterval(id);
-    };
-  }, []);
 
   // The lit row's icon draws itself in
   useEffect(() => {
@@ -66,20 +47,14 @@ export default function ExpectList({ children }: { children?: React.ReactNode })
     };
   }, [active]);
 
-  // A mouse holds the row it is over; a tap just picks a row and lets the rows carry on.
-  const pick = (i: number, pointerType: string) => {
-    if (pointerType === "mouse") paused.current = true;
-    setActive(i);
-  };
-
   return (
-    <div ref={root} className="expect" onPointerLeave={() => (paused.current = false)}>
+    <div ref={root} className="expect">
       <div className="expect-head">{children}</div>
       <div className="expect-rows" style={{ ["--i" as string]: active, ["--n" as string]: standards.length }} data-reveal="rise">
         <span className="expect-bar" aria-hidden="true" />
         <ul>
           {standards.map((s, i) => (
-            <li key={s.k} className={`expect-row ${i === active ? "is-on" : ""}`} onPointerEnter={(e) => pick(i, e.pointerType)}>
+            <li key={s.k} className={`expect-row ${i === active ? "is-on" : ""}`} onPointerEnter={() => setActive(i)}>
               <h3 className="expect-row-name display">{s.k}</h3>
               <p className="expect-row-line">{s.v}</p>
               <span className="expect-row-icon" aria-hidden="true">
