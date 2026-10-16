@@ -4,6 +4,7 @@ import { BrowserBar, siteHost, stageColors } from "./Shot";
 import type { Project } from "@/content/projects";
 
 const descriptions: Record<string, string> = {
+  "basic-kneads": "Fifty items to add as you read, then one order with a delivery time.",
   "smashed-burgers": "Bilingual menu and branch information for six locations.",
   pinewood: "Branch pricing, bookings and pre-orders across three cafés.",
   "brisket-and-bistro": "A 114-item menu, the dining room and the way up to Level 5.",
@@ -31,6 +32,7 @@ export default function ProjectTile({ project, headingLevel = 3, eager = false }
           <div>
             <p className="project-tile-meta eyebrow text-accent">
               {project.concept && <span className="concept-tag">Concept</span>}
+              {!project.concept && !project.placeholder && <span className="client-tag">Client project</span>}
               <span>{project.category} · {project.location}</span>
             </p>
             <Heading className="display project-tile-title">{project.title}</Heading>

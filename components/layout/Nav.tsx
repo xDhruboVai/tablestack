@@ -12,7 +12,7 @@ import { EASE, prefersReducedMotion } from "@/lib/motion";
 /** The short line under each page in the phone menu. */
 const MENU_NOTES: Record<string, string> = {
   "/": "Start here",
-  "/work": "Our concept sites",
+  "/work": "Sites we have built",
   "/about": "Who we are",
   "/contact": "Tell us about your business",
 };

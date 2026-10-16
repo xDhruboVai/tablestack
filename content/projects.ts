@@ -2,9 +2,9 @@
  * ─────────────────────────────────────────────────────────────
  *  PROJECTS
  *
- *  Every project shown is a concept: a site we designed and built on our own initiative
- *  for a real restaurant. None was commissioned, and each is labelled "Concept" wherever it
- *  appears. A commissioned project would simply leave `concept` unset.
+ *  Basic Kneads is client work. Every other project is a concept: a site we designed and
+ *  built on our own initiative for a real restaurant. Those were not commissioned, and each
+ *  is labelled "Concept" wherever it appears. Client work leaves `concept` unset.
  *  `placeholderProjects` are fictional samples kept only as a template
  *  for the case-study structure. They're hidden while SHOW_PLACEHOLDERS
  *  is false, and are labeled "Placeholder" if you ever turn them on.
@@ -317,6 +317,90 @@ const placeholderProjects: Project[] = [
 /* ── The first two concept sites ───────────────────────────── */
 const realProjects: Project[] = [
   {
+    slug: "basic-kneads",
+    placeholder: false,
+    look: "brand",
+    title: "Basic Kneads",
+    client: "Basic Kneads",
+    kind: "Artisan bakery and sandwich shop",
+    category: "Food & drink",
+    year: "2026",
+    location: "Dhaka, Bangladesh",
+    services: ["Website design", "Full-stack build", "Online ordering"],
+    stack: ["Next.js", "Tailwind CSS", "Vercel"],
+    summary:
+      "The website for a Dhaka bakery: bread, croissants and sandwiches that need both hands. Customers read the menu, add what they want and send the whole order in one go.",
+    liveUrl: "https://basic-kneads.vercel.app",
+    challenge:
+      "A bakery with fifty things on the menu, open from 3 PM to 10 PM, with same-day delivery in Gulshan. The site had to make the food look as good as it tastes, and let people order everything in one message instead of over the phone.",
+    approach:
+      "Warm cream pages, deep maroon type and close-up food photography, with a script logo that feels hand-written. The menu works like a basket: add as you read, then send.",
+    execution: [
+      "The full menu, 50 items in nine sections, with prices in taka",
+      "Add items while you read the menu, then send the order in one go",
+      "An order form with delivery area, date and time",
+      "Send as a gift, delivered without the receipt or prices",
+      "An email when the order arrives, and again when it is confirmed",
+      "A story page on how the croissants are made",
+      "Home, Menu, Story and Order buttons at the bottom of the phone screen",
+    ],
+    outcome: "Live at basic-kneads.vercel.app.",
+    art: {
+      palette: { bg: "#F7F1E9", fg: "#30231D", accent: "#BA4638", soft: "#5C1A1F" },
+      type: "sans",
+      motif: "loaf",
+      layout: "center",
+      tagline: "A little more than your daily bread.",
+      dishes: [
+        ["Butter croissant", "249"],
+        ["Ragi Reuben", "999"],
+        ["Roman Holiday", "1,599"],
+      ],
+    },
+    media: {
+      cover: "/work/basic-kneads/cover.jpg",
+      coverAlt: "Basic Kneads homepage: the headline A little more than your daily bread. above a croissant sandwich",
+    },
+    gallery: [
+      {
+        src: "/work/basic-kneads/home.jpg",
+        frame: "desktop",
+        alt: "The Chocolate Coma kouign amann on a deep red background under the headline Not your average bake.",
+        caption: "The home page on a computer",
+        spec: "",
+        wide: true,
+      },
+      {
+        src: "/work/basic-kneads/mobile.jpg",
+        frame: "mobile",
+        alt: "Two phones showing the Basic Kneads homepage and the croissant section of the menu",
+        caption: "Home and menu on a phone",
+        spec: "",
+      },
+      {
+        src: "/work/basic-kneads/menu.jpg",
+        frame: "menu",
+        alt: "Menu page with section tabs, photos of six sandwiches and their prices with Add buttons",
+        caption: "The menu, with an Add button on every item",
+        spec: "",
+      },
+      {
+        src: "/work/basic-kneads/detail.jpg",
+        frame: "detail",
+        alt: "Story page: rows of shaped croissants under the headline Dough first. Everything else after.",
+        caption: "The story page",
+        spec: "",
+      },
+      {
+        src: "/work/basic-kneads/order.jpg",
+        frame: "boh",
+        alt: "Order page with the menu sections on the left and delivery details on the right",
+        caption: "Ordering, with delivery date and time",
+        spec: "",
+      },
+    ],
+  },
+  {
     slug: "smashed-burgers",
     placeholder: false,
     concept: true,
@@ -501,7 +585,7 @@ const realProjects: Project[] = [
 ];
 
 /* ── More concept sites ────────────────────────────────────────
-   Like the two above: designed and built on our own initiative for real Dhaka restaurants. None was
+   Like Smashed Burgers and Pinewood above: designed and built on our own initiative for real Dhaka restaurants. None was
    commissioned, and none is the restaurant's official website. */
 const conceptGallery = (slug: string, items: [file: string, frame: GalleryItem["frame"], caption: string, alt: string][]): GalleryItem[] =>
   items.map(([file, frame, caption, alt], i) => ({ src: `/work/${slug}/${file}.jpg`, frame, caption, alt, spec: "", wide: i === 0 }));

@@ -8,7 +8,7 @@ import { ContactCTA } from "@/components/home/Sections";
 
 export const metadata = pageMeta({
   title: "Work",
-  description: `Websites ${site.name} has designed and built as concepts for restaurants in Dhaka, each with a short write-up and a link to open the site.`,
+  description: `Websites ${site.name} has designed and built in Dhaka, for clients and as concepts, each with a short write-up and a link to open the site.`,
   path: "/work",
 });
 
@@ -29,7 +29,11 @@ export default async function WorkPage() {
               : "Our work so far, including concept sites we designed on our own initiative. Open each one to see the pages and features for yourself."}
           </p>
         </WorkWall>
-        <div className={`project-tile-grid mt-12 md:mt-14 ${projects.length === 1 ? "project-tile-grid-single" : ""}`} data-reveal="rise">
+        {/* An odd number of projects: the first one runs the full width, so the last row is never half empty. */}
+        <div
+          className={`project-tile-grid mt-12 md:mt-14 ${projects.length === 1 ? "project-tile-grid-single" : projects.length % 2 ? "project-tile-grid-lead" : ""}`}
+          data-reveal="rise"
+        >
           {projects.map((project, i) => <ProjectTile project={project} headingLevel={2} eager={i < 2} key={project.slug} />)}
         </div>
       </section>

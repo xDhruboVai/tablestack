@@ -37,7 +37,7 @@ export default function SiteShowcase({ items }: { items: ShowcaseItem[] }) {
       <div className="showcase-side">
         {/* Keyed by the site, so the text plays its short entrance each time the site changes. */}
         <div key={current.slug} className="showcase-info" aria-live="polite">
-          {current.concept && <span className="showcase-tag">Concept</span>}
+          <span className={`showcase-tag ${current.concept ? "" : "showcase-tag-client"}`}>{current.concept ? "Concept" : "Client project"}</span>
           <h3 className="showcase-title">{current.title}</h3>
           <p className="showcase-summary">{current.summary}</p>
           <div className="showcase-links">
