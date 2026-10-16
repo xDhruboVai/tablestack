@@ -330,7 +330,7 @@ const realProjects: Project[] = [
     stack: ["Next.js", "Tailwind CSS", "Vercel"],
     summary:
       "The website for a Dhaka bakery: bread, croissants and sandwiches that need both hands. Customers read the menu, add what they want and send the whole order in one go.",
-    liveUrl: "https://basic-kneads.vercel.app",
+    liveUrl: "https://mybasickneads.com",
     challenge:
       "A bakery with fifty things on the menu, open from 3 PM to 10 PM, with same-day delivery in Gulshan. The site had to make the food look as good as it tastes, and let people order everything in one message instead of over the phone.",
     approach:
@@ -344,7 +344,7 @@ const realProjects: Project[] = [
       "A story page on how the croissants are made",
       "Home, Menu, Story and Order buttons at the bottom of the phone screen",
     ],
-    outcome: "Live at basic-kneads.vercel.app.",
+    outcome: "Live at mybasickneads.com.",
     art: {
       palette: { bg: "#F7F1E9", fg: "#30231D", accent: "#BA4638", soft: "#5C1A1F" },
       type: "sans",
