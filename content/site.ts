@@ -48,6 +48,7 @@ export const bookCall = site.bookingUrl
 
 export const nav = [
   { label: "Work", href: "/work" },
+  { label: "Pricing", href: "/pricing" },
   { label: "About Us", href: "/about" },
   { label: "Contact", href: "/contact" },
 ] as const;

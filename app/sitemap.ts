@@ -11,7 +11,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Only projects that are switched on; with none, the Work page is left out too.
   const projects = await getVisibleProjects();
   const work = projects.length ? ["/work", ...projects.map((p) => `/work/${p.slug}`)] : [];
-  const paths = ["", "/about", "/contact", "/faq", "/blog", ...work];
+  const paths = ["", "/pricing", "/about", "/contact", "/faq", "/blog", ...work];
   return [
     ...paths.map((p) => ({ url: `${site.url}${p || "/"}` })),
     ...posts.map((p) => ({ url: `${site.url}/blog/${p.slug}`, lastModified: new Date(p.date) })),

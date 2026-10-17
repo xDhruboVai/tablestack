@@ -1,7 +1,8 @@
 "use client";
 
-import { useId, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { site } from "@/content/site";
+import { planMessage } from "@/content/pricing";
 
 type Fields = { name: string; email: string; business: string; message: string; website: string };
 type FieldName = "name" | "email" | "message";
@@ -24,6 +25,13 @@ export default function ContactForm() {
   const [serverError, setServerError] = useState("");
   const form = useRef<HTMLFormElement>(null);
   const id = useId();
+
+  // Arriving from a package's button on /pricing (/contact?package=…): start the message with that package,
+  // so we know what the visitor asked about. Read after mounting, so the page itself stays static.
+  useEffect(() => {
+    const opening = planMessage(new URLSearchParams(window.location.search).get("package"));
+    if (opening) setFields((current) => (current.message ? current : { ...current, message: opening }));
+  }, []);
 
   function update(key: keyof Fields, value: string) {
     setFields((current) => ({ ...current, [key]: value }));

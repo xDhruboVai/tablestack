@@ -13,6 +13,7 @@ import { EASE, prefersReducedMotion } from "@/lib/motion";
 const MENU_NOTES: Record<string, string> = {
   "/": "Start here",
   "/work": "Sites we have built",
+  "/pricing": "Starting prices in USD",
   "/about": "Who we are",
   "/contact": "Tell us about your business",
 };
