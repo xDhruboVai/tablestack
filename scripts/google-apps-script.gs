@@ -32,6 +32,8 @@ function doPost(e) {
     var budget = text(payload.budget, 60);
     var timeline = text(payload.timeline, 60);
     var message = text(payload.message, 5000);
+    var packageName = text(payload["package"], 200);
+    var country = text(payload.country, 2);
 
     if (!clientName || !isEmail(clientEmail) || message.length < 10) {
       return jsonResponse({ ok: false, error: "Invalid inquiry data" });
@@ -57,6 +59,8 @@ function doPost(e) {
       "",
       "No",
       "",
+      packageName,
+      country,
     ];
 
     var lock = LockService.getScriptLock();
@@ -72,6 +76,8 @@ function doPost(e) {
       "Email: " + clientEmail,
       "Contact number: " + (phone || "n/a"),
       "Business: " + (business || "n/a"),
+      "Package: " + (packageName || "Not sure yet"),
+      "Country: " + (country || "unknown"),
       "Needs: " + (needs || "n/a"),
       "Budget: " + (budget || "n/a"),
       "Timeline: " + (timeline || "n/a"),

@@ -3310,8 +3310,11 @@ html[data-mode="boh"] .cap-card-web { box-shadow: inset 0 0 0 1px var(--rule-str
 .contact-brief-wide { grid-column: 1 / -1; }
 .contact-brief-form .field label { color: var(--fg); font-weight: 600; }
 .contact-brief-form .field input,
+.contact-brief-form .field select,
 .contact-brief-form .field textarea { width: 100%; margin-top: 9px; border: 1px solid var(--rule-strong); border-radius: 10px; background: var(--bg); padding: 14px 15px; font-size: 1rem; }
+.contact-brief-form .field select { padding-right: 40px; background-position: calc(100% - 22px) 55%, calc(100% - 17px) 55%; }
 .contact-brief-form .field input:focus,
+.contact-brief-form .field select:focus,
 .contact-brief-form .field textarea:focus { border-color: var(--accent); outline: 2px solid color-mix(in srgb, var(--accent) 20%, transparent); box-shadow: none; }
 .contact-brief-form .field [aria-invalid="true"] { border-color: var(--accent); }
 .contact-brief-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 14px; margin-top: 28px; }

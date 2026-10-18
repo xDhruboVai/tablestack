@@ -1,7 +1,8 @@
+import { headers } from "next/headers";
 import { pageMeta } from "@/lib/seo";
 import TLink from "@/components/layout/TLink";
 import { ContactCTA } from "@/components/home/Sections";
-import { addOns, hrTiers, plans, pricingNotes } from "@/content/pricing";
+import { addOns, currencyNote, hrTiers, plans, pricingNotes, regionOf } from "@/content/pricing";
 import { bookCall, site } from "@/content/site";
 
 export const metadata = pageMeta({
@@ -18,7 +19,9 @@ function Tick() {
   );
 }
 
-export default function PricingPage() {
+export default async function PricingPage() {
+  // Vercel's IP lookup; no permission prompt. Without it (local dev) the page shows USD.
+  const region = regionOf((await headers()).get("x-vercel-ip-country"));
   return (
     <>
       <section className="px-page pb-20 pt-[calc(var(--nav-h)+8svh)] md:pb-24" aria-labelledby="pricing-h" data-annot="page · /pricing">
@@ -34,7 +37,7 @@ export default function PricingPage() {
               <p className="price-for">{plan.for}</p>
               <p className="price-amount">
                 <span className="price-from">{plan.price ? "Starting at" : "Priced per project"}</span>
-                <b className={plan.price ? "" : "price-quote"}>{plan.price ?? "Request a quote"}</b>
+                <b className={plan.price ? "" : "price-quote"}>{plan.price?.[region] ?? "Request a quote"}</b>
               </p>
               <ul className="price-list">
                 {plan.included.map((item) => (
@@ -49,7 +52,7 @@ export default function PricingPage() {
                   {hrTiers.map((tier) => (
                     <li key={tier.name}>
                       <span>{tier.name}</span>
-                      <b>{tier.price}</b>
+                      <b>{tier.price[region]}</b>
                     </li>
                   ))}
                 </ul>
@@ -70,7 +73,7 @@ export default function PricingPage() {
         </div>
 
         <ul className="price-fine mt-10" aria-label="Good to know" data-reveal="fade">
-          {pricingNotes.map((note) => (
+          {[currencyNote[region], ...pricingNotes].map((note) => (
             <li key={note}>
               <span className="list-bar" aria-hidden="true" />
               {note}
@@ -93,7 +96,7 @@ export default function PricingPage() {
           {hrTiers.map((tier) => (
             <div key={tier.name} className="hr-level">
               <h3>{tier.name}</h3>
-              <p className="hr-level-price">{tier.price}</p>
+              <p className="hr-level-price">{tier.price[region]}</p>
               <p className="hr-level-lead">{tier.lead}</p>
               <ul className="price-list">
                 {tier.items.map((item) => (
@@ -126,7 +129,7 @@ export default function PricingPage() {
             </span>
           </summary>
           <ul className="price-extras-list">
-            {addOns.map((a) => (
+            {addOns[region].map((a) => (
               <li key={a.name}>
                 <span>{a.name}</span>
                 <b>{a.price}</b>

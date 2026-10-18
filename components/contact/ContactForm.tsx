@@ -2,13 +2,35 @@
 
 import { useEffect, useId, useRef, useState } from "react";
 import { site } from "@/content/site";
-import { planMessage } from "@/content/pricing";
+import { hrTiers, plans } from "@/content/pricing";
 
-type Fields = { name: string; email: string; business: string; message: string; website: string };
+type Fields = { name: string; email: string; business: string; plan: string; tier: string; message: string; website: string };
 type FieldName = "name" | "email" | "message";
 type Status = "idle" | "sending" | "sent" | "preview" | "error";
 
-const empty: Fields = { name: "", email: "", business: "", message: "", website: "" };
+const empty: Fields = { name: "", email: "", business: "", plan: "", tier: "", message: "", website: "" };
+
+// The unsent brief is kept in this browser, so leaving for /pricing and coming back doesn't empty the form.
+const DRAFT_KEY = "ts_contact_draft";
+const saveDraft = (fields: Fields) => {
+  try {
+    localStorage.setItem(DRAFT_KEY, JSON.stringify({ ...fields, website: "" }));
+  } catch {}
+};
+const loadDraft = (): Partial<Fields> => {
+  try {
+    const value: unknown = JSON.parse(localStorage.getItem(DRAFT_KEY) ?? "{}");
+    if (!value || typeof value !== "object") return {};
+    return Object.fromEntries(Object.entries(value).filter(([k, v]) => k in empty && k !== "website" && typeof v === "string"));
+  } catch {
+    return {};
+  }
+};
+const clearDraft = () => {
+  try {
+    localStorage.removeItem(DRAFT_KEY);
+  } catch {}
+};
 
 function validate(fields: Fields): Partial<Record<FieldName, string>> {
   const errors: Partial<Record<FieldName, string>> = {};
@@ -26,15 +48,21 @@ export default function ContactForm() {
   const form = useRef<HTMLFormElement>(null);
   const id = useId();
 
-  // Arriving from a package's button on /pricing (/contact?package=…): start the message with that package,
-  // so we know what the visitor asked about. Read after mounting, so the page itself stays static.
+  // Bring back the unsent draft, and when arriving from a package's button on /pricing (/contact?package=…)
+  // pick that package. Read after mounting, so the page itself stays static.
   useEffect(() => {
-    const opening = planMessage(new URLSearchParams(window.location.search).get("package"));
-    if (opening) setFields((current) => (current.message ? current : { ...current, message: opening }));
+    const draft = loadDraft();
+    const picked = new URLSearchParams(window.location.search).get("package");
+    if (picked && plans.some((p) => p.id === picked) && picked !== draft.plan) Object.assign(draft, { plan: picked, tier: "" });
+    setFields((current) => ({ ...current, ...draft }));
   }, []);
 
   function update(key: keyof Fields, value: string) {
-    setFields((current) => ({ ...current, [key]: value }));
+    setFields((current) => {
+      const next = { ...current, [key]: value, ...(key === "plan" && value !== "hr" ? { tier: "" } : {}) };
+      saveDraft(next);
+      return next;
+    });
     if (key in errors) setErrors((current) => ({ ...current, [key]: undefined }));
     if (status === "error" || status === "preview") setStatus("idle");
   }
@@ -59,6 +87,7 @@ export default function ContactForm() {
       });
       const result = await response.json().catch(() => ({}));
       if (!response.ok) throw new Error(result.error || "We couldn’t send your note. Please try again.");
+      if (result.delivered === true) clearDraft();
       setStatus(result.delivered === true ? "sent" : "preview");
     } catch (error) {
       setServerError(error instanceof Error ? error.message : "We couldn’t send your note. Please try again.");
@@ -103,6 +132,26 @@ export default function ContactForm() {
           <label htmlFor={`${id}-business`}>Business or project <span className="text-muted">(optional)</span></label>
           <input id={`${id}-business`} name="business" type="text" autoComplete="organization" placeholder="Name of your business" value={fields.business} onChange={(event) => update("business", event.target.value)} />
         </div>
+        <div className={fields.plan === "hr" ? "field" : "field contact-brief-wide"}>
+          <label htmlFor={`${id}-plan`}>Package <span className="text-muted">(optional)</span></label>
+          <select id={`${id}-plan`} name="plan" value={fields.plan} onChange={(event) => update("plan", event.target.value)}>
+            <option value="">Not sure yet</option>
+            {plans.map((plan) => (
+              <option key={plan.id} value={plan.id}>{plan.name}</option>
+            ))}
+          </select>
+        </div>
+        {fields.plan === "hr" && (
+          <div className="field">
+            <label htmlFor={`${id}-tier`}>HR level</label>
+            <select id={`${id}-tier`} name="tier" value={fields.tier} onChange={(event) => update("tier", event.target.value)}>
+              <option value="">Not sure yet</option>
+              {hrTiers.map((tier) => (
+                <option key={tier.id} value={tier.id}>{tier.name}</option>
+              ))}
+            </select>
+          </div>
+        )}
         <div className="field contact-brief-wide">
           <label htmlFor={`${id}-message`}>What should the site or tool do? <span aria-hidden="true">*</span></label>
           <textarea {...inputProps("message")} rows={5} placeholder="A sentence or two is enough." value={fields.message} onChange={(event) => update("message", event.target.value)} required />

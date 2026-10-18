@@ -1,10 +1,11 @@
 import { NextResponse } from "next/server";
+import { hrTiers, packageLabel, plans, regionOf } from "@/content/pricing";
 import { clientOf, createLimiter, multiLine, oneLine, readJson, sameOrigin, sheetSafe } from "@/lib/security";
 
 /**
  * Contact form endpoint.
- * Forwards validated inquiries to a Google Apps Script webhook, which writes
- * the lead to Sheets and sends the notification/confirmation emails.
+ * Saves validated inquiries to two stores: a Google Apps Script webhook (writes the lead to Sheets and
+ * sends the notification/confirmation emails) and the Supabase `inquiries` table.
  */
 
 type Body = {
@@ -15,6 +16,8 @@ type Body = {
   needs?: unknown;
   budget?: unknown;
   timeline?: unknown;
+  plan?: unknown;
+  tier?: unknown;
   message?: unknown;
   website?: unknown;
 };
@@ -26,6 +29,8 @@ const limiter = createLimiter(5, 10 * 60 * 1000);
 // Starts with a letter or digit, so a spreadsheet can't read the address as a formula.
 const EMAIL = /^[a-z0-9][^\s@]*@[^\s@]+\.[^\s@]{2,}$/i;
 
+type Inquiry = { name: string; email: string; business: string; message: string; plan: string; tier: string; package: string; country: string };
+
 export async function POST(req: Request) {
   if (!sameOrigin(req)) return NextResponse.json({ error: "Please send the form from the website." }, { status: 403 });
 
@@ -34,6 +39,12 @@ export async function POST(req: Request) {
 
   // Honeypot filled → pretend success, drop silently.
   if (oneLine(body.website, 200)) return NextResponse.json({ ok: true });
+
+  // Only known package ids are kept; the HR level only with the HR package.
+  const plan = plans.find((p) => p.id === body.plan)?.id ?? "";
+  const tier = plan === "hr" ? (hrTiers.find((t) => t.id === body.tier)?.id ?? "") : "";
+  // Vercel's IP lookup of the visitor's country, so the record shows which prices they saw.
+  const country = oneLine(req.headers.get("x-vercel-ip-country"), 2).toUpperCase();
 
   const data = {
     name: oneLine(body.name, 120),
@@ -49,6 +60,10 @@ export async function POST(req: Request) {
     budget: oneLine(body.budget, 60),
     timeline: oneLine(body.timeline, 60),
     message: multiLine(body.message, 5000),
+    plan,
+    tier,
+    package: packageLabel(plan, tier, regionOf(country)),
+    country,
   };
 
   if (!data.name || !EMAIL.test(data.email) || data.message.length < 10) {
@@ -61,11 +76,14 @@ export async function POST(req: Request) {
   }
   limiter.hit(client);
 
-  const { GOOGLE_SHEETS_WEBHOOK_URL, GOOGLE_SHEETS_WEBHOOK_SECRET } = process.env;
+  const { GOOGLE_SHEETS_WEBHOOK_URL, GOOGLE_SHEETS_WEBHOOK_SECRET, SUPABASE_SERVICE_ROLE_KEY } = process.env;
+  const SUPABASE_URL = process.env.SUPABASE_URL ?? process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const sheetsReady = Boolean(GOOGLE_SHEETS_WEBHOOK_URL && GOOGLE_SHEETS_WEBHOOK_SECRET);
+  const databaseReady = Boolean(SUPABASE_URL && SUPABASE_SERVICE_ROLE_KEY);
 
-  if (!GOOGLE_SHEETS_WEBHOOK_URL || !GOOGLE_SHEETS_WEBHOOK_SECRET) {
+  if (!sheetsReady && !databaseReady) {
     if (process.env.NODE_ENV !== "production") {
-      console.info("[contact] (dev, not delivered to Google Sheets)", data);
+      console.info("[contact] (dev, not delivered)", data);
       return NextResponse.json({ ok: true, delivered: false });
     }
     return NextResponse.json({ error: "The form isn’t connected yet." }, { status: 503 });
@@ -82,29 +100,67 @@ export async function POST(req: Request) {
     message: sheetSafe(data.message),
   };
 
+  // Two independent stores. The inquiry counts as received when at least one of them saved it.
+  const results = await Promise.all([
+    sheetsReady && toSheets(GOOGLE_SHEETS_WEBHOOK_URL!, GOOGLE_SHEETS_WEBHOOK_SECRET!, row),
+    databaseReady && toDatabase(SUPABASE_URL!, SUPABASE_SERVICE_ROLE_KEY!, data),
+  ]);
+  if (!results.includes(true)) return NextResponse.json({ error: "Delivery failed." }, { status: 502 });
+
+  return NextResponse.json({ ok: true, delivered: true });
+}
+
+/** The Google Apps Script webhook writes the lead to the sheet and sends the notification/confirmation emails. */
+async function toSheets(url: string, secret: string, row: Record<string, unknown>): Promise<boolean> {
   try {
-    const res = await fetch(GOOGLE_SHEETS_WEBHOOK_URL, {
+    const res = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ secret: GOOGLE_SHEETS_WEBHOOK_SECRET, ...row }),
+      body: JSON.stringify({ secret, ...row }),
       // Don't leave the visitor waiting if the spreadsheet service hangs.
       signal: AbortSignal.timeout(12_000),
     });
 
     if (!res.ok) {
       console.error("[contact] Google Sheets webhook failed", res.status);
-      return NextResponse.json({ error: "Delivery failed." }, { status: 502 });
+      return false;
     }
 
     const result: unknown = await res.json().catch(() => null);
     if (!result || typeof result !== "object" || !("ok" in result) || result.ok !== true) {
       console.error("[contact] Google Sheets webhook returned an invalid response");
-      return NextResponse.json({ error: "Delivery failed." }, { status: 502 });
+      return false;
     }
+    return true;
   } catch (error) {
     console.error("[contact] Google Sheets webhook request failed", error instanceof Error ? error.name : "unknown error");
-    return NextResponse.json({ error: "Delivery failed." }, { status: 502 });
+    return false;
   }
+}
 
-  return NextResponse.json({ ok: true, delivered: true });
+/** Supabase table `inquiries` (supabase/migrations). Only the service-role key may write to it. */
+async function toDatabase(url: string, key: string, data: Inquiry): Promise<boolean> {
+  try {
+    const res = await fetch(url + "/rest/v1/inquiries", {
+      method: "POST",
+      headers: { apikey: key, Authorization: "Bearer " + key, "Content-Type": "application/json", Prefer: "return=minimal" },
+      body: JSON.stringify({
+        name: data.name,
+        email: data.email,
+        business: data.business,
+        message: data.message,
+        plan: data.plan || null,
+        tier: data.tier || null,
+        package: data.package || null,
+        country: data.country || null,
+      }),
+      signal: AbortSignal.timeout(12_000),
+      cache: "no-store",
+    });
+    if (!res.ok) console.error("[contact] Supabase insert failed", res.status);
+    return res.ok;
+  } catch (error) {
+    console.error("[contact] Supabase insert request failed", error instanceof Error ? error.name : "unknown error");
+    return false;
+  }
 }

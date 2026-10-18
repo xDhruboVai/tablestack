@@ -53,12 +53,13 @@ Two eases (`out(4)` for arrivals, `inOut(4)` for covers/transitions) and three d
 
 ## Contact form
 
-The form posts to `/api/contact`, which forwards to a Google Apps Script webhook. The script writes each inquiry to Google Sheets and sends Gmail notifications.
+The form posts to `/api/contact`, which saves each inquiry in two places: a Google Apps Script webhook (writes it to Google Sheets and sends Gmail notifications) and the Supabase `inquiries` table (`supabase/migrations/20261018120000_inquiries.sql`). It counts as received when at least one of them saved it.
 
 1. Copy `.env.example` to `.env.local`.
 2. Fill in `GOOGLE_SHEETS_WEBHOOK_URL` and `GOOGLE_SHEETS_WEBHOOK_SECRET`.
+3. Fill in `SUPABASE_URL` (falls back to `NEXT_PUBLIC_SUPABASE_URL`) and `SUPABASE_SERVICE_ROLE_KEY` (secret, server only), and apply the migration.
 
-Without these values, development logs submissions to the terminal and shows the success ticket. **Production without them shows the error state** (with the direct email link) so nothing is silently lost.
+Without either pair, development logs submissions to the terminal and shows the success ticket. **Production without them shows the error state** (with the direct email link) so nothing is silently lost.
 
 ## Replace before launch
 
