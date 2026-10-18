@@ -2,13 +2,13 @@
 
 import { useEffect, useId, useRef, useState } from "react";
 import { site } from "@/content/site";
-import { hrTiers, plans } from "@/content/pricing";
+import { addOns, hrTiers, plans } from "@/content/pricing";
 
-type Fields = { name: string; email: string; business: string; plan: string; tier: string; message: string; website: string };
+type Fields = { name: string; email: string; business: string; plan: string; tier: string; addons: string[]; message: string; website: string };
 type FieldName = "name" | "email" | "message";
 type Status = "idle" | "sending" | "sent" | "preview" | "error";
 
-const empty: Fields = { name: "", email: "", business: "", plan: "", tier: "", message: "", website: "" };
+const empty: Fields = { name: "", email: "", business: "", plan: "", tier: "", addons: [], message: "", website: "" };
 
 // The unsent brief is kept in this browser, so leaving for /pricing and coming back doesn't empty the form.
 const DRAFT_KEY = "ts_contact_draft";
@@ -21,7 +21,11 @@ const loadDraft = (): Partial<Fields> => {
   try {
     const value: unknown = JSON.parse(localStorage.getItem(DRAFT_KEY) ?? "{}");
     if (!value || typeof value !== "object") return {};
-    return Object.fromEntries(Object.entries(value).filter(([k, v]) => k in empty && k !== "website" && typeof v === "string"));
+    return Object.fromEntries(
+      Object.entries(value).filter(([k, v]) =>
+        k === "addons" ? Array.isArray(v) && v.every((a) => typeof a === "string") : k in empty && k !== "website" && typeof v === "string",
+      ),
+    );
   } catch {
     return {};
   }
@@ -57,7 +61,7 @@ export default function ContactForm() {
     setFields((current) => ({ ...current, ...draft }));
   }, []);
 
-  function update(key: keyof Fields, value: string) {
+  function update(key: keyof Fields, value: string | string[]) {
     setFields((current) => {
       const next = { ...current, [key]: value, ...(key === "plan" && value !== "hr" ? { tier: "" } : {}) };
       saveDraft(next);
@@ -152,6 +156,24 @@ export default function ContactForm() {
             </select>
           </div>
         )}
+        <fieldset className="field contact-brief-wide">
+          <legend>Add-ons <span className="text-muted">(optional)</span></legend>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {addOns.map((a) => (
+              <label key={a.id} className="chip cursor-pointer">
+                <input
+                  type="checkbox"
+                  name="addons"
+                  value={a.id}
+                  className="sr-only"
+                  checked={fields.addons.includes(a.id)}
+                  onChange={(event) => update("addons", event.target.checked ? [...fields.addons, a.id] : fields.addons.filter((x) => x !== a.id))}
+                />
+                {a.name}
+              </label>
+            ))}
+          </div>
+        </fieldset>
         <div className="field contact-brief-wide">
           <label htmlFor={`${id}-message`}>What should the site or tool do? <span aria-hidden="true">*</span></label>
           <textarea {...inputProps("message")} rows={5} placeholder="A sentence or two is enough." value={fields.message} onChange={(event) => update("message", event.target.value)} required />

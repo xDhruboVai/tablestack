@@ -1,5 +1,6 @@
+import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
-import { hrTiers, packageLabel, plans, regionOf } from "@/content/pricing";
+import { addOns, addOnsLabel, hrTiers, packageLabel, plans, REGION_COOKIE, regionOf } from "@/content/pricing";
 import { clientOf, createLimiter, multiLine, oneLine, readJson, sameOrigin, sheetSafe } from "@/lib/security";
 
 /**
@@ -18,6 +19,7 @@ type Body = {
   timeline?: unknown;
   plan?: unknown;
   tier?: unknown;
+  addons?: unknown;
   message?: unknown;
   website?: unknown;
 };
@@ -29,7 +31,23 @@ const limiter = createLimiter(5, 10 * 60 * 1000);
 // Starts with a letter or digit, so a spreadsheet can't read the address as a formula.
 const EMAIL = /^[a-z0-9][^\s@]*@[^\s@]+\.[^\s@]{2,}$/i;
 
-type Inquiry = { name: string; email: string; business: string; message: string; plan: string; tier: string; package: string; country: string };
+type Inquiry = {
+  name: string;
+  email: string;
+  phone: string;
+  business: string;
+  needs: string[];
+  budget: string;
+  timeline: string;
+  message: string;
+  plan: string;
+  tier: string;
+  package: string;
+  addons: string[];
+  addonsLabel: string;
+  country: string;
+  currency: string;
+};
 
 export async function POST(req: Request) {
   if (!sameOrigin(req)) return NextResponse.json({ error: "Please send the form from the website." }, { status: 403 });
@@ -43,10 +61,12 @@ export async function POST(req: Request) {
   // Only known package ids are kept; the HR level only with the HR package.
   const plan = plans.find((p) => p.id === body.plan)?.id ?? "";
   const tier = plan === "hr" ? (hrTiers.find((t) => t.id === body.tier)?.id ?? "") : "";
-  // Vercel's IP lookup of the visitor's country, so the record shows which prices they saw.
+  const addons = addOns.filter((a) => Array.isArray(body.addons) && body.addons.includes(a.id)).map((a) => a.id);
+  // Vercel's IP lookup of the visitor's country, and the currency they saw (their pick on /pricing wins).
   const country = oneLine(req.headers.get("x-vercel-ip-country"), 2).toUpperCase();
+  const region = regionOf(country, (await cookies()).get(REGION_COOKIE)?.value);
 
-  const data = {
+  const data: Inquiry = {
     name: oneLine(body.name, 120),
     email: oneLine(body.email, 200),
     phone: oneLine(body.phone, 60).replace(/[^0-9+() -]/g, ""),
@@ -62,8 +82,11 @@ export async function POST(req: Request) {
     message: multiLine(body.message, 5000),
     plan,
     tier,
-    package: packageLabel(plan, tier, regionOf(country)),
+    package: packageLabel(plan, tier, region),
+    addons,
+    addonsLabel: addOnsLabel(addons, region),
     country,
+    currency: region === "bd" ? "BDT" : "USD",
   };
 
   if (!data.name || !EMAIL.test(data.email) || data.message.length < 10) {
@@ -140,18 +163,17 @@ async function toSheets(url: string, secret: string, row: Record<string, unknown
 
 /** Supabase table `inquiries` (supabase/migrations). Only the service-role key may write to it. */
 async function toDatabase(url: string, key: string, data: Inquiry): Promise<boolean> {
+  const { addonsLabel, ...record } = data;
   try {
     const res = await fetch(url + "/rest/v1/inquiries", {
       method: "POST",
       headers: { apikey: key, Authorization: "Bearer " + key, "Content-Type": "application/json", Prefer: "return=minimal" },
       body: JSON.stringify({
-        name: data.name,
-        email: data.email,
-        business: data.business,
-        message: data.message,
+        ...record,
         plan: data.plan || null,
         tier: data.tier || null,
         package: data.package || null,
+        addons_label: addonsLabel || null,
         country: data.country || null,
       }),
       signal: AbortSignal.timeout(12_000),

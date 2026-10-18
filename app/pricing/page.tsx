@@ -1,8 +1,9 @@
-import { headers } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { pageMeta } from "@/lib/seo";
 import TLink from "@/components/layout/TLink";
 import { ContactCTA } from "@/components/home/Sections";
-import { addOns, currencyNote, hrTiers, plans, pricingNotes, regionOf } from "@/content/pricing";
+import RegionToggle from "@/components/ui/RegionToggle";
+import { addOns, hrTiers, plans, pricingNotes, REGION_COOKIE, regionNotes, regionOf } from "@/content/pricing";
 import { bookCall, site } from "@/content/site";
 
 export const metadata = pageMeta({
@@ -20,14 +21,17 @@ function Tick() {
 }
 
 export default async function PricingPage() {
-  // Vercel's IP lookup; no permission prompt. Without it (local dev) the page shows USD.
-  const region = regionOf((await headers()).get("x-vercel-ip-country"));
+  // The visitor's pick from the currency switch, else Vercel's IP lookup (no permission prompt). Local dev: USD.
+  const region = regionOf((await headers()).get("x-vercel-ip-country"), (await cookies()).get(REGION_COOKIE)?.value);
   return (
     <>
       <section className="px-page pb-20 pt-[calc(var(--nav-h)+8svh)] md:pb-24" aria-labelledby="pricing-h" data-annot="page · /pricing">
         <h1 id="pricing-h" className="display text-[clamp(2.6rem,5.46vw,6.24rem)]" data-split="lines">
           Prices to <em className="text-accent">start from.</em>
         </h1>
+        <div className="mt-8">
+          <RegionToggle region={region} />
+        </div>
 
         {/* The four packages: paper, black, amber and yellow, so each one is easy to tell apart. */}
         <div className="price-grid mt-14 md:mt-16" data-reveal="rise">
@@ -73,7 +77,7 @@ export default async function PricingPage() {
         </div>
 
         <ul className="price-fine mt-10" aria-label="Good to know" data-reveal="fade">
-          {[currencyNote[region], ...pricingNotes].map((note) => (
+          {[...regionNotes[region], ...pricingNotes].map((note) => (
             <li key={note}>
               <span className="list-bar" aria-hidden="true" />
               {note}
@@ -119,20 +123,20 @@ export default async function PricingPage() {
         </div>
       </section>
 
-      {/* Add-ons and upkeep, folded away until someone wants them. */}
+      {/* Add-ons, folded away until someone wants them. */}
       <section className="px-page pb-20 md:pb-24" aria-labelledby="extras-h">
         <details className="price-extras">
           <summary>
             <span>
-              <span id="extras-h" className="price-extras-title">Add-ons and upkeep</span>
-              <span className="price-extras-sub">SEO, security, order automation and monthly maintenance</span>
+              <span id="extras-h" className="price-extras-title">Add-ons</span>
+              <span className="price-extras-sub">SEO setup and extra features</span>
             </span>
           </summary>
           <ul className="price-extras-list">
-            {addOns[region].map((a) => (
-              <li key={a.name}>
+            {addOns.map((a) => (
+              <li key={a.id}>
                 <span>{a.name}</span>
-                <b>{a.price}</b>
+                <b>{a.price[region]}</b>
               </li>
             ))}
           </ul>

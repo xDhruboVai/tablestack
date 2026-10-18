@@ -3308,7 +3308,10 @@ html[data-mode="boh"] .cap-card-web { box-shadow: inset 0 0 0 1px var(--rule-str
 .contact-brief-form { margin-top: clamp(32px, 3vw, 50px); }
 .contact-brief-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 23px 20px; }
 .contact-brief-wide { grid-column: 1 / -1; }
-.contact-brief-form .field label { color: var(--fg); font-weight: 600; }
+.contact-brief-form .field label,
+.contact-brief-form .field legend { color: var(--fg); font-weight: 600; }
+.contact-brief-form .field .chip { font-weight: 500; }
+.contact-brief-form .field .chip:has(input:checked) { color: var(--bg); }
 .contact-brief-form .field input,
 .contact-brief-form .field select,
 .contact-brief-form .field textarea { width: 100%; margin-top: 9px; border: 1px solid var(--rule-strong); border-radius: 10px; background: var(--bg); padding: 14px 15px; font-size: 1rem; }

@@ -7,8 +7,12 @@
 
 export type Region = "us" | "bd";
 
-/** The visitor's region from their two-letter country code (the hosting platform's IP lookup). */
-export const regionOf = (country: string | null | undefined): Region => (country?.toUpperCase() === "BD" ? "bd" : "us");
+/** Cookie that remembers the currency a visitor picked on /pricing. */
+export const REGION_COOKIE = "ts_region";
+
+/** The visitor's region: their pick on /pricing if any, otherwise their two-letter country code (the hosting platform's IP lookup). */
+export const regionOf = (country: string | null | undefined, picked?: string | null): Region =>
+  picked === "bd" || picked === "us" ? picked : country?.toUpperCase() === "BD" ? "bd" : "us";
 
 /** The four main packages. `id` is passed to the contact form so we know which one a visitor asked about. */
 export type Plan = {
@@ -139,33 +143,16 @@ export const hrTiers = [
   },
 ] as const;
 
-/** Optional extras and monthly upkeep. Indicative ranges; the final quote depends on scope. */
-export const addOns: Record<Region, { name: string; price: string }[]> = {
-  us: [
-    { name: "SEO optimization", price: "$49.50 to $99.50" },
-    { name: "Security hardening and basic testing", price: "$74.50 to $149.50" },
-    { name: "Order automation", price: "$149.50 to $299.50" },
-    { name: "Website maintenance", price: "$24.50 to $49.50 a month" },
-    { name: "E-commerce maintenance", price: "$49.50 to $99.50 a month" },
-    { name: "HR system support", price: "$74.50 to $149.50 a month" },
-    { name: "Additional feature development", price: "$15 to $22.50 an hour" },
-  ],
-  bd: [
-    { name: "Landing page with a custom admin panel", price: "৳11,000" },
-    { name: "SEO optimization (on-page and technical)", price: "৳2,000" },
-    { name: "Security testing and database hardening", price: "৳2,000" },
-    { name: "Post-launch bug warranty", price: "Included (90 days)" },
-    { name: "Order automation suite", price: "৳3,000" },
-    { name: "HR module (Basic, Standard or Enterprise)", price: "৳15,000 to ৳25,000+" },
-    { name: "Monthly database maintenance (not for landing pages)", price: "৳500 a month" },
-    { name: "Custom feature or change request, after 90 days", price: "৳800" },
-  ],
-};
+/** Optional extras. `id` is what the contact form sends; prices are a guide, the final quote depends on scope. */
+export const addOns = [
+  { id: "seo", name: "SEO setup (on-page and technical)", price: { us: "$49.50 to $99.50", bd: "৳2,000" } },
+  { id: "feature", name: "Extra feature or change request", price: { us: "$15 to $22.50 an hour", bd: "৳800 per request" } },
+] as const;
 
-/** The first line of the small print, per region. */
-export const currencyNote: Record<Region, string> = {
-  us: "Prices are starting estimates in USD.",
-  bd: "Prices are starting estimates in Bangladeshi taka.",
+/** The first lines of the small print, per region. */
+export const regionNotes: Record<Region, string[]> = {
+  us: ["Prices are starting estimates in USD."],
+  bd: ["Prices are starting estimates in Bangladeshi taka.", "Every project includes a 90-day bug warranty after launch."],
 };
 
 /** The rest of the small print, shown under the packages. */
@@ -186,4 +173,9 @@ export function packageLabel(planId: string, tierId: string, region: Region): st
   const tier = plan.id === "hr" ? hrTiers.find((t) => t.id === tierId) : undefined;
   const price = tier ? tier.price[region] : plan.price?.[region];
   return (tier ? `${plan.name}, ${tier.name}` : plan.name) + (price ? ` (${price})` : "");
+}
+
+/** The picked add-ons as one line, with this region's prices: "SEO setup (on-page and technical) (৳2,000)". */
+export function addOnsLabel(ids: string[], region: Region): string {
+  return addOns.filter((a) => ids.includes(a.id)).map((a) => `${a.name} (${a.price[region]})`).join(", ");
 }
