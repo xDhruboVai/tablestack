@@ -8,7 +8,7 @@ import { bookCall, site } from "@/content/site";
 
 export const metadata = pageMeta({
   title: "Pricing",
-  description: `Starting prices in USD from ${site.name}: landing pages from $199, business and e-commerce sites from $449, HR systems from $749, and custom work by quote.`,
+  description: `Starting prices from ${site.name} for landing pages, business and e-commerce sites, HR management systems, and custom work by quote.`,
   path: "/pricing",
 });
 
