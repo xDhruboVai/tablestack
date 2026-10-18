@@ -140,8 +140,8 @@ async function toSheets(url: string, secret: string, row: Record<string, unknown
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ secret, ...row }),
-      // Don't leave the visitor waiting if the spreadsheet service hangs.
-      signal: AbortSignal.timeout(12_000),
+      // Don't leave the visitor waiting if the spreadsheet service hangs. Apps Script can take ~13 s to start after a redeploy.
+      signal: AbortSignal.timeout(25_000),
     });
 
     if (!res.ok) {
