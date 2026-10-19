@@ -62,7 +62,8 @@ export const viewport: Viewport = {
 /* Runs before paint: starts in light mode unless the visitor chose dark before, enables motion styles, flags a first visit for the loader. */
 const bootScript = `(function(){try{var d=document.documentElement;
 if(localStorage.getItem('ts-mode')==='boh')d.dataset.mode='boh';else delete d.dataset.mode;
-if(!matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('motion');
+var isBot=/bot|googlebot|crawler|spider|robot|crawling|lighthouse/i.test(navigator.userAgent)||navigator.webdriver;
+if(!isBot&&!matchMedia('(prefers-reduced-motion: reduce)').matches){d.classList.add('motion');
 if(!sessionStorage.getItem('ts-visited')){d.classList.add('first-visit');sessionStorage.setItem('ts-visited','1');}}
 }catch(e){}})();`;
 

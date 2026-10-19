@@ -72,13 +72,18 @@ const screens = { web: CapPhone, flow: CapForm, tools: CapAdmin } as const;
 export function Capabilities() {
   return (
     <section id="services" className="px-page relative scroll-mt-[var(--nav-h)] pb-20 md:pb-24" aria-labelledby="cap-title" data-annot="section · capabilities">
-      <div className="grid grid-cols-12 gap-x-6">
-        <h2 id="cap-title" className="display col-span-12 text-[clamp(2.2rem,3.1vw,3.6rem)] md:col-span-8" data-split="lines">
-          Start with the <em className="text-accent">actual need.</em>
-        </h2>
-        <p className="body-lg col-span-12 mt-6 max-w-[40ch] md:col-span-4 md:mt-0 md:self-end" data-split="lines">
-          Websites first, with the right tools behind them.
-        </p>
+      <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+        <div className="max-w-[48ch]">
+          <h2 id="cap-title" className="display text-[clamp(2.2rem,3.1vw,3.6rem)]" data-split="lines">
+            Start with the <em className="text-accent">actual need.</em>
+          </h2>
+          <p className="body-lg mt-3 text-fg-2" data-split="lines">
+            Websites first, with the right tools behind them.
+          </p>
+        </div>
+        <TLink href="/services" className="btn btn-ghost md:mb-2 self-start md:self-auto" data-reveal="rise">
+          All capabilities (15) <span className="btn-arrow">→</span>
+        </TLink>
       </div>
       {/* Black, red and yellow cards, each with its screen breaking out of the top edge. */}
       <div className="cap-grid" data-reveal="rise">
