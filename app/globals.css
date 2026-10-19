@@ -357,7 +357,14 @@ svg {
   inset: -12px -10px;
 }
 
-/* ─── Motion: initial states (only when motion is allowed + JS ran) ── */
+/* ─── Motion & Visibility: Progressive Enhancement ──────────── */
+/* Content is visible by default (SSR, no-JS, crawlers, delayed hydration) */
+[data-split],
+[data-intro] {
+  visibility: visible;
+}
+
+/* Initial reveal states: non-text elements fade or draw in when motion is active */
 html.motion [data-reveal]:not([data-revealed]) {
   opacity: 0;
 }
@@ -365,21 +372,35 @@ html.motion [data-reveal="draw"]:not([data-revealed]) {
   opacity: 1;
   transform: scaleX(0);
 }
+/* Headings and split text remain visible; Anime.js line masks handle clipping on reveal */
 html.motion [data-split]:not([data-revealed]) {
-  visibility: hidden;
+  visibility: visible;
 }
 html.motion [data-intro] {
-  visibility: hidden;
+  visibility: visible;
 }
-/* Failsafe: if scripts never initialise, show everything after a moment. */
+/* Failsafe: if scripts never initialise or are delayed, ensure full visibility rapidly */
 html.motion:not(.anim-ready) :is([data-reveal], [data-split], [data-intro]) {
-  animation: ts-failsafe 0.01s 2.5s forwards;
+  animation: ts-failsafe 0.01s 0.8s forwards;
 }
 @keyframes ts-failsafe {
   to {
     opacity: 1;
     visibility: visible;
     transform: none;
+  }
+}
+
+/* Reduced motion explicit override */
+@media (prefers-reduced-motion: reduce) {
+  html.motion [data-reveal],
+  html.motion [data-reveal="draw"],
+  html.motion [data-split],
+  html.motion [data-intro] {
+    opacity: 1 !important;
+    transform: none !important;
+    visibility: visible !important;
+    animation: none !important;
   }
 }
 
@@ -1201,13 +1222,22 @@ html.first-visit .loader [data-slab] {
 html.first-visit .loader [data-word] {
   transform: translateY(110%);
 }
+/* Failsafe: if scripts don't initialise, dismiss the loader quickly to prevent blocking main content */
 html.first-visit:not(.anim-ready) .loader {
-  animation: ts-loader-failsafe 0.01s 3s forwards;
+  animation: ts-loader-failsafe 0.01s 1s forwards;
 }
 @keyframes ts-loader-failsafe {
   to {
     opacity: 0;
     visibility: hidden;
+    pointer-events: none;
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loader {
+    display: none !important;
   }
 }
 

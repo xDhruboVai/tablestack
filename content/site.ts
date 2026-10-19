@@ -55,6 +55,7 @@ export const nav = [
 
 /** Extra pages, linked from the footer only. */
 export const footerNav = [
+  { label: "Services", href: "/services" },
   { label: "FAQ", href: "/faq" },
   { label: "Blog", href: "/blog" },
 ] as const;

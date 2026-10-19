@@ -15,12 +15,12 @@ const isPreview = process.env.VERCEL_ENV === "preview";
  */
 const csp = [
   "default-src 'self'",
-  `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval' https://va.vercel-scripts.com" : ""}${isPreview ? " https://vercel.live" : ""}`,
+  `script-src 'self' 'unsafe-inline' https://va.vercel-scripts.com https://connect.facebook.net${isDev ? " 'unsafe-eval'" : ""}${isPreview ? " https://vercel.live" : ""}`,
   `style-src 'self' 'unsafe-inline'${isPreview ? " https://vercel.live" : ""}`,
-  `img-src 'self' data: blob:${isPreview ? " https://vercel.live https://vercel.com" : ""}`,
+  `img-src 'self' data: blob: https://www.facebook.com${isPreview ? " https://vercel.live https://vercel.com" : ""}`,
   `font-src 'self' data:${isPreview ? " https://vercel.live https://assets.vercel.com" : ""}`,
   // The team cards read public GitHub activity from this one service.
-  `connect-src 'self' https://github-contributions-api.jogruber.de${isDev ? " ws: wss:" : ""}${isPreview ? " https://vercel.live wss://ws-us3.pusher.com" : ""}`,
+  `connect-src 'self' https://github-contributions-api.jogruber.de https://va.vercel-scripts.com https://www.facebook.com https://connect.facebook.net${isDev ? " ws: wss:" : ""}${isPreview ? " https://vercel.live wss://ws-us3.pusher.com" : ""}`,
   `frame-src ${isPreview ? "https://vercel.live" : "'none'"}`,
   "worker-src 'self' blob:",
   "manifest-src 'self'",
@@ -79,7 +79,6 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       { source: "/portfolio", destination: "/work", permanent: true },
-      { source: "/services", destination: "/#services", permanent: true },
       { source: "/why-choose-tablestack", destination: "/about", permanent: true },
     ];
   },
