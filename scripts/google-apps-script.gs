@@ -46,7 +46,7 @@ function doPost(e) {
       Session.getScriptTimeZone(),
       "yyyy-MM-dd HH:mm:ss"
     );
-
+   
     var row = [
       timestamp,
       clientName,
