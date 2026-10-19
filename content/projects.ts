@@ -14,7 +14,7 @@
  * ─────────────────────────────────────────────────────────────
  */
 
-const SHOW_PLACEHOLDERS = false;
+const SHOW_PLACEHOLDERS = false;                    
 
 export type Motif = "flame" | "loaf" | "enso" | "leaf" | "book";
 
