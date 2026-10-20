@@ -1,4 +1,4 @@
-import { pageMeta } from "@/lib/seo";
+import { jsonLdText, pageMeta } from "@/lib/seo";
 import { site } from "@/content/site";
 import ProjectTile from "@/components/work/ProjectTile";
 import WorkWall from "@/components/work/WorkWall";
@@ -16,8 +16,31 @@ export default async function WorkPage() {
   const projects = await getVisibleProjects();
   // No projects switched on: the Work page doesn't exist.
   if (projects.length === 0) notFound();
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "CollectionPage",
+        "@id": `${site.url}/work#webpage`,
+        url: `${site.url}/work`,
+        name: `Work | ${site.name}`,
+        description: `Websites ${site.name} has designed and built in Dhaka, for clients and as concepts.`,
+        isPartOf: { "@id": `${site.url}/#website` },
+        breadcrumb: {
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Home", item: site.url },
+            { "@type": "ListItem", position: 2, name: "Work", item: `${site.url}/work` },
+          ],
+        },
+      },
+    ],
+  };
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdText(jsonLd) }} />
       <section className="px-page pb-24 pt-[calc(var(--nav-h)+clamp(20px,4svh,44px))] md:pb-28" aria-labelledby="work-h" data-annot="page · /work">
         <WorkWall projects={projects}>
           <h1 id="work-h" className="display work-wall-title" data-split="chars">

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { site } from "@/content/site";
 import { notFound } from "next/navigation";
+import { jsonLdText } from "@/lib/seo";
 import TLink from "@/components/layout/TLink";
 import ProjectCover from "@/components/work/ProjectCover";
 import ProjectMock from "@/components/work/ProjectMock";
@@ -51,8 +52,34 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
   // "Next project" cycles through the visible ones, and is left out when this is the only one.
   const next = visible.length > 1 ? visible[(visible.findIndex((v) => v.slug === slug) + 1) % visible.length] : null;
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "CreativeWork",
+        "@id": `${site.url}/work/${p.slug}#work`,
+        name: p.title,
+        description: p.summary,
+        url: `${site.url}/work/${p.slug}`,
+        author: { "@id": `${site.url}/#organization` },
+        creator: { "@id": `${site.url}/#organization` },
+        isPartOf: { "@id": `${site.url}/work#webpage` },
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${site.url}/work/${p.slug}#breadcrumb`,
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: site.url },
+          { "@type": "ListItem", position: 2, name: "Work", item: `${site.url}/work` },
+          { "@type": "ListItem", position: 3, name: p.title, item: `${site.url}/work/${p.slug}` },
+        ],
+      },
+    ],
+  };
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdText(jsonLd) }} />
       <article>
         {/* Wide screens: name, one plain sentence and the live link on the left; the site itself on the right. */}
         <header className="px-page pt-[calc(var(--nav-h)+6svh)]" data-annot={`page · /work/${p.slug}`}>

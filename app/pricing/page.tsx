@@ -1,5 +1,5 @@
 import { cookies, headers } from "next/headers";
-import { pageMeta } from "@/lib/seo";
+import { jsonLdText, pageMeta } from "@/lib/seo";
 import TLink from "@/components/layout/TLink";
 import { ContactCTA } from "@/components/home/Sections";
 import RegionToggle from "@/components/ui/RegionToggle";
@@ -23,8 +23,44 @@ function Tick() {
 export default async function PricingPage() {
   // The visitor's pick from the currency switch, else Vercel's IP lookup (no permission prompt). Local dev: USD.
   const region = regionOf((await headers()).get("x-vercel-ip-country"), (await cookies()).get(REGION_COOKIE)?.value);
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": `${site.url}/pricing#webpage`,
+        url: `${site.url}/pricing`,
+        name: `Pricing | ${site.name}`,
+        description: `Starting prices from ${site.name} for landing pages, business and e-commerce sites, HR management systems, and custom work by quote.`,
+        isPartOf: { "@id": `${site.url}/#website` },
+        breadcrumb: {
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Home", item: site.url },
+            { "@type": "ListItem", position: 2, name: "Pricing", item: `${site.url}/pricing` },
+          ],
+        },
+      },
+      {
+        "@type": "OfferCatalog",
+        "@id": `${site.url}/pricing#catalog`,
+        name: `${site.name} Web Development Plans`,
+        provider: { "@id": `${site.url}/#organization` },
+        itemListElement: plans.map((plan) => ({
+          "@type": "Offer",
+          name: plan.name,
+          description: `${plan.for}. Included: ${plan.included.join(", ")}`,
+          priceCurrency: region === "bd" ? "BDT" : "USD",
+          ...(plan.price?.[region] ? { price: plan.price[region].replace(/[^0-9]/g, "") } : {}),
+        })),
+      },
+    ],
+  };
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdText(jsonLd) }} />
       <section className="px-page pb-20 pt-[calc(var(--nav-h)+8svh)] md:pb-24" aria-labelledby="pricing-h" data-annot="page · /pricing">
         <h1 id="pricing-h" className="display text-[clamp(2.6rem,5.46vw,6.24rem)]" data-split="lines">
           Prices to <em className="text-accent">start from.</em>

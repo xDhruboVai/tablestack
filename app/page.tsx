@@ -10,14 +10,13 @@ export const metadata: Metadata = { alternates: { canonical: "/" } };
 
 export default async function Home() {
   const visible = await getVisibleProjects();
-  // Structured data for search engines: the business (Organization) and the site (WebSite), linked by stable ids.
-  // Only facts the owner has confirmed: no street address, ratings, clients or founding date.
-  const sameAs = site.social.map((l) => l.href).filter((h) => h.includes("facebook.com"));
+  // Structured data for search engines: the business (ProfessionalService / LocalBusiness) and the site (WebSite), linked by stable ids.
+  const sameAs = site.social.map((l) => l.href).filter(Boolean);
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": "Organization",
+        "@type": ["ProfessionalService", "Organization"],
         "@id": `${site.url}/#organization`,
         name: site.name,
         alternateName: site.altNames,
@@ -27,10 +26,44 @@ export default async function Home() {
         description: site.seoDescription,
         email: site.email,
         telephone: site.phoneIntl,
-        address: { "@type": "PostalAddress", addressLocality: site.city, addressCountry: "BD" },
-        areaServed: { "@type": "Country", name: "Bangladesh" },
+        priceRange: "৳৳",
+        currenciesAccepted: "BDT, USD",
+        paymentAccepted: "Bank Transfer, bKash, Nagad, Cash",
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: site.city,
+          addressRegion: "Dhaka Division",
+          addressCountry: "BD",
+        },
+        geo: {
+          "@type": "GeoCoordinates",
+          latitude: "23.8103",
+          longitude: "90.4125",
+        },
+        areaServed: [
+          { "@type": "City", name: "Dhaka" },
+          { "@type": "Country", name: "Bangladesh" },
+        ],
+        openingHoursSpecification: [
+          {
+            "@type": "OpeningHoursSpecification",
+            dayOfWeek: ["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"],
+            opens: "10:00",
+            closes: "20:00",
+          },
+        ],
         sameAs,
-        knowsAbout: ["Website design", "Web development", "Bilingual websites", "Online menus", "Booking flows", "Database-backed websites"],
+        knowsAbout: [
+          "Website design",
+          "Web development",
+          "Next.js development",
+          "Bilingual websites",
+          "Online menus",
+          "Booking flows",
+          "E-commerce websites",
+          "Database architecture",
+          "Agentic AI tools",
+        ],
       },
       {
         "@type": "WebSite",

@@ -20,14 +20,29 @@ export default async function PostPage() {
   const showWork = (await getVisibleProjects()).length > 0;
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    headline: post.title,
-    description: post.description,
-    datePublished: post.date,
-    dateModified: "2026-10-11",
-    author: { "@type": "Organization", name: site.name, url: site.url },
-    publisher: { "@type": "Organization", name: site.name, url: site.url },
-    mainEntityOfPage: `${site.url}/blog/${post.slug}`,
+    "@graph": [
+      {
+        "@type": "BlogPosting",
+        "@id": `${site.url}/blog/${post.slug}#article`,
+        headline: post.title,
+        description: post.description,
+        datePublished: post.date,
+        dateModified: "2026-10-11",
+        author: { "@type": "Organization", name: site.name, url: site.url },
+        publisher: { "@type": "Organization", name: site.name, url: site.url },
+        mainEntityOfPage: `${site.url}/blog/${post.slug}`,
+        isPartOf: { "@id": `${site.url}/blog#webpage` },
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": `${site.url}/blog/${post.slug}#breadcrumb`,
+        itemListElement: [
+          { "@type": "ListItem", position: 1, name: "Home", item: site.url },
+          { "@type": "ListItem", position: 2, name: "Blog", item: `${site.url}/blog` },
+          { "@type": "ListItem", position: 3, name: post.title, item: `${site.url}/blog/${post.slug}` },
+        ],
+      },
+    ],
   };
 
   return (

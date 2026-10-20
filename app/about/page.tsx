@@ -1,4 +1,4 @@
-import { pageMeta } from "@/lib/seo";
+import { jsonLdText, pageMeta } from "@/lib/seo";
 import ToolList from "@/components/ui/ToolList";
 import TeamLinks from "@/components/about/TeamLinks";
 import GlowLink from "@/components/ui/GlowLink";
@@ -88,8 +88,42 @@ function TeamArt({ side }: { side: "front" | "back" }) {
 }
 
 export default function AboutPage() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "AboutPage",
+        "@id": `${site.url}/about#webpage`,
+        url: `${site.url}/about`,
+        name: `About Us | ${site.name}`,
+        description: `Meet ${site.name}: a small team in Dhaka, Bangladesh building websites, software, databases and AI tools.`,
+        isPartOf: { "@id": `${site.url}/#website` },
+        breadcrumb: {
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Home", item: site.url },
+            { "@type": "ListItem", position: 2, name: "About Us", item: `${site.url}/about` },
+          ],
+        },
+        mainEntity: { "@id": `${site.url}/#organization` },
+      },
+      ...team.map((m) => ({
+        "@type": "Person",
+        name: m.name,
+        jobTitle: m.role,
+        worksFor: { "@id": `${site.url}/#organization` },
+        sameAs: [m.facebook, m.github, "portfolio" in m ? m.portfolio : undefined].filter(Boolean),
+        alumniOf: {
+          "@type": "EducationalOrganization",
+          name: m.study.split(",")[0].trim(),
+        },
+      })),
+    ],
+  };
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLdText(jsonLd) }} />
       {/* Hero: the pitch on the left, the quick facts as a small stack of cards on the right */}
       <section className="about-hero px-page" aria-labelledby="about-h" data-annot="page · /about">
         <div className="about-hero-copy">
