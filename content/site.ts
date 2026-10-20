@@ -17,8 +17,8 @@ export const site = {
   url: "https://tablestackbd.com",
   email: "tablestackbd@gmail.com",
   // Company phone: shown in the footer and in Google's business data.
-  phone: "01716934401",
-  phoneIntl: "+8801716934401",
+  phone: "01323866906",
+  phoneIntl: "+8801323866906",
   city: "Dhaka",
   // Booking link used by every "Book a call" button.
   bookingUrl: "https://cal.com/table-stack/intro-call",
