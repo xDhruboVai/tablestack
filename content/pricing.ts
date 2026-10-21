@@ -61,7 +61,7 @@ export const plans: Plan[] = [
       "Shopping cart or inquiry flow, depending on scope",
       "Basic on-page SEO",
       "Deployment assistance",
-      "60-day post-launch bug warranty",
+      "90-day post-launch bug warranty",
     ],
     note: "Payment gateways, advanced shipping, complex inventory and extra automation are quoted separately unless agreed.",
     cta: "Discuss this package",

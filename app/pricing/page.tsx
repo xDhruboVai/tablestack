@@ -7,8 +7,8 @@ import { addOns, hrTiers, plans, pricingNotes, REGION_COOKIE, regionNotes, regio
 import { bookCall, site } from "@/content/site";
 
 export const metadata = pageMeta({
-  title: "Pricing",
-  description: `Starting prices from ${site.name} for landing pages, business and e-commerce sites, HR management systems, and custom work by quote.`,
+  title: "Website Price in Bangladesh: Packages & Plans",
+  description: `Website price in Bangladesh: landing pages from ${plans[0].price!.bd}, e-commerce websites from ${plans[1].price!.bd}, HR software from ${plans[2].price!.bd}. Custom software by quote.`,
   path: "/pricing",
 });
 

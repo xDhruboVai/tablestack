@@ -4,7 +4,7 @@ export const posts = [
     slug: "how-much-does-a-website-cost-in-bangladesh",
     title: "How Much Does a Website Cost in Bangladesh?",
     description:
-      "What changes a website quote, what to include in your brief, and how to compare the work behind two prices.",
+      "Website price in Bangladesh: our starting prices, what changes a quote, what to put in your brief and how to compare two prices.",
     date: "2026-10-01",
     readingTime: "3 min read",
   },

@@ -7,7 +7,7 @@ import { bookCall, pillars, site, standards } from "@/content/site";
 import { getVisibleProjects } from "@/lib/visibility";
 
 export const metadata = pageMeta({
-  title: "Services & Capabilities",
+  title: "Web Development & Software Services in Bangladesh",
   description:
     "Web development, database architecture, and agentic AI automation by TableStack in Dhaka, Bangladesh. Custom web applications, e-commerce, and cloud tools.",
   path: "/services",

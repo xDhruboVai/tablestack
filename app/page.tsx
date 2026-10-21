@@ -61,6 +61,8 @@ export default async function Home() {
           "Online menus",
           "Booking flows",
           "E-commerce websites",
+          "HR and payroll software",
+          "Custom software development",
           "Database architecture",
           "Agentic AI tools",
         ],

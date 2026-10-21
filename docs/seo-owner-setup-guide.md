@@ -106,7 +106,7 @@ Please answer these. Do not send passwords, API keys, recovery codes or secret f
    (Facebook page name, invoices, email signature)?
 5. What is the permanent address of the Facebook page (not a share link)? Are there official LinkedIn,
    Instagram or GitHub organisation pages?
-6. Are these correct and fine to publish: email `tablestackbd@gmail.com`, phone `01716934401`,
+6. Are these correct and fine to publish: email `tablestackbd@gmail.com`, phone `01323866906`,
    location "Dhaka, Bangladesh"?
 7. Do you meet customers in person, at your place or theirs? Or is all work done online?
 8. Are Smashed Burgers and Pinewood paid client work, and have both agreed to be named publicly?
