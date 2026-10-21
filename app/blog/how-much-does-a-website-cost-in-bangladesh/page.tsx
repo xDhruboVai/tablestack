@@ -2,6 +2,7 @@ import { jsonLdText, pageMeta } from "@/lib/seo";
 import TLink from "@/components/layout/TLink";
 import { ContactCTA } from "@/components/home/Sections";
 import { formatDate, posts } from "@/content/posts";
+import { plans } from "@/content/pricing";
 import { site } from "@/content/site";
 import { getVisibleProjects } from "@/lib/visibility";
 
@@ -27,7 +28,7 @@ export default async function PostPage() {
         headline: post.title,
         description: post.description,
         datePublished: post.date,
-        dateModified: "2026-10-11",
+        dateModified: "2026-10-22",
         author: { "@type": "Organization", name: site.name, url: site.url },
         publisher: { "@type": "Organization", name: site.name, url: site.url },
         mainEntityOfPage: `${site.url}/blog/${post.slug}`,
@@ -90,6 +91,20 @@ export default async function PostPage() {
 
             <h2>Compare the scope, not just the number</h2>
             <p>Two quotes can look far apart while describing different work. Check whether both include mobile layouts, content entry, language versions, editing tools, testing and handover. Ask what happens if you add a feature later.</p>
+
+            <h2>Website price in Bangladesh: our starting prices</h2>
+            <p>As a guide, these are {site.name}’s starting prices. Your quote depends on the scope.</p>
+            <ul>
+              {plans.filter((p) => p.price).map((p) => (
+                <li key={p.id}><strong>{p.name}:</strong> from {p.price!.bd}</li>
+              ))}
+            </ul>
+            <p>See what each one includes on the <TLink href="/pricing" className="inline-link">pricing page</TLink>, or read about <TLink href="/ecommerce-website-bangladesh" className="inline-link">e-commerce websites</TLink> and <TLink href="/hr-software-bangladesh" className="inline-link">HR software</TLink>.</p>
+
+            <div lang="bn">
+              <h2>ওয়েবসাইট বানাতে কত টাকা লাগে?</h2>
+              <p>{site.name}-এ ল্যান্ডিং পেজ শুরু {plans[0].price!.bd} থেকে, আর ই-কমার্স বা বিজনেস ওয়েবসাইট শুরু {plans[1].price!.bd} থেকে। কয়টি পেজ, কী কী ফিচার আর কে কনটেন্ট দেবে, তার উপর চূড়ান্ত খরচ নির্ভর করে। কাজ শুরুর আগে আমরা লিখিত কোটেশন দিই।</p>
+            </div>
 
             <h2>How we quote</h2>
             <p>At {site.name}, we discuss the business and agree on pages, features and a timeline before quoting. You see layouts and a working preview before launch. We spell out any ongoing support separately.</p>

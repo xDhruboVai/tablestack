@@ -7,7 +7,7 @@ import { getVisibleProjects } from "@/lib/visibility";
 import { ContactCTA } from "@/components/home/Sections";
 
 export const metadata = pageMeta({
-  title: "Work",
+  title: "Website Design Portfolio",
   description: `Websites ${site.name} has designed and built in Dhaka, for clients and as concepts, each with a short write-up and a link to open the site.`,
   path: "/work",
 });

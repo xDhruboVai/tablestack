@@ -34,9 +34,9 @@ export const site = {
   ],
   tagline: "Websites built around the way your business works.",
   // Shown in Google results and link previews (keep under about 160 characters).
-  seoTitle: "TableStack | Websites and Web Tools in Bangladesh",
+  seoTitle: "TableStack | Website, E-commerce & Software Company in Bangladesh",
   seoDescription:
-    "TableStack is a Dhaka web team building websites and the tools behind them. See our work: sites with menus, online orders, bookings and branch pages.",
+    "TableStack is a Dhaka team building websites, e-commerce stores, HR management systems and custom software for businesses across Bangladesh.",
   description:
     "A small web team in Bangladesh. We build websites and the tools behind them, from bilingual menus and branch pages to booking flows and admin screens.",
 } as const;
@@ -56,6 +56,8 @@ export const nav = [
 /** Extra pages, linked from the footer only. */
 export const footerNav = [
   { label: "Services", href: "/services" },
+  { label: "E-commerce Websites", href: "/ecommerce-website-bangladesh" },
+  { label: "HR Software", href: "/hr-software-bangladesh" },
   { label: "FAQ", href: "/faq" },
   { label: "Blog", href: "/blog" },
 ] as const;
