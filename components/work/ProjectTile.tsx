@@ -11,6 +11,7 @@ const descriptions: Record<string, string> = {
   "shang-high": "A searchable menu and a page for each of four outlets.",
   "rustic-eatery": "One menu, a monthly offer and four branches.",
   "the-backyard-chef": "A menu for each of two branches, with sharing platters.",
+  threadline: "Twenty pieces with filters, and checkout with Cash on Delivery.",
 };
 
 /** `eager` loads the cover straight away: use it where the tile is on screen when the page opens. */

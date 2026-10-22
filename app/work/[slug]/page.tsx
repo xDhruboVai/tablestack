@@ -113,8 +113,12 @@ export default async function ProjectPage({ params }: { params: Promise<Params> 
               )}
               {p.concept && (
                 <p className="concept-note mt-8" data-reveal="fade">
-                  We designed and built this on our own initiative, to show what we would make for {p.title}. The restaurant did not commission it, and
-                  it is not their official website.
+                  {p.conceptNote ?? (
+                    <>
+                      We designed and built this on our own initiative, to show what we would make for {p.title}. The restaurant did not commission it, and
+                      it is not their official website.
+                    </>
+                  )}
                 </p>
               )}
             </div>

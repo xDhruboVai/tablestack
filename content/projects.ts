@@ -3,8 +3,8 @@
  *  PROJECTS
  *
  *  Basic Kneads is client work. Every other project is a concept: a site we designed and
- *  built on our own initiative for a real restaurant. Those were not commissioned, and each
- *  is labelled "Concept" wherever it appears. Client work leaves `concept` unset.
+ *  built on our own initiative, for a real restaurant or (Threadline) a fictional brand.
+ *  None was commissioned, and each is labelled "Concept" wherever it appears. Client work leaves `concept` unset.
  *  `placeholderProjects` are fictional samples kept only as a template
  *  for the case-study structure. They're hidden while SHOW_PLACEHOLDERS
  *  is false, and are labeled "Placeholder" if you ever turn them on.
@@ -44,18 +44,24 @@ export type GalleryItem = {
 /** How a project's screenshots are presented on its page (components/work/Shot.tsx). */
 export type ProjectLook = "brand" | "studio" | "angled" | "plain";
 
+/** Work page filter order. A category only gets a filter button once a visible project uses it. */
+export const CATEGORIES = ["Food & drink", "E-commerce", "Travel", "Retail", "Services", "Other"] as const;
+export type Category = (typeof CATEGORIES)[number];
+
 export type Project = {
   slug: string;
   placeholder: boolean;
   /** Designed on our own initiative, not commissioned by the business. Shown with a "Concept" label everywhere. */
   concept?: boolean;
+  /** Replaces the standard concept note on the project page (the standard one speaks of a real restaurant). */
+  conceptNote?: string;
   /** One look for all of this project's screenshots. Left out, projects take the looks in turn. */
   look?: ProjectLook;
   title: string;
   client: string;
   kind: string;
   /** Industry label. The Work page shows a filter once projects span two or more categories. */
-  category: "Food & drink" | "Retail" | "Services" | "Other";
+  category: Category;
   year: string;
   location: string;
   services: string[];
@@ -801,7 +807,67 @@ const conceptProjects: Project[] = [
   },
 ];
 
-const shown = [...realProjects, ...conceptProjects];
+/* ── E-commerce concept ────────────────────────────────────────
+   Threadline is a fictional clothing brand, made up for this concept store. Its products, prices
+   and policies are demo content; only describe what the live concept shows. */
+const storeProjects: Project[] = [
+  {
+    slug: "threadline",
+    placeholder: false,
+    concept: true,
+    conceptNote:
+      "We designed and built this on our own initiative, to show what we would make for a clothing brand. THREADLINE is a fictional brand: its products, prices and store policies are demo content.",
+    look: "studio",
+    title: "Threadline",
+    client: "Concept, fictional brand",
+    kind: "Clothing store",
+    category: "E-commerce",
+    year: "2026",
+    location: "Dhaka, Bangladesh",
+    services: ["Online store design", "Concept build"],
+    stack: [],
+    summary:
+      "A concept online store for a fictional Dhaka clothing brand. Twenty pieces to browse and filter, product pages with colours and sizes, and checkout with Cash on Delivery.",
+    liveUrl: "https://threadline-phi-virid.vercel.app/",
+    challenge:
+      "A clothing store has to make browsing easy on a phone and buying feel safe. Shoppers need to find their size and colour quickly, see what delivery costs, and pay the way most people here do: cash on delivery.",
+    approach: "Warm grey pages, heavy black headlines and clothes photographed on their own, so the pieces carry the brand.",
+    execution: [
+      "20 pieces in ten categories, for men, women and unisex",
+      "Filters for size, colour, fit, price and stock, with sorting",
+      "Product pages with colours, sizes, a size guide and pieces to wear it with",
+      "Quick add, a cart drawer and a wishlist",
+      "Checkout with Cash on Delivery, a discount code and delivery cost by division",
+      "Order tracking by order number and phone number, and customer accounts",
+    ],
+    outcome: "A concept: a complete clothing store, from browsing to checkout.",
+    art: {
+      palette: { bg: "#141414", fg: "#F2F0EB", accent: "#2F4A6B", soft: "#D9D5CE" },
+      type: "sans",
+      motif: "leaf",
+      layout: "grid",
+      tagline: "Not your uniform.",
+      dishes: [
+        ["Northside Heavy Tee", "1,370"],
+        ["Wide Leg Denim", "2,690"],
+        ["Field Chore Jacket", "3,490"],
+      ],
+    },
+    media: {
+      cover: "/work/threadline/cover.jpg",
+      coverAlt: "Threadline concept homepage: a tee, a denim jacket and jeans beside the headline Not your uniform.",
+    },
+    gallery: conceptGallery("threadline", [
+      ["home", "desktop", "The shop, with filters", "All clothing page with size, colour, fit and price filters beside a grid of pieces with prices"],
+      ["mobile", "mobile", "Home and a product on a phone", "Two phones showing the Threadline homepage and the Northside Heavy Tee product page"],
+      ["product", "menu", "A product page", "Northside Heavy Tee page with colour and size choices, Add to cart and Buy now with Cash on Delivery"],
+      ["categories", "detail", "Shop by category", "Category tiles for tees, shirts, hoodies, denim, pants and jackets"],
+      ["checkout", "boh", "Checkout with Cash on Delivery", "Checkout form with contact and delivery details beside the order summary and delivery cost"],
+    ]),
+  },
+];
+
+const shown = [...realProjects, ...storeProjects, ...conceptProjects];
 export const projects: Project[] = SHOW_PLACEHOLDERS || shown.length === 0 ? [...shown, ...placeholderProjects] : shown;
 
 export const featuredSlugs = projects.slice(0, 4).map((p) => p.slug);

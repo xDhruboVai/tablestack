@@ -2,9 +2,11 @@ import { jsonLdText, pageMeta } from "@/lib/seo";
 import { site } from "@/content/site";
 import ProjectTile from "@/components/work/ProjectTile";
 import WorkWall from "@/components/work/WorkWall";
+import WorkFilter from "@/components/work/WorkFilter";
 import { notFound } from "next/navigation";
 import { getVisibleProjects } from "@/lib/visibility";
 import { ContactCTA } from "@/components/home/Sections";
+import { CATEGORIES } from "@/content/projects";
 
 export const metadata = pageMeta({
   title: "Website Design Portfolio",
@@ -48,17 +50,13 @@ export default async function WorkPage() {
           </h1>
           <p className="body-lg work-wall-intro" data-split="lines">
             {projects.every((p) => p.concept)
-              ? "Concept sites we designed and built on our own initiative for restaurants in Dhaka. Open each one to see the pages and features for yourself."
+              ? "Concept sites we designed and built on our own initiative, for restaurants and shops in Dhaka. Open each one to see the pages and features for yourself."
               : "Our work so far, including concept sites we designed on our own initiative. Open each one to see the pages and features for yourself."}
           </p>
         </WorkWall>
-        {/* An odd number of projects: the first one runs the full width, so the last row is never half empty. */}
-        <div
-          className={`project-tile-grid mt-12 md:mt-14 ${projects.length === 1 ? "project-tile-grid-single" : projects.length % 2 ? "project-tile-grid-lead" : ""}`}
-          data-reveal="rise"
-        >
+        <WorkFilter categories={projects.map((p) => p.category)} order={CATEGORIES}>
           {projects.map((project, i) => <ProjectTile project={project} headingLevel={2} eager={i < 2} key={project.slug} />)}
-        </div>
+        </WorkFilter>
       </section>
       <ContactCTA />
     </>
